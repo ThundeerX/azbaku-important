@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin panel — AzBaku AutoImport</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue:#1B365D; --blue-deep:#122844; --silver:#C4C9CC; --white:#FFFFFF;
+    --charcoal:#1A1A1A; --red:#D7263D; --paper:#F4F6F8; --steel:#5B6672; --line:#E1E5E8;
+    --green:#1F8A4C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Inter',sans-serif;color:var(--charcoal);background:var(--paper);line-height:1.6;}
+  h1,h2{font-family:'Fraunces',serif;font-weight:600;color:var(--blue);}
+  .mono{font-family:'Inter',sans-serif;font-variant-numeric:tabular-nums;font-weight:600;}
+  a{color:inherit;}
+  button{font-family:'Inter',sans-serif;cursor:pointer;}
+
+  /* Login gate */
+  .login-wrap{
+    min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;
+  }
+  .login-card{
+    background:var(--white);border:1px solid var(--line);border-radius:14px;
+    padding:40px;max-width:360px;width:100%;text-align:center;
+  }
+  .login-card h1{font-size:22px;margin-bottom:8px;}
+  .login-card p{color:var(--steel);font-size:13.5px;margin-bottom:24px;}
+  .login-card input{
+    width:100%;padding:12px 14px;border:1.5px solid var(--line);border-radius:8px;
+    font-size:14.5px;margin-bottom:14px;text-align:center;letter-spacing:0.15em;
+  }
+  .warn-box{
+    background:#FFF4E5;border:1px solid #F0C36D;color:#7A5300;
+    border-radius:8px;padding:12px 14px;font-size:12.5px;text-align:left;margin-top:20px;line-height:1.5;
+  }
+
+  /* App shell */
+  .app{display:none;}
+  .app.show{display:flex;min-height:100vh;}
+
+  /* Sidebar */
+  .sidebar{
+    width:240px;flex-shrink:0;background:var(--blue-deep);color:var(--white);
+    display:flex;flex-direction:column;padding:24px 0;
+  }
+  .sidebar-brand{padding:0 24px 24px;border-bottom:1px solid rgba(255,255,255,0.1);margin-bottom:16px;}
+  .sidebar-brand .mark{
+    width:84px;height:84px;border-radius:8px;background:var(--white);
+    display:flex;align-items:center;justify-content:center;margin-bottom:10px;padding:6px;
+  }
+  .sidebar-brand .mark img{width:100%;height:100%;object-fit:contain;}
+  .sidebar-brand h1{color:var(--white);font-size:16px;}
+  .sidebar-brand .sub{color:var(--silver);font-size:11.5px;font-family:'Inter',sans-serif;font-weight:500;margin-top:2px;}
+  .side-nav{flex:1;padding:0 12px;}
+  .side-nav button{
+    display:flex;align-items:center;gap:12px;width:100%;text-align:left;
+    padding:12px 14px;border-radius:8px;border:none;background:transparent;
+    color:var(--silver);font-size:14px;font-weight:500;margin-bottom:4px;
+  }
+  .side-nav button.active{background:rgba(255,255,255,0.08);color:var(--white);}
+  .side-nav button:hover{background:rgba(255,255,255,0.06);color:var(--white);}
+  .side-nav .icon{width:18px;height:18px;flex-shrink:0;}
+  .sidebar-foot{padding:16px 24px 0;border-top:1px solid rgba(255,255,255,0.1);}
+  .sidebar-foot button{
+    width:100%;background:transparent;border:1px solid rgba(255,255,255,0.2);color:var(--silver);
+    padding:9px 0;border-radius:6px;font-size:13px;
+  }
+  .sidebar-foot button:hover{color:var(--white);border-color:rgba(255,255,255,0.4);}
+
+  /* Main content */
+  .main{flex:1;min-width:0;background:var(--paper);}
+  .main-header{
+    background:var(--white);border-bottom:1px solid var(--line);
+    padding:20px 32px;display:flex;justify-content:space-between;align-items:center;
+  }
+  .main-header h2{font-size:19px;}
+  .main-header .page-sub{color:var(--steel);font-size:13px;margin-top:2px;}
+  .refresh-btn{
+    background:var(--white);border:1.5px solid var(--line);color:var(--steel);
+    padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;
+  }
+  .refresh-btn:hover{border-color:var(--blue);color:var(--blue);}
+  .main-body{padding:28px 32px 60px;max-width:1100px;}
+
+  /* Mobile sidebar toggle */
+  .mobile-topbar{display:none;background:var(--blue-deep);color:var(--white);padding:14px 20px;align-items:center;justify-content:space-between;}
+  .mobile-topbar button{background:transparent;border:1px solid rgba(255,255,255,0.3);color:var(--white);padding:7px 12px;border-radius:6px;font-size:13px;}
+
+  @media (max-width:880px){
+    .app.show{flex-direction:column;}
+    .sidebar{
+      position:fixed;left:0;top:0;bottom:0;z-index:80;transform:translateX(-100%);
+      transition:transform .2s ease;width:280px;
+    }
+    .sidebar.open{transform:translateX(0);box-shadow:0 0 40px rgba(0,0,0,0.25);}
+    .mobile-topbar{display:flex;}
+    .main-header{padding:16px 20px;}
+    .main-body{padding:20px;}
+  }
+
+  @media (min-width:881px) and (max-width:1024px){
+    .sidebar{width:200px;}
+    .main-body{padding:24px;}
+    .sub-table th, .sub-table td{padding:10px;}
+  }
+
+  /* Stat cards */
+  .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px;}
+  .stat-card{background:var(--white);border:1px solid var(--line);border-radius:12px;padding:20px;}
+  .stat-card .stat-label{font-size:12px;color:var(--steel);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:8px;}
+  .stat-card .stat-value{font-family:'Inter',sans-serif;font-variant-numeric:tabular-nums;font-size:26px;font-weight:700;color:var(--blue);}
+  .stat-card.accent .stat-value{color:var(--red);}
+  @media (max-width:1180px){ .main-body{max-width:100%;} }
+  @media (max-width:1100px){ .stats-grid{grid-template-columns:repeat(2,1fr);} }
+  .card{background:var(--white);border:1px solid var(--line);border-radius:12px;padding:28px;margin-bottom:20px;}
+  .card h2{font-size:18px;margin-bottom:6px;}
+  .card .card-sub{color:var(--steel);font-size:13px;margin-bottom:20px;}
+
+  .field{margin-bottom:16px;}
+  .field label{display:block;font-size:13px;font-weight:600;margin-bottom:6px;}
+  .field input, .field textarea{
+    width:100%;padding:11px 13px;border:1.5px solid var(--line);border-radius:8px;
+    font-size:14px;font-family:'Inter',sans-serif;
+  }
+  .field textarea{resize:vertical;min-height:70px;}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;padding:11px 22px;border-radius:8px;
+    font-weight:600;font-size:13.5px;border:1.5px solid transparent;
+  }
+  .btn-red{background:var(--red);color:var(--white);}
+  .btn-outline{background:transparent;border-color:var(--blue);color:var(--blue);}
+  .btn-ghost{background:transparent;color:var(--steel);border-color:var(--line);}
+  .btn-sm{padding:7px 14px;font-size:12.5px;}
+
+  .save-toast{
+    position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);
+    background:var(--green);color:var(--white);padding:12px 22px;border-radius:8px;
+    font-size:13.5px;font-weight:600;opacity:0;pointer-events:none;transition:all .25s ease;
+    box-shadow:0 8px 24px rgba(0,0,0,0.15);
+  }
+  .save-toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+  /* Case list */
+  .case-row{
+    display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:12px;align-items:end;
+    padding:16px;border:1px solid var(--line);border-radius:10px;margin-bottom:12px;
+  }
+  .case-row .field{margin-bottom:0;}
+  .remove-btn{
+    background:transparent;border:1px solid var(--line);color:var(--red);
+    width:38px;height:38px;border-radius:8px;font-size:16px;
+  }
+  .remove-btn:hover{background:#FDECEE;}
+
+  /* Submissions table */
+  .sub-empty{text-align:center;color:var(--steel);font-size:14px;padding:40px 0;}
+  .sub-table-wrap{overflow-x:auto;}
+  .sub-table{width:100%;border-collapse:collapse;font-size:13.5px;}
+  .sub-table th{
+    text-align:left;padding:10px 14px;color:var(--steel);font-size:11.5px;
+    text-transform:uppercase;letter-spacing:0.04em;border-bottom:1.5px solid var(--line);white-space:nowrap;
+  }
+  .sub-table td{padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top;}
+  .sub-table tr:hover td{background:var(--paper);}
+  .sub-table .sub-car{font-weight:600;color:var(--charcoal);}
+  .sub-table .sub-notes-cell{max-width:220px;color:var(--steel);font-size:12.5px;}
+  .pill{display:inline-block;padding:3px 10px;border-radius:999px;font-size:11.5px;font-weight:600;background:var(--paper);color:var(--steel);}
+  .pill.new{background:#FFF4E5;color:#7A5300;}
+
+  @media (max-width:700px){
+    .row2{grid-template-columns:1fr;}
+    .case-row{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<div class="login-wrap" id="loginWrap">
+  <div class="login-card">
+    <h1>Admin panel</h1>
+    <p>AzBaku AutoImport idarə paneli</p>
+    <input type="password" id="pwInput" placeholder="Şifrə" autocomplete="off">
+    <button class="btn btn-red" style="width:100%;justify-content:center;" id="loginBtn">Daxil ol</button>
+    <div class="warn-box">
+      ⚠️ Bu panel demo məqsədlidir. Şifrə brauzerinizdə saxlanılır, real təhlükəsizlik təmin etmir. Standart şifrə: <strong>azbaku2026</strong>
+    </div>
+  </div>
+</div>
+
+<div class="app" id="app">
+  <div class="mobile-topbar">
+    <strong>AzBaku Admin</strong>
+    <button id="sidebarToggle">☰ Menyu</button>
+  </div>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="mark"><img src="images/logo.png" alt="AzBaku AutoImport logosu"></div>
+      <h1>AzBaku Admin</h1>
+      <div class="sub">idarə paneli</div>
+    </div>
+    <nav class="side-nav">
+      <button class="tab-btn active" data-tab="dashboard">📊 &nbsp;İcmal</button>
+      <button class="tab-btn" data-tab="text">📝 &nbsp;Sayt mətni</button>
+      <button class="tab-btn" data-tab="cases">🚗 &nbsp;Nümunə avtomobillər</button>
+      <button class="tab-btn" data-tab="submissions">📥 &nbsp;Sorğular</button>
+    </nav>
+    <div class="sidebar-foot">
+      <button class="logout-btn" id="logoutBtn">Çıxış</button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="main-header">
+      <div>
+        <h2 id="pageTitle">İcmal</h2>
+        <div class="page-sub" id="pageSub">Sayt performansına ümumi baxış</div>
+      </div>
+      <button class="refresh-btn" id="refreshBtn">↻ Yenilə</button>
+    </div>
+
+    <div class="main-body">
+
+      <div class="banner-box" style="margin-bottom:24px;">
+        <strong>Diqqət:</strong> Bu panel canlı verilənlər bazasına (MySQL) qoşulur. Etdiyiniz dəyişikliklər dərhal bütün ziyarətçilər üçün görünür.
+      </div>
+
+      <!-- TAB: Dashboard -->
+      <div class="tab-panel" id="tab-dashboard">
+        <div class="stats-grid">
+          <div class="stat-card"><div class="stat-label">Ümumi sorğular</div><div class="stat-value" id="statTotal">—</div></div>
+          <div class="stat-card accent"><div class="stat-label">Son 7 gün</div><div class="stat-value" id="statWeek">—</div></div>
+          <div class="stat-card"><div class="stat-label">Orta büdcə</div><div class="stat-value" id="statAvgBudget">—</div></div>
+          <div class="stat-card"><div class="stat-label">Nümunə avtomobillər</div><div class="stat-value" id="statCases">—</div></div>
+        </div>
+        <div class="card">
+          <h2>Son sorğular</h2>
+          <p class="card-sub">Ən son daxil olan 5 müştəri sorğusu</p>
+          <div id="recentSubmissions"></div>
+        </div>
+      </div>
+
+      <!-- TAB: Site text -->
+      <div class="tab-panel" id="tab-text" style="display:none;">
+        <div class="card">
+          <h2>Baş səhifə mətni</h2>
+          <p class="card-sub">Ana səhifədəki başlıq, alt mətn və telefon nömrəsini dəyişin.</p>
+          <div class="field">
+            <label>Başlıq (HTML icazəlidir, məs. &lt;em&gt;vurğu&lt;/em&gt;)</label>
+            <input type="text" id="heroTitle" value="Siz sifariş verin,<br><em>biz tapıb gətirək.</em>">
+          </div>
+          <div class="field">
+            <label>Alt mətn</label>
+            <textarea id="heroLead">Bizim öz avtoparkımız yoxdur — sizin üçün ABŞ və Kanada auksionlarından dəqiq istədiyiniz avtomobili axtarır, alır və Bakıya qədər sığortalı çatdırırıq.</textarea>
+          </div>
+          <div class="field">
+            <label>Telefon nömrəsi</label>
+            <input type="text" id="phoneNumber" value="+994 00 000 00 00">
+          </div>
+          <button class="btn btn-red" id="saveTextBtn">Mətni yadda saxla</button>
+        </div>
+      </div>
+
+      <!-- TAB: Cases -->
+      <div class="tab-panel" id="tab-cases" style="display:none;">
+        <div class="card">
+          <h2>Nümunə avtomobillər</h2>
+          <p class="card-sub">Ana səhifədə "Bunları biz artıq gətirmişik" bölməsində göstərilən kartlar.</p>
+          <div id="casesList"></div>
+          <button class="btn btn-outline btn-sm" id="addCaseBtn">+ Yeni nümunə əlavə et</button>
+          <div style="margin-top:18px;">
+            <button class="btn btn-red" id="saveCasesBtn">Nümunələri yadda saxla</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB: Submissions -->
+      <div class="tab-panel" id="tab-submissions" style="display:none;">
+        <div class="card">
+          <h2>Gələn sorğular</h2>
+          <p class="card-sub">"Sifariş ver" formasından göndərilən bütün müştəri sorğuları.</p>
+          <div id="submissionsList"></div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<div class="save-toast" id="saveToast">✓ Yadda saxlanıldı</div>
+
+<script>
+  var PASSWORD = 'azbaku2026';
+  var authToken = '';
+
+  // ---- Login ----
+  var loginWrap = document.getElementById('loginWrap');
+  var app = document.getElementById('app');
+  var pwInput = document.getElementById('pwInput');
+
+  function tryLogin(){
+    if (pwInput.value === PASSWORD) {
+      authToken = pwInput.value;
+      sessionStorage.setItem('azbaku_admin_auth', authToken);
+      loginWrap.style.display = 'none';
+      app.classList.add('show');
+      loadTextTab();
+      loadDashboard();
+    } else {
+      pwInput.style.borderColor = '#D7263D';
+      pwInput.value = '';
+      pwInput.placeholder = 'Yanlış şifrə, yenidən cəhd edin';
+    }
+  }
+  document.getElementById('loginBtn').addEventListener('click', tryLogin);
+  pwInput.addEventListener('keydown', function(e){ if (e.key === 'Enter') tryLogin(); });
+
+  document.getElementById('logoutBtn').addEventListener('click', function(){
+    sessionStorage.removeItem('azbaku_admin_auth');
+    location.reload();
+  });
+
+  var savedToken = sessionStorage.getItem('azbaku_admin_auth');
+  if (savedToken) {
+    authToken = savedToken;
+    loginWrap.style.display = 'none';
+    app.classList.add('show');
+    loadTextTab();
+    loadDashboard();
+  }
+
+  // ---- Mobile sidebar toggle ----
+  var sidebar = document.getElementById('sidebar');
+  document.getElementById('sidebarToggle').addEventListener('click', function(){
+    sidebar.classList.toggle('open');
+  });
+
+  var pageTitles = {
+    dashboard: ['İcmal', 'Sayt performansına ümumi baxış'],
+    text: ['Sayt mətni', 'Ana səhifə başlığı, alt mətn və əlaqə nömrəsi'],
+    cases: ['Nümunə avtomobillər', 'Ana səhifədə göstərilən keçmiş idxal nümunələri'],
+    submissions: ['Sorğular', 'Sifariş formasından daxil olan müştəri sorğuları']
+  };
+
+  // ---- Tabs ----
+  document.querySelectorAll('.tab-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      document.querySelectorAll('.tab-panel').forEach(function(p){ p.style.display = 'none'; });
+      document.getElementById('tab-' + btn.dataset.tab).style.display = 'block';
+      var info = pageTitles[btn.dataset.tab];
+      document.getElementById('pageTitle').textContent = info[0];
+      document.getElementById('pageSub').textContent = info[1];
+      sidebar.classList.remove('open');
+      if (btn.dataset.tab === 'dashboard') loadDashboard();
+      if (btn.dataset.tab === 'cases') renderCases();
+      if (btn.dataset.tab === 'submissions') renderSubmissions();
+    });
+  });
+
+  document.getElementById('refreshBtn').addEventListener('click', function(){
+    var active = document.querySelector('.tab-btn.active').dataset.tab;
+    if (active === 'dashboard') loadDashboard();
+    if (active === 'cases') renderCases();
+    if (active === 'submissions') renderSubmissions();
+    if (active === 'text') loadTextTab();
+    showToast('↻ Yeniləndi');
+  });
+
+  function showToast(msg){
+    var t = document.getElementById('saveToast');
+    t.textContent = msg || '✓ Yadda saxlanıldı';
+    t.classList.add('show');
+    setTimeout(function(){ t.classList.remove('show'); }, 2200);
+  }
+
+  // ---- Site text ----
+  function loadTextTab(){
+    fetch('/api/content.php')
+      .then(function(res){ return res.json(); })
+      .then(function(saved){
+        if (saved.hero_title) document.getElementById('heroTitle').value = saved.hero_title;
+        if (saved.hero_lead) document.getElementById('heroLead').value = saved.hero_lead;
+        if (saved.phone) document.getElementById('phoneNumber').value = saved.phone;
+      })
+      .catch(function(){ showToast('⚠ API-ə qoşulmadı'); });
+  }
+
+  document.getElementById('saveTextBtn').addEventListener('click', function(){
+    var data = {
+      hero_title: document.getElementById('heroTitle').value,
+      hero_lead: document.getElementById('heroLead').value,
+      phone: document.getElementById('phoneNumber').value
+    };
+    fetch('/api/content.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + authToken },
+      body: JSON.stringify(data)
+    })
+      .then(function(res){ return res.json(); })
+      .then(function(){ showToast(); })
+      .catch(function(){ showToast('⚠ Yadda saxlanmadı, API-i yoxlayın'); });
+  });
+
+  // ---- Cases ----
+  var currentCases = [];
+
+  function renderCases(){
+    fetch('/api/cases.php')
+      .then(function(res){ return res.json(); })
+      .then(function(cases){
+        currentCases = cases;
+        drawCasesList();
+      })
+      .catch(function(){ showToast('⚠ API-ə qoşulmadı'); });
+  }
+
+  function drawCasesList(){
+    var list = document.getElementById('casesList');
+    list.innerHTML = '';
+    currentCases.forEach(function(c, i){
+      var row = document.createElement('div');
+      row.className = 'case-row';
+      row.innerHTML =
+        '<div class="field"><label>Ad</label><input type="text" class="c-title" value="' + escapeHtml(c.title) + '"></div>' +
+        '<div class="field"><label>Yekun qiymət</label><input type="text" class="c-price" value="' + escapeHtml(c.price) + '"></div>' +
+        '<div class="field"><label>Müddət</label><input type="text" class="c-days" value="' + escapeHtml(c.days) + '"></div>' +
+        '<button class="remove-btn" data-idx="' + i + '" title="Sil">✕</button>';
+      list.appendChild(row);
+    });
+    list.querySelectorAll('.remove-btn').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var idx = parseInt(btn.dataset.idx, 10);
+        currentCases = collectCasesFromForm();
+        currentCases.splice(idx, 1);
+        drawCasesList();
+      });
+    });
+  }
+
+  function collectCasesFromForm(){
+    var rows = document.querySelectorAll('#casesList .case-row');
+    var out = [];
+    rows.forEach(function(row){
+      out.push({
+        title: row.querySelector('.c-title').value.trim(),
+        price: row.querySelector('.c-price').value.trim(),
+        days: row.querySelector('.c-days').value.trim()
+      });
+    });
+    return out;
+  }
+
+  document.getElementById('addCaseBtn').addEventListener('click', function(){
+    currentCases = collectCasesFromForm();
+    currentCases.push({title:'Yeni avtomobil', price:'$0', days:'0 gün'});
+    drawCasesList();
+  });
+
+  document.getElementById('saveCasesBtn').addEventListener('click', function(){
+    currentCases = collectCasesFromForm();
+    fetch('/api/cases.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + authToken },
+      body: JSON.stringify(currentCases)
+    })
+      .then(function(res){ return res.json(); })
+      .then(function(){ showToast(); renderCases(); })
+      .catch(function(){ showToast('⚠ Yadda saxlanmadı, API-i yoxlayın'); });
+  });
+
+  // ---- Submissions ----
+  function renderSubmissions(){
+    var list = document.getElementById('submissionsList');
+    list.innerHTML = '<div class="sub-empty">Yüklənir...</div>';
+    fetch('/api/submissions.php', {
+      headers: { 'Authorization': 'Bearer ' + authToken }
+    })
+      .then(function(res){ return res.json(); })
+      .then(function(subs){
+        if (!subs.length) {
+          list.innerHTML = '<div class="sub-empty">Hələ heç bir sorğu yoxdur.</div>';
+          return;
+        }
+        list.innerHTML = buildSubmissionsTable(subs);
+      })
+      .catch(function(){ list.innerHTML = '<div class="sub-empty">⚠ API-ə qoşulmadı.</div>'; });
+  }
+
+  function buildSubmissionsTable(subs, limit){
+    var rows = limit ? subs.slice(0, limit) : subs;
+    var html = '<div class="sub-table-wrap"><table class="sub-table"><thead><tr>' +
+      '<th>Tarix</th><th>Avtomobil</th><th>İl</th><th>Vəziyyət</th><th>Büdcə</th><th>Müştəri</th><th>Telefon</th><th>Qeyd</th>' +
+      '</tr></thead><tbody>';
+    rows.forEach(function(s){
+      html += '<tr>' +
+        '<td class="mono" style="white-space:nowrap;font-size:12px;color:var(--steel);">' + escapeHtml(s.created_at) + '</td>' +
+        '<td class="sub-car">' + escapeHtml(s.make) + ' ' + escapeHtml(s.model) + '</td>' +
+        '<td>' + escapeHtml(s.year_from) + '–' + escapeHtml(s.year_to) + '</td>' +
+        '<td><span class="pill">' + escapeHtml(s.condition_pref) + '</span></td>' +
+        '<td class="mono">$' + Number(s.budget).toLocaleString('en-US') + '</td>' +
+        '<td>' + escapeHtml(s.customer_name) + '</td>' +
+        '<td><a href="tel:' + escapeHtml(s.phone) + '" style="color:var(--blue);font-weight:600;">' + escapeHtml(s.phone) + '</a></td>' +
+        '<td class="sub-notes-cell">' + (s.notes ? escapeHtml(s.notes) : '—') + '</td>' +
+        '</tr>';
+    });
+    html += '</tbody></table></div>';
+    return html;
+  }
+
+  // ---- Dashboard ----
+  function loadDashboard(){
+    Promise.all([
+      fetch('/api/submissions.php', { headers: { 'Authorization': 'Bearer ' + authToken } }).then(function(r){ return r.json(); }),
+      fetch('/api/cases.php').then(function(r){ return r.json(); })
+    ]).then(function(results){
+      var subs = results[0];
+      var cases = results[1];
+
+      document.getElementById('statTotal').textContent = subs.length;
+      document.getElementById('statCases').textContent = cases.length;
+
+      var weekAgo = Date.now() - 7 * 24 * 60 * 60 * 1000;
+      var recentCount = subs.filter(function(s){
+        var t = new Date(s.created_at.replace(' ', 'T')).getTime();
+        return !isNaN(t) && t >= weekAgo;
+      }).length;
+      document.getElementById('statWeek').textContent = recentCount;
+
+      var avgBudget = subs.length ? Math.round(subs.reduce(function(sum, s){ return sum + Number(s.budget || 0); }, 0) / subs.length) : 0;
+      document.getElementById('statAvgBudget').textContent = subs.length ? '$' + avgBudget.toLocaleString('en-US') : '—';
+
+      var recentWrap = document.getElementById('recentSubmissions');
+      recentWrap.innerHTML = subs.length ? buildSubmissionsTable(subs, 5) : '<div class="sub-empty">Hələ heç bir sorğu yoxdur.</div>';
+    }).catch(function(){
+      showToast('⚠ API-ə qoşulmadı');
+    });
+  }
+
+  function escapeHtml(str){
+    var div = document.createElement('div');
+    div.textContent = str == null ? '' : String(str);
+    return div.innerHTML;
+  }
+</script>
+
+</body>
+</html>
