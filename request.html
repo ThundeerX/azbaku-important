@@ -44,7 +44,11 @@
   .btn-outline:hover{background:var(--blue);color:var(--white);}
   .hamburger{display:flex;flex-direction:column;justify-content:center;gap:4px;width:36px;height:36px;flex-shrink:0;border:1.5px solid var(--line);border-radius:8px;background:var(--white);}
   .hamburger span{width:15px;height:2px;background:var(--blue);margin:0 auto;}
-  .mobile-menu{display:none;flex-direction:column;padding:8px 16px 16px;border-bottom:1px solid var(--line);}
+  .mobile-menu{
+    display:none;flex-direction:column;padding:8px 16px 16px;
+    position:fixed;left:0;right:0;top:0;z-index:70;background:var(--white);
+    box-shadow:0 12px 24px rgba(0,0,0,0.12);max-height:calc(100vh - 60px);overflow-y:auto;
+  }
   .mobile-menu.open{display:flex;}
   .mobile-menu a{padding:13px 0;font-size:15px;font-weight:600;color:var(--blue);border-bottom:1px solid var(--line);}
 
@@ -372,7 +376,12 @@
 
   var hamburgerBtn = document.getElementById('hamburgerBtn');
   var mobileMenu = document.getElementById('mobileMenu');
-  hamburgerBtn.addEventListener('click', function(){ mobileMenu.classList.toggle('open'); });
+  var siteHeader = document.querySelector('header');
+  hamburgerBtn.addEventListener('click', function(){
+    mobileMenu.style.top = siteHeader.offsetHeight + 'px';
+    mobileMenu.style.maxHeight = 'calc(100vh - ' + siteHeader.offsetHeight + 'px)';
+    mobileMenu.classList.toggle('open');
+  });
   mobileMenu.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ mobileMenu.classList.remove('open'); }); });
 </script>
 
