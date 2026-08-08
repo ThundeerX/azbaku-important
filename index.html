@@ -406,6 +406,11 @@
   mobileMenu.querySelectorAll('a').forEach(function(a){
     a.addEventListener('click', function(){ mobileMenu.classList.remove('open'); });
   });
+  document.addEventListener('click', function(e){
+    if (mobileMenu.classList.contains('open') && !mobileMenu.contains(e.target) && !hamburgerBtn.contains(e.target)) {
+      mobileMenu.classList.remove('open');
+    }
+  });
 
   fetch('/api/cases.php')
     .then(function(res){ return res.json(); })
