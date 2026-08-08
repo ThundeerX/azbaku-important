@@ -45,7 +45,16 @@
   .mobile-menu{display:none;flex-direction:column;padding:8px 24px 20px;border-bottom:1px solid var(--line);}
   .mobile-menu.open{display:flex;}
   .mobile-menu a{padding:14px 0;font-size:15.5px;font-weight:600;color:var(--blue);border-bottom:1px solid var(--line);}
-  @media (max-width:880px){ nav{display:none;} .hamburger{display:flex;} }
+  @media (max-width:880px){ nav{display:none;} .hamburger{display:flex;} .hide-mobile{display:none;} }
+
+  @media (max-width:480px){
+    .topbar .wrap span:first-child{display:none;}
+    .topbar .wrap{justify-content:center;padding:6px 20px;}
+    .navwrap .wrap{padding:10px 20px;}
+    .brand{font-size:15px;white-space:nowrap;gap:6px;}
+    .brand-mark{width:36px;height:36px;}
+    .wrap{padding-left:20px;padding-right:20px;}
+  }
 
   /* HERO — full photo */
   .hero{
@@ -59,10 +68,21 @@
   .hero p.lead{color:var(--silver);font-size:17.5px;max-width:520px;margin-bottom:32px;}
   .hero-btns{display:flex;gap:14px;flex-wrap:wrap;}
 
+  @media (max-width:640px){
+    .hero{min-height:0;}
+    .hero-inner{padding:44px 0 40px;}
+    .hero h1{margin-bottom:16px;}
+    .hero p.lead{font-size:15.5px;margin-bottom:24px;}
+  }
+
   /* Photo strip — trust bar */
   .trust-strip{background:var(--paper);padding:22px 0;border-bottom:1px solid var(--line);}
   .trust-strip .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px;font-size:13.5px;color:var(--steel);font-weight:600;}
   .trust-strip span{color:var(--blue);}
+  @media (max-width:640px){
+    .trust-strip .wrap{grid-template-columns:1fr 1fr;display:grid;gap:14px 12px;text-align:center;justify-items:center;}
+    .trust-strip{padding:18px 0;}
+  }
 
   /* Section shell */
   section{padding:88px 0;}
@@ -171,7 +191,7 @@
         <a href="#contact">Əlaqə</a>
       </nav>
       <div style="display:flex;align-items:center;gap:14px;">
-        <a href="request.html" class="btn btn-red" style="padding:11px 22px;">Sifariş ver</a>
+        <a href="request.html" class="btn btn-red hide-mobile" style="padding:11px 22px;">Sifariş ver</a>
         <button class="hamburger" id="hamburgerBtn" aria-label="Menyu"><span></span><span></span><span></span></button>
       </div>
     </div>
