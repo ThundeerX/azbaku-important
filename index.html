@@ -30,7 +30,7 @@
   .topbar{background:var(--blue);}
   .topbar .wrap{display:flex;justify-content:center;align-items:center;padding:7px 16px;}
   .topbar a{color:var(--white);font-weight:600;font-size:12.5px;}
-  .brand{font-family:'Inter',sans-serif;font-weight:700;font-size:13px;letter-spacing:0.06em;text-transform:uppercase;color:var(--blue);display:flex;align-items:center;gap:7px;white-space:nowrap;overflow:hidden;}
+  .brand{font-family:'Inter',sans-serif;font-weight:800;font-size:13px;letter-spacing:0.06em;text-transform:uppercase;color:var(--blue);display:flex;align-items:center;gap:7px;white-space:nowrap;overflow:hidden;}
   .brand-mark{width:32px;height:32px;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
   .brand-mark img{width:100%;height:100%;object-fit:contain;}
 
@@ -69,7 +69,7 @@
   /* Tablet and up: show full nav + desc + header button, hide hamburger */
   @media (min-width:769px){
     .navwrap .wrap{padding:12px 28px 12px 32px;}
-    .brand{font-size:19px;gap:10px;}
+    .brand{font-size:19px;font-weight:800;gap:10px;}
     .brand-mark{width:42px;height:42px;}
     nav{display:flex;gap:28px;}
     nav a{font-size:14.5px;font-weight:600;color:var(--charcoal);padding:6px 0;border-bottom:2px solid transparent;}
@@ -186,8 +186,8 @@
   .path-card h3{font-size:22px;margin-bottom:10px;}
   .path-card p{color:var(--steel);font-size:14.5px;margin-bottom:24px;}
   .auction-logos{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:4px;}
-  .auction-logo{display:flex;align-items:center;gap:6px;background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:8px 14px;font-size:12.5px;font-weight:600;color:var(--blue);}
-  .auction-logo img{width:18px;height:18px;object-fit:contain;border-radius:3px;}
+  .auction-logo{display:flex;align-items:center;gap:6px;background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:8px 14px;font-size:12.5px;font-weight:700;color:var(--blue);}
+  .auction-logo .a-icon{width:20px;height:20px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:10px;color:var(--white);flex-shrink:0;}
   @media (max-width:760px){ .paths{grid-template-columns:1fr;} }
 
   /* CTA band */
@@ -304,7 +304,7 @@
       <p>Stokumuz yoxdur, amma nəticələrimiz var — real qiymət və müddətlərlə keçmiş sifarişlər.</p>
     </div>
     <div class="cases" id="casesContainer">
-      <div class="case-card">
+      <a href="example-detail.html?id=static-1" class="case-card" style="display:block;">
         <div class="case-photo">
           <span class="case-badge">Təhvil verildi</span>
           <img src="https://images.unsplash.com/photo-1568844293986-8d0400bd4745?w=700&q=80" alt="Honda CR-V 2022">
@@ -313,8 +313,8 @@
           <h3>Honda CR-V 2022</h3>
           <div class="case-meta"><span>Yekun qiymət<strong>$21,400</strong></span><span>Müddət<strong>41 gün</strong></span></div>
         </div>
-      </div>
-      <div class="case-card">
+      </a>
+      <a href="example-detail.html?id=static-2" class="case-card" style="display:block;">
         <div class="case-photo">
           <span class="case-badge">Təhvil verildi</span>
           <img src="https://images.unsplash.com/photo-1605893477799-b99e3b8b93fe?w=700&q=80" alt="Ford F-150 2020">
@@ -323,8 +323,8 @@
           <h3>Ford F-150 2020</h3>
           <div class="case-meta"><span>Yekun qiymət<strong>$26,900</strong></span><span>Müddət<strong>38 gün</strong></span></div>
         </div>
-      </div>
-      <div class="case-card">
+      </a>
+      <a href="example-detail.html?id=static-3" class="case-card" style="display:block;">
         <div class="case-photo">
           <span class="case-badge">Təhvil verildi</span>
           <img src="https://images.unsplash.com/photo-1555215695-3004980ad54e?w=700&q=80" alt="BMW 3 Series 2021">
@@ -333,7 +333,7 @@
           <h3>BMW 3 Series 2021</h3>
           <div class="case-meta"><span>Yekun qiymət<strong>$24,150</strong></span><span>Müddət<strong>44 gün</strong></span></div>
         </div>
-      </div>
+      </a>
     </div>
     <div style="text-align:center;margin-top:36px;">
       <a href="examples.html" class="btn btn-outline">Bütün nümunələrə bax →</a>
@@ -358,11 +358,11 @@
         <h3>Auksion nümunələrinə baxın</h3>
         <p>Hazırda auksionlarda olan seçilmiş lotlara baxın, bəyəndiyinizi bizə göstərin.</p>
         <div class="auction-logos">
-          <div class="auction-logo"><img src="https://www.copart.com/favicon.ico" alt="Copart" onerror="this.style.display='none'"><span>Copart</span></div>
-          <div class="auction-logo"><img src="https://www.iaai.com/favicon.ico" alt="IAAI" onerror="this.style.display='none'"><span>IAAI</span></div>
-          <div class="auction-logo"><img src="https://www.manheim.com/favicon.ico" alt="Manheim" onerror="this.style.display='none'"><span>Manheim</span></div>
-          <div class="auction-logo"><img src="https://www.adesa.com/favicon.ico" alt="Adesa" onerror="this.style.display='none'"><span>Adesa</span></div>
-          <div class="auction-logo"><img src="https://www.encar.com/favicon.ico" alt="EnCar" onerror="this.style.display='none'"><span>EnCar</span></div>
+          <div class="auction-logo"><span class="a-icon" style="background:#F7B500;">C</span>Copart</div>
+          <div class="auction-logo"><span class="a-icon" style="background:#0057B8;">I</span>IAAI</div>
+          <div class="auction-logo"><span class="a-icon" style="background:#E31837;">M</span>Manheim</div>
+          <div class="auction-logo"><span class="a-icon" style="background:#003DA5;">A</span>Adesa</div>
+          <div class="auction-logo"><span class="a-icon" style="background:#1A1A1A;">E</span>EnCar</div>
         </div>
         <a href="examples.html" style="color:var(--blue);font-weight:700;border:1.5px solid var(--blue);border-radius:7px;padding:13px 26px;display:inline-block;margin-top:20px;">Nümunə lotlara bax</a>
       </div>
