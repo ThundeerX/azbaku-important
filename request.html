@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sifariş ver — AzBaku AutoImport</title>
+<meta name="description" content="İstədiyiniz avtomobili bildirin — marka, model, il və büdcə. AzBaku AutoImport 24 saat ərzində sizinlə əlaqə saxlayır.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue:#1B365D; --blue-deep:#122844; --silver:#C4C9CC; --white:#FFFFFF;
+    --charcoal:#1A1A1A; --red:#D7263D; --paper:#F5F7F9; --steel:#5B6672; --line:#E1E5E8;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Inter',sans-serif;color:var(--charcoal);background:var(--white);line-height:1.6;-webkit-font-smoothing:antialiased;}
+  h1,h2,h3{font-family:'Fraunces',serif;font-weight:600;color:var(--blue);letter-spacing:-0.01em;}
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 32px;}
+  a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible{outline:2px solid var(--red);outline-offset:2px;}
+  .eyebrow{font-size:12.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--red);font-weight:700;margin-bottom:14px;display:inline-block;}
+
+  header{position:sticky;top:0;z-index:60;background:transparent;padding:12px 16px 0;}
+  .navwrap{
+    max-width:1180px;margin:0 auto;
+    background:rgba(255,255,255,0.78);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+    border-radius:999px;box-shadow:0 10px 30px rgba(27,54,93,0.14);
+    border:1px solid rgba(255,255,255,0.5);
+  }
+  .topbar{text-align:center;padding-bottom:8px;}
+  .topbar .wrap{display:flex;justify-content:center;align-items:center;padding:0;}
+  .topbar a{color:var(--blue);font-weight:700;font-size:12.5px;}
+
+  .navwrap .wrap{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;gap:10px;flex-wrap:nowrap;}
+  .brand{font-family:'Fraunces',serif;font-weight:700;font-size:15px;color:var(--blue);display:flex;align-items:center;gap:6px;white-space:nowrap;overflow:hidden;}
+  .brand-mark{width:32px;height:32px;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+  .brand-mark img{width:100%;height:100%;object-fit:contain;}
+
+  nav{display:none;}
+  .header-cta{display:none !important;}
+
+  @media (min-width:769px){ .header-cta{display:inline-flex !important;} }
+
+  nav a{font-size:14.5px;font-weight:600;color:var(--charcoal);padding:6px 0;border-bottom:2px solid transparent;}
+  nav a:hover{color:var(--blue);border-color:var(--silver);}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 26px;border-radius:7px;font-weight:700;font-size:14.5px;border:1.5px solid transparent;cursor:pointer;transition:transform .12s ease;white-space:nowrap;}
+  .btn:hover{transform:translateY(-1px);}
+  .btn-red{background:var(--red);color:var(--white);}
+  .btn-outline{background:transparent;color:var(--blue);border-color:var(--blue);}
+  .btn-outline:hover{background:var(--blue);color:var(--white);}
+  .hamburger{display:flex;flex-direction:column;justify-content:center;gap:4px;width:36px;height:36px;flex-shrink:0;border:1.5px solid var(--line);border-radius:8px;background:var(--white);}
+  .hamburger span{width:15px;height:2px;background:var(--blue);margin:0 auto;}
+  .mobile-menu{
+    display:none;flex-direction:column;padding:8px 16px 16px;
+    position:fixed;left:0;right:0;top:0;z-index:70;background:var(--white);
+    box-shadow:0 12px 24px rgba(0,0,0,0.12);max-height:calc(100vh - 60px);overflow-y:auto;
+  }
+  .mobile-menu.open{display:flex;}
+  .mobile-menu a{padding:13px 0;font-size:15px;font-weight:600;color:var(--blue);border-bottom:1px solid var(--line);}
+
+  @media (min-width:769px){
+    .topbar{display:none;}
+    .navwrap .wrap{padding:12px 28px 12px 32px;}
+    .brand{font-size:19px;gap:10px;}
+    .brand-mark{width:42px;height:42px;}
+    nav{display:flex;gap:28px;}
+    .header-cta{padding:11px 22px;}
+    .hamburger{display:none;}
+    .wrap{padding-left:32px;padding-right:32px;}
+  }
+
+  .page-hero{
+    position:relative;min-height:280px;display:flex;align-items:flex-end;color:var(--white);
+    background:linear-gradient(180deg, rgba(10,38,71,0.45), rgba(6,26,48,0.9)),
+      url('https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=1800&q=80') center 35%/cover no-repeat;
+  }
+  .page-hero .wrap{padding:64px 32px 48px;}
+  .breadcrumb{font-size:13px;color:var(--silver);margin-bottom:16px;}
+  .breadcrumb a:hover{color:var(--white);}
+  .page-hero h1{color:var(--white);font-size:clamp(28px,3.8vw,42px);margin-bottom:10px;}
+  .page-hero p{color:var(--silver);font-size:16px;max-width:560px;}
+
+  .form-wrap{padding:64px 0 96px;background:var(--paper);}
+  .form-grid{display:grid;grid-template-columns:1.3fr 0.9fr;gap:48px;align-items:start;}
+  @media (max-width:920px){ .form-grid{grid-template-columns:1fr;} .side-col{order:-1;} }
+  @media (min-width:921px) and (max-width:1180px){ .form-grid{gap:32px;} .form-card{padding:32px;} }
+
+  .form-card{background:var(--white);border:1px solid var(--line);border-radius:16px;padding:40px;box-shadow:0 20px 50px rgba(10,38,71,0.06);}
+
+  .progress{display:flex;gap:8px;margin-bottom:32px;}
+  .progress-step{flex:1;height:4px;border-radius:2px;background:var(--line);}
+  .progress-step.done{background:var(--red);}
+
+  fieldset{border:none;margin-bottom:32px;}
+  legend{font-family:'Fraunces',serif;font-size:19px;font-weight:600;color:var(--blue);margin-bottom:4px;padding:0;}
+  .legend-sub{color:var(--steel);font-size:13.5px;margin-bottom:20px;}
+
+  .field-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
+  @media (max-width:600px){ .field-row{grid-template-columns:1fr;gap:0;} }
+  @media (max-width:920px){ .page-hero .wrap{padding:48px 32px 36px;} }
+  .field{margin-bottom:16px;}
+  .field label{display:block;font-size:13.5px;font-weight:700;color:var(--charcoal);margin-bottom:7px;}
+  .field .hint{font-weight:400;color:var(--steel);font-size:12.5px;}
+  .field input, .field select, .field textarea{
+    width:100%;padding:12px 14px;border:1.5px solid var(--line);border-radius:8px;
+    font-family:'Inter',sans-serif;font-size:14.5px;color:var(--charcoal);background:var(--white);
+  }
+  .field input:focus, .field select:focus, .field textarea:focus{border-color:var(--blue);outline:none;}
+  .field textarea{resize:vertical;min-height:96px;}
+  .field-error{color:var(--red);font-size:12.5px;margin-top:6px;display:none;}
+  .field.invalid input, .field.invalid select{border-color:var(--red);}
+  .field.invalid .field-error{display:block;}
+
+  .radio-group{display:flex;gap:10px;flex-wrap:wrap;}
+  .radio-pill{position:relative;}
+  .radio-pill input{position:absolute;opacity:0;inset:0;cursor:pointer;width:100%;height:100%;}
+  .radio-pill span{display:block;padding:10px 18px;border:1.5px solid var(--line);border-radius:999px;font-size:13.5px;font-weight:600;color:var(--steel);}
+  .radio-pill input:checked + span{background:var(--blue);border-color:var(--blue);color:var(--white);}
+
+  .range-value{display:flex;justify-content:space-between;margin-bottom:10px;}
+  .range-value span:first-child{font-size:13.5px;font-weight:700;}
+  .range-value span:last-child{color:var(--blue);font-weight:700;font-size:15px;}
+  input[type="range"]{width:100%;height:4px;border-radius:2px;background:var(--line);appearance:none;-webkit-appearance:none;}
+  input[type="range"]::-webkit-slider-thumb{appearance:none;-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--red);cursor:pointer;border:3px solid var(--white);box-shadow:0 0 0 1.5px var(--red);}
+  input[type="range"]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--red);cursor:pointer;border:3px solid var(--white);box-shadow:0 0 0 1.5px var(--red);}
+
+  .submit-row{display:flex;align-items:center;gap:16px;margin-top:8px;}
+  @media (max-width:600px){ .submit-row{flex-direction:column;align-items:stretch;} .submit-row .btn{width:100%;} }
+  .submit-row .btn{padding:14px 32px;font-size:15px;}
+  .submit-note{font-size:12.5px;color:var(--steel);}
+
+  .side-photo{border-radius:16px;overflow:hidden;margin-bottom:20px;box-shadow:0 16px 36px rgba(10,38,71,0.1);}
+  .side-photo img{width:100%;height:200px;object-fit:cover;display:block;}
+  .side-panel{background:var(--white);border:1px solid var(--line);border-radius:16px;padding:28px;}
+  .side-panel h3{font-size:16.5px;font-family:'Inter',sans-serif;font-weight:700;color:var(--charcoal);margin-bottom:18px;}
+  .side-step{display:flex;gap:14px;margin-bottom:20px;}
+  .side-step:last-child{margin-bottom:0;}
+  .side-num{width:28px;height:28px;border-radius:50%;background:var(--blue);color:var(--white);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12.5px;flex-shrink:0;}
+  .side-step p{font-size:13.5px;color:var(--steel);}
+  .side-step strong{display:block;color:var(--charcoal);font-size:14px;margin-bottom:2px;}
+  .side-divider{height:1px;background:var(--line);margin:22px 0;}
+  .side-contact{font-size:13.5px;color:var(--steel);}
+  .side-contact a{color:var(--blue);font-weight:700;}
+
+  .success{display:none;text-align:center;padding:60px 24px;}
+  .success.show{display:block;}
+  .success-icon{width:56px;height:56px;border-radius:50%;background:var(--blue);color:var(--white);display:flex;align-items:center;justify-content:center;margin:0 auto 22px;font-size:24px;}
+  .success h2{font-size:24px;margin-bottom:12px;}
+  .success p{color:var(--steel);font-size:15px;max-width:420px;margin:0 auto 28px;}
+
+  footer{background:linear-gradient(180deg, var(--blue) 0%, var(--blue-deep) 100%);color:var(--silver);padding:32px 0;font-size:13px;text-align:center;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="topbar">
+    <div class="wrap">
+      <a href="tel:+994000000000" class="topbar-phone">+994 00 000 00 00</a>
+    </div>
+  </div>
+  <div class="navwrap">
+    <div class="wrap">
+      <a href="index.html" class="brand"><span class="brand-mark"><img src="images/logo.png" alt="AzBaku AutoImport logosu"></span>AzBaku AutoImport</a>
+      <nav>
+        <a href="examples.html">Nümunələr</a>
+        <a href="request.html">Sifariş ver</a>
+        <a href="index.html#process">Prosesimiz</a>
+        <a href="index.html#why">Niyə Biz</a>
+        <a href="index.html#contact">Əlaqə</a>
+      </nav>
+      <div style="display:flex;align-items:center;gap:14px;">
+        <a href="tel:+994000000000" class="btn btn-outline header-cta">Zəng edin</a>
+        <button class="hamburger" id="hamburgerBtn" aria-label="Menyu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="examples.html">Nümunələr</a>
+  <a href="request.html">Sifariş ver</a>
+  <a href="index.html#process">Prosesimiz</a>
+  <a href="index.html#why">Niyə Biz</a>
+  <a href="index.html#contact">Əlaqə</a>
+</div>
+
+<section class="page-hero">
+  <div class="wrap">
+    <div class="breadcrumb"><a href="index.html">Ana səhifə</a> / Sifariş ver</div>
+    <span class="eyebrow">2 dəqiqə çəkir</span>
+    <h1>Hansı avtomobili axtarırsınız?</h1>
+    <p>Nə qədər çox məlumat versəniz, təklifimiz bir o qədər dəqiq olacaq. Heç nə ödəmirsiniz — bu, sadəcə axtarış sorğusudur.</p>
+  </div>
+</section>
+
+<div class="form-wrap">
+  <div class="wrap">
+    <div class="form-grid">
+
+      <div>
+        <div id="formView" class="form-card">
+          <div class="progress">
+            <div class="progress-step done"></div>
+            <div class="progress-step"></div>
+            <div class="progress-step"></div>
+          </div>
+
+          <form id="carRequestForm" novalidate>
+            <fieldset>
+              <legend>Avtomobil</legend>
+              <p class="legend-sub">Dəqiq bilmirsinizsə, təxmini yazın — sonra dəqiqləşdirərik.</p>
+              <div class="field-row">
+                <div class="field" data-field="make">
+                  <label for="make">Marka <span class="hint">(məs. Toyota)</span></label>
+                  <input type="text" id="make" name="make" placeholder="Toyota">
+                  <div class="field-error">Zəhmət olmasa marka daxil edin</div>
+                </div>
+                <div class="field" data-field="model">
+                  <label for="model">Model <span class="hint">(məs. Camry)</span></label>
+                  <input type="text" id="model" name="model" placeholder="Camry">
+                  <div class="field-error">Zəhmət olmasa model daxil edin</div>
+                </div>
+              </div>
+              <div class="field-row">
+                <div class="field" data-field="yearFrom">
+                  <label for="yearFrom">İl (min)</label>
+                  <select id="yearFrom" name="yearFrom"></select>
+                </div>
+                <div class="field" data-field="yearTo">
+                  <label for="yearTo">İl (maks)</label>
+                  <select id="yearTo" name="yearTo"></select>
+                </div>
+              </div>
+              <div class="field">
+                <label>Vəziyyət</label>
+                <div class="radio-group">
+                  <label class="radio-pill"><input type="radio" name="condition" value="new" checked><span>Zədəsiz</span></label>
+                  <label class="radio-pill"><input type="radio" name="condition" value="light"><span>Yüngül zədəli</span></label>
+                  <label class="radio-pill"><input type="radio" name="condition" value="any"><span>Fərq etməz</span></label>
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>Büdcə</legend>
+              <p class="legend-sub">Yekun qiymətə auksion + daşınma + gömrük + xidmət haqqı daxildir.</p>
+              <div class="range-value"><span>Maksimum büdcə (yekun, Bakıda təhvil)</span><span id="budgetOut">$20,000</span></div>
+              <input type="range" id="budget" name="budget" min="5000" max="80000" step="1000" value="20000">
+            </fieldset>
+
+            <fieldset>
+              <legend>Əlaqə məlumatı</legend>
+              <p class="legend-sub">24 saat ərzində uyğun variantlarla əlaqə saxlayacağıq.</p>
+              <div class="field-row">
+                <div class="field" data-field="name">
+                  <label for="name">Ad Soyad</label>
+                  <input type="text" id="name" name="name" placeholder="Adınız Soyadınız">
+                  <div class="field-error">Zəhmət olmasa adınızı daxil edin</div>
+                </div>
+                <div class="field" data-field="phone">
+                  <label for="phone">Telefon</label>
+                  <input type="tel" id="phone" name="phone" placeholder="+994 XX XXX XX XX">
+                  <div class="field-error">Zəhmət olmasa telefon nömrənizi daxil edin</div>
+                </div>
+              </div>
+              <div class="field">
+                <label for="notes">Əlavə qeydlər <span class="hint">(istəyə görə)</span></label>
+                <textarea id="notes" name="notes" placeholder="Rəng, dəqiq komplektasiya, digər üstünlüklər..."></textarea>
+              </div>
+            </fieldset>
+
+            <div class="submit-row">
+              <button type="submit" class="btn btn-red">Sorğunu göndər</button>
+              <span class="submit-note">Heç bir öhdəlik yaratmır</span>
+            </div>
+          </form>
+        </div>
+
+        <div class="success form-card" id="successView">
+          <div class="success-icon">✓</div>
+          <h2>Sorğunuz qəbul edildi</h2>
+          <p>Komandamız 24 saat ərzində göstərdiyiniz nömrəyə zəng edəcək və uyğun variantları müzakirə edəcək.</p>
+          <a href="index.html" class="btn btn-outline">Ana səhifəyə qayıt</a>
+        </div>
+      </div>
+
+      <aside class="side-col">
+        <div class="side-photo">
+          <img src="https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?w=700&q=80" alt="Avtomobil auksionu">
+        </div>
+        <div class="side-panel">
+          <h3>Sonra nə baş verir</h3>
+          <div class="side-step"><div class="side-num">1</div><p><strong>24 saat ərzində zəng</strong>Komandamız sorğunuzu araşdırıb sizinlə əlaqə saxlayır.</p></div>
+          <div class="side-step"><div class="side-num">2</div><p><strong>2-3 uyğun lot</strong>Auksionlardan tam vəziyyət hesabatı ilə variantlar göndəririk.</p></div>
+          <div class="side-step"><div class="side-num">3</div><p><strong>Siz qərar verirsiniz</strong>Bəyəndiyiniz lotu təsdiqləyənə qədər heç nə ödəmirsiniz.</p></div>
+          <div class="side-divider"></div>
+          <div class="side-contact">Tələsik məsələdirsə, birbaşa zəng edin:<br><a href="tel:+994000000000">+994 00 000 00 00</a></div>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">© 2026 AzBaku AutoImport. Bütün hüquqlar qorunur.</div>
+</footer>
+
+<script>
+  (function(){
+    var yf = document.getElementById('yearFrom');
+    var yt = document.getElementById('yearTo');
+    var current = 2026;
+    for (var y = current + 1; y >= 2000; y--) {
+      var o1 = document.createElement('option'); o1.value = y; o1.textContent = y;
+      var o2 = document.createElement('option'); o2.value = y; o2.textContent = y;
+      yf.appendChild(o1); yt.appendChild(o2);
+    }
+    yf.value = 2020;
+    yt.value = current;
+  })();
+
+  var budget = document.getElementById('budget');
+  var budgetOut = document.getElementById('budgetOut');
+  budget.addEventListener('input', function(){ budgetOut.textContent = '$' + Number(budget.value).toLocaleString('en-US'); });
+
+  var form = document.getElementById('carRequestForm');
+  var requiredFields = ['make','model','name','phone'];
+
+  function validate(){
+    var valid = true;
+    requiredFields.forEach(function(name){
+      var input = form.querySelector('[name="' + name + '"]');
+      var wrap = input.closest('.field');
+      if (!input.value.trim()) { wrap.classList.add('invalid'); valid = false; }
+      else { wrap.classList.remove('invalid'); }
+    });
+    return valid;
+  }
+  requiredFields.forEach(function(name){
+    var input = form.querySelector('[name="' + name + '"]');
+    input.addEventListener('input', function(){ if (input.value.trim()) input.closest('.field').classList.remove('invalid'); });
+  });
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    if (!validate()) {
+      var firstInvalid = form.querySelector('.field.invalid input');
+      if (firstInvalid) firstInvalid.focus();
+      return;
+    }
+    var submitBtn = form.querySelector('button[type="submit"]');
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Göndərilir...';
+
+    var payload = {
+      make: form.make.value.trim(), model: form.model.value.trim(),
+      yearFrom: form.yearFrom.value, yearTo: form.yearTo.value,
+      condition: form.querySelector('input[name="condition"]:checked').value,
+      budget: budget.value, name: form.name.value.trim(),
+      phone: form.phone.value.trim(), notes: form.notes.value.trim()
+    };
+
+    fetch('/api/submissions.php', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload)
+    })
+      .then(function(res){ return res.json(); })
+      .then(function(){
+        document.getElementById('formView').style.display = 'none';
+        document.getElementById('successView').classList.add('show');
+        window.scrollTo({top: 0, behavior:'smooth'});
+      })
+      .catch(function(){
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Sorğunu göndər';
+        alert('Xəta baş verdi. Zəhmət olmasa yenidən cəhd edin və ya birbaşa zəng edin.');
+      });
+  });
+
+  var hamburgerBtn = document.getElementById('hamburgerBtn');
+  var mobileMenu = document.getElementById('mobileMenu');
+  var siteHeader = document.querySelector('header');
+  hamburgerBtn.addEventListener('click', function(){
+    mobileMenu.style.top = siteHeader.offsetHeight + 'px';
+    mobileMenu.style.maxHeight = 'calc(100vh - ' + siteHeader.offsetHeight + 'px)';
+    mobileMenu.classList.toggle('open');
+  });
+  mobileMenu.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ mobileMenu.classList.remove('open'); }); });
+  document.addEventListener('click', function(e){
+    if (mobileMenu.classList.contains('open') && !mobileMenu.contains(e.target) && !hamburgerBtn.contains(e.target)) {
+      mobileMenu.classList.remove('open');
+    }
+  });
+</script>
+
+</body>
+</html>
