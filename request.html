@@ -164,9 +164,17 @@ footer{background:linear-gradient(180deg,var(--blue) 0%,var(--blue-deep) 100%);c
   var yf=document.getElementById('yearFrom'),yt=document.getElementById('yearTo');
   for(var y=2027;y>=2000;y--){var o1=document.createElement('option');o1.value=y;o1.textContent=y;var o2=o1.cloneNode(true);yf.appendChild(o1);yt.appendChild(o2);}
   yf.value=2020;yt.value=2026;
-  var form=document.getElementById('carRequestForm'),req=['make','model','name','phone'];
-  function validate(){var ok=true;req.forEach(function(n){var el=form.querySelector('[name="'+n+'"]'),w=el.closest('.field');if(!el.value.trim()){w.classList.add('invalid');ok=false;}else{w.classList.remove('invalid');}});return ok;}
-  req.forEach(function(n){form.querySelector('[name="'+n+'"]').addEventListener('input',function(){if(this.value.trim())this.closest('.field').classList.remove('invalid');});});
+  var payload={
+  make: form.make.value.trim(),
+  model: form.model.value.trim(),
+  year_from: form.yearFrom.value,
+  year_to: form.yearTo.value,
+  condition_pref: form.querySelector('input[name="condition"]:checked').value,
+  budget: form.budgetMax.value || form.budgetMin.value,
+  customer_name: form.name.value.trim(),
+  phone: form.phone.value.trim(),
+  notes: form.notes.value.trim()
+};
   form.addEventListener('submit',function(e){e.preventDefault();if(!validate()){var fi=form.querySelector('.field.invalid input');if(fi)fi.focus();return;}
     var sb=form.querySelector('button[type="submit"]');sb.disabled=true;sb.textContent='Göndərilir...';
     var payload={make:form.make.value.trim(),model:form.model.value.trim(),yearFrom:form.yearFrom.value,yearTo:form.yearTo.value,condition:form.querySelector('input[name="condition"]:checked').value,mileage:form.mileage.value||'',budget:form.budgetMin.value+'-'+form.budgetMax.value,name:form.name.value.trim(),phone:form.phone.value.trim(),notes:form.notes.value.trim()};
