@@ -28,7 +28,7 @@
   .topbar a{color:var(--white);font-weight:600;font-size:12.5px;}
 
   .navwrap .wrap{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;gap:10px;flex-wrap:nowrap;}
-  .brand{font-family:'Inter',sans-serif;font-weight:700;font-size:13px;letter-spacing:0.06em;text-transform:uppercase;color:var(--blue);display:flex;align-items:center;gap:7px;white-space:nowrap;overflow:hidden;}
+  .brand{font-family:'Inter',sans-serif;font-weight:800;font-size:13px;letter-spacing:0.06em;text-transform:uppercase;color:var(--blue);display:flex;align-items:center;gap:7px;white-space:nowrap;overflow:hidden;}
   .brand-mark{width:32px;height:32px;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
   .brand-mark img{width:100%;height:100%;object-fit:contain;}
 
@@ -65,7 +65,7 @@
 
   @media (min-width:769px){
     .navwrap .wrap{padding:12px 28px 12px 32px;}
-    .brand{font-size:19px;gap:10px;}
+    .brand{font-size:19px;font-weight:800;gap:10px;}
     .brand-mark{width:42px;height:42px;}
     nav{display:flex;gap:28px;}
     .header-cta{padding:11px 22px;}
@@ -121,12 +121,7 @@
   .radio-pill span{display:block;padding:10px 18px;border:1.5px solid var(--line);border-radius:999px;font-size:13.5px;font-weight:600;color:var(--steel);}
   .radio-pill input:checked + span{background:var(--blue);border-color:var(--blue);color:var(--white);}
 
-  .range-value{display:flex;justify-content:space-between;margin-bottom:10px;}
-  .range-value span:first-child{font-size:13.5px;font-weight:700;}
-  .range-value span:last-child{color:var(--blue);font-weight:700;font-size:15px;}
-  input[type="range"]{width:100%;height:4px;border-radius:2px;background:var(--line);appearance:none;-webkit-appearance:none;}
-  input[type="range"]::-webkit-slider-thumb{appearance:none;-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--red);cursor:pointer;border:3px solid var(--white);box-shadow:0 0 0 1.5px var(--red);}
-  input[type="range"]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--red);cursor:pointer;border:3px solid var(--white);box-shadow:0 0 0 1.5px var(--red);}
+  /* Budget min/max inputs use standard field styling above */
 
   .submit-row{display:flex;align-items:center;gap:16px;margin-top:8px;}
   @media (max-width:600px){ .submit-row{flex-direction:column;align-items:stretch;} .submit-row .btn{width:100%;} }
@@ -244,13 +239,25 @@
                   <label class="radio-pill"><input type="radio" name="condition" value="any"><span>Fərq etməz</span></label>
                 </div>
               </div>
+              <div class="field">
+                <label for="mileage">Maksimum yürüş (km)</label>
+                <input type="number" id="mileage" name="mileage" min="0" max="500000" step="1000" value="" placeholder="məs. 120000">
+              </div>
             </fieldset>
 
             <fieldset>
               <legend>Büdcə</legend>
               <p class="legend-sub">Yekun qiymətə auksion + daşınma + gömrük + xidmət haqqı daxildir.</p>
-              <div class="range-value"><span>Maksimum büdcə (yekun, Bakıda təhvil)</span><span id="budgetOut">$20,000</span></div>
-              <input type="range" id="budget" name="budget" min="5000" max="80000" step="1000" value="20000">
+              <div class="field-row">
+                <div class="field">
+                  <label for="budgetMin">Minimum büdcə ($)</label>
+                  <input type="number" id="budgetMin" name="budgetMin" min="0" max="300000" step="500" value="5000" placeholder="5000">
+                </div>
+                <div class="field">
+                  <label for="budgetMax">Maksimum büdcə ($)</label>
+                  <input type="number" id="budgetMax" name="budgetMax" min="0" max="300000" step="500" value="30000" placeholder="30000">
+                </div>
+              </div>
             </fieldset>
 
             <fieldset>
@@ -325,9 +332,7 @@
     yt.value = current;
   })();
 
-  var budget = document.getElementById('budget');
-  var budgetOut = document.getElementById('budgetOut');
-  budget.addEventListener('input', function(){ budgetOut.textContent = '$' + Number(budget.value).toLocaleString('en-US'); });
+  // Budget and mileage references
 
   var form = document.getElementById('carRequestForm');
   var requiredFields = ['make','model','name','phone'];
@@ -362,7 +367,9 @@
       make: form.make.value.trim(), model: form.model.value.trim(),
       yearFrom: form.yearFrom.value, yearTo: form.yearTo.value,
       condition: form.querySelector('input[name="condition"]:checked').value,
-      budget: budget.value, name: form.name.value.trim(),
+      budget: form.budgetMin.value + '-' + form.budgetMax.value,
+      mileage: form.mileage.value || '',
+      name: form.name.value.trim(),
       phone: form.phone.value.trim(), notes: form.notes.value.trim()
     };
 
