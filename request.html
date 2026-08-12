@@ -164,13 +164,13 @@ footer{background:linear-gradient(180deg,var(--blue) 0%,var(--blue-deep) 100%);c
   var yf=document.getElementById('yearFrom'),yt=document.getElementById('yearTo');
   for(var y=2027;y>=2000;y--){var o1=document.createElement('option');o1.value=y;o1.textContent=y;var o2=o1.cloneNode(true);yf.appendChild(o1);yt.appendChild(o2);}
   yf.value=2020;yt.value=2026;
-  var payload={
+ var payload = {
   make: form.make.value.trim(),
   model: form.model.value.trim(),
   year_from: form.yearFrom.value,
   year_to: form.yearTo.value,
   condition_pref: form.querySelector('input[name="condition"]:checked').value,
-  budget: form.budgetMax.value || form.budgetMin.value,
+  budget: parseInt(form.budgetMax.value) || parseInt(form.budgetMin.value) || 0,
   customer_name: form.name.value.trim(),
   phone: form.phone.value.trim(),
   notes: form.notes.value.trim()
