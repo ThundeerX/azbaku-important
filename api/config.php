@@ -4,10 +4,10 @@
 define('DB_HOST', 'localhost');           // usually 'localhost' on Hostinger
 define('DB_NAME', '1234_azbaku');   // your database name
 define('DB_USER', 'u1234_admin');    // your database username
-define('DB_PASS', 'Azbaku2030@');    // your database password
+define('DB_PASS', 'Azbaku2026');    // your database password
 
 // Change this to your own secret admin password before uploading
-define('ADMIN_PASSWORD', 'Azbaku2030@');
+define('ADMIN_PASSWORD', 'Azbaku2026');
 
 // Allow requests from your domain only (update once your domain is live)
 header('Access-Control-Allow-Origin: *');
