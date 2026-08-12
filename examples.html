@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nümunələr — AzBaku AutoImport</title>
+<meta name="description" content="AzBaku AutoImport tərəfindən idxal olunmuş real avtomobil nümunələri — ölkə, qiymət və müddət.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue:#1B365D; --blue-deep:#122844; --silver:#C4C9CC; --white:#FFFFFF;
+    --charcoal:#1A1A1A; --red:#D7263D; --paper:#F5F7F9; --steel:#5B6672; --line:#E1E5E8;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Inter',sans-serif;color:var(--charcoal);background:var(--white);line-height:1.6;-webkit-font-smoothing:antialiased;}
+  h1,h2,h3{font-family:'Fraunces',serif;font-weight:600;color:var(--blue);letter-spacing:-0.01em;}
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 32px;}
+  a:focus-visible, button:focus-visible{outline:2px solid var(--red);outline-offset:2px;}
+  .eyebrow{font-size:12.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--red);font-weight:700;margin-bottom:14px;display:inline-block;}
+
+  header{position:sticky;top:0;z-index:60;background:var(--white);padding:0;}
+  .navwrap{background:rgba(255,255,255,0.94);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);}
+  .topbar{background:var(--blue);}
+  .topbar .wrap{display:flex;justify-content:center;align-items:center;padding:7px 16px;}
+  .topbar a{color:var(--white);font-weight:600;font-size:12.5px;}
+  .navwrap .wrap{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;gap:10px;flex-wrap:nowrap;}
+  .brand{font-family:'Inter',sans-serif;font-weight:600;font-size:14px;letter-spacing:0.06em;text-transform:uppercase;color:var(--blue);display:flex;align-items:center;gap:7px;white-space:nowrap;overflow:hidden;}
+  .brand-mark{width:32px;height:32px;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+  .brand-mark img{width:100%;height:100%;object-fit:contain;}
+  nav{display:none;}
+  .header-cta{display:none !important;}
+  @media (min-width:769px){
+    .header-cta{display:inline-flex !important;}
+    header{background:transparent;padding:12px 16px 0;}
+    .navwrap{
+      max-width:1380px;margin:0 auto;
+      border-radius:999px;box-shadow:0 10px 30px rgba(27,54,93,0.14);
+      border:1px solid rgba(255,255,255,0.5);
+    }
+  }
+  nav a{font-size:14.5px;font-weight:600;color:var(--charcoal);padding:6px 0;border-bottom:2px solid transparent;}
+  nav a:hover{color:var(--blue);border-color:var(--silver);}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 26px;border-radius:7px;font-weight:700;font-size:14.5px;border:1.5px solid transparent;cursor:pointer;transition:transform .12s ease;white-space:nowrap;}
+  .btn:hover{transform:translateY(-1px);}
+  .btn-red{background:var(--red);color:var(--white);}
+  .btn-outline{background:transparent;color:var(--blue);border-color:var(--blue);}
+  .btn-outline:hover{background:var(--blue);color:var(--white);}
+  .hamburger{display:flex;flex-direction:column;justify-content:center;gap:4px;width:36px;height:36px;flex-shrink:0;border:1.5px solid var(--line);border-radius:8px;background:var(--white);}
+  .hamburger span{width:15px;height:2px;background:var(--blue);margin:0 auto;}
+  .mobile-menu{display:none;flex-direction:column;padding:8px 16px 16px;position:fixed;left:0;right:0;top:0;z-index:70;background:var(--white);box-shadow:0 12px 24px rgba(0,0,0,0.12);max-height:calc(100vh - 60px);overflow-y:auto;}
+  .mobile-menu.open{display:flex;}
+  .mobile-menu a{padding:13px 0;font-size:15px;font-weight:600;color:var(--blue);border-bottom:1px solid var(--line);}
+  @media (min-width:769px){
+    .navwrap .wrap{padding:12px 28px 12px 32px;}
+    .brand{font-size:20px;gap:10px;}
+    .brand-mark{width:42px;height:42px;}
+    nav{display:flex;gap:28px;}
+    .header-cta{padding:11px 22px;}
+    .hamburger{display:none;}
+    .wrap{padding-left:32px;padding-right:32px;}
+  }
+
+  .page-hero{background:var(--blue);color:var(--white);padding:56px 0 48px;}
+  .breadcrumb{font-size:13px;color:var(--silver);margin-bottom:16px;}
+  .breadcrumb a:hover{color:var(--white);}
+  .page-hero h1{color:var(--white);font-size:clamp(28px,3.8vw,42px);margin-bottom:10px;}
+  .page-hero p{color:var(--silver);font-size:16px;max-width:600px;}
+
+  .gallery-wrap{padding:56px 0 96px;background:var(--paper);}
+  .gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  @media (max-width:1000px){ .gallery-grid{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:640px){ .gallery-grid{grid-template-columns:1fr;} }
+
+  .case-card{
+    display:block;border-radius:14px;overflow:hidden;border:1px solid var(--line);
+    background:var(--white);transition:transform .18s ease, box-shadow .18s ease;
+  }
+  .case-card:hover{transform:translateY(-4px);box-shadow:0 16px 36px rgba(27,54,93,0.14);}
+  .case-photo{height:190px;overflow:hidden;position:relative;background:linear-gradient(135deg,var(--blue),var(--blue-deep));}
+  .case-photo img{width:100%;height:100%;object-fit:cover;display:block;}
+  .flag-badge{
+    position:absolute;top:14px;left:14px;background:var(--white);
+    display:flex;align-items:center;gap:6px;padding:5px 12px 5px 7px;border-radius:999px;
+    font-size:12px;font-weight:700;color:var(--blue);box-shadow:0 4px 10px rgba(0,0,0,0.15);
+  }
+  .flag-badge .flag-emoji{font-size:16px;line-height:1;}
+  .status-badge{
+    position:absolute;top:14px;right:14px;background:var(--red);color:var(--white);
+    font-size:11px;font-weight:700;padding:5px 12px;border-radius:999px;
+  }
+  .case-body{padding:22px;}
+  .case-body h3{font-size:17.5px;font-family:'Inter',sans-serif;font-weight:700;color:var(--charcoal);margin-bottom:14px;}
+  .case-meta{display:flex;justify-content:space-between;font-size:13px;color:var(--steel);border-top:1px solid var(--line);padding-top:14px;}
+  .case-meta strong{display:block;color:var(--blue);font-size:15px;font-weight:700;margin-top:2px;}
+  .case-cta{margin-top:16px;font-size:13.5px;font-weight:700;color:var(--red);display:flex;align-items:center;gap:6px;}
+
+  .empty-state{text-align:center;padding:60px 20px;color:var(--steel);}
+
+  footer{background:linear-gradient(180deg, var(--blue) 0%, var(--blue-deep) 100%);color:var(--silver);padding:32px 0;font-size:13px;text-align:center;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="topbar">
+    <div class="wrap">
+      <a href="tel:+994000000000" class="topbar-phone">+994 00 000 00 00</a>
+    </div>
+  </div>
+  <div class="navwrap">
+    <div class="wrap">
+      <a href="index.html" class="brand"><span class="brand-mark"><img src="images/logo.png" alt="AzBaku AutoImport logosu"></span>AzBaku AutoImport</a>
+      <nav>
+        <a href="examples.html">Nümunələr</a>
+        <a href="request.html">Sifariş ver</a>
+        <a href="index.html#process">Prosesimiz</a>
+        <a href="index.html#why">Niyə Biz</a>
+        <a href="index.html#contact">Əlaqə</a>
+      </nav>
+      <div style="display:flex;align-items:center;gap:14px;">
+        <a href="request.html" class="btn btn-red header-cta">Sifariş ver</a>
+        <button class="hamburger" id="hamburgerBtn" aria-label="Menyu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="examples.html">Nümunələr</a>
+  <a href="request.html">Sifariş ver</a>
+  <a href="index.html#process">Prosesimiz</a>
+  <a href="index.html#why">Niyə Biz</a>
+  <a href="index.html#contact">Əlaqə</a>
+</div>
+
+<section class="page-hero">
+  <div class="wrap">
+    <div class="breadcrumb"><a href="index.html">Ana səhifə</a> / Nümunələr</div>
+    <span class="eyebrow">Real idxal nümunələri</span>
+    <h1>Bunları biz artıq gətirmişik</h1>
+    <p>Hər nümunə real ölkədən, real qiymətlə və real müddətlə göstərilir. Üzərinə klikləyərək tam qiymət bölgüsünə baxa bilərsiniz.</p>
+  </div>
+</section>
+
+<div class="gallery-wrap">
+  <div class="wrap">
+    <div class="gallery-grid" id="galleryGrid">
+      <div class="empty-state">Yüklənir...</div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">© 2026 AzBaku AutoImport. Bütün hüquqlar qorunur.</div>
+</footer>
+
+<script>
+  var hamburgerBtn = document.getElementById('hamburgerBtn');
+  var mobileMenu = document.getElementById('mobileMenu');
+  var siteHeader = document.querySelector('header');
+  hamburgerBtn.addEventListener('click', function(){
+    mobileMenu.style.top = siteHeader.offsetHeight + 'px';
+    mobileMenu.style.maxHeight = 'calc(100vh - ' + siteHeader.offsetHeight + 'px)';
+    mobileMenu.classList.toggle('open');
+  });
+  mobileMenu.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', function(){ mobileMenu.classList.remove('open'); });
+  });
+  document.addEventListener('click', function(e){
+    if (mobileMenu.classList.contains('open') && !mobileMenu.contains(e.target) && !hamburgerBtn.contains(e.target)) {
+      mobileMenu.classList.remove('open');
+    }
+  });
+
+  function countryCodeToFlag(code){
+    if (!code || code.length !== 2) return '🌍';
+    var A = 0x1F1E6;
+    return String.fromCodePoint(A + code.toUpperCase().charCodeAt(0) - 65) +
+           String.fromCodePoint(A + code.toUpperCase().charCodeAt(1) - 65);
+  }
+
+  var fallbackPhotos = [
+    'https://images.unsplash.com/photo-1568844293986-8d0400bd4745?w=700&q=80',
+    'https://images.unsplash.com/photo-1605893477799-b99e3b8b93fe?w=700&q=80',
+    'https://images.unsplash.com/photo-1555215695-3004980ad54e?w=700&q=80'
+  ];
+
+  var staticFallbackCases = [
+    {
+      id: 'static-1', title: 'Honda CR-V 2022', country: 'ABŞ', country_code: 'US',
+      photo_url: 'https://images.unsplash.com/photo-1568844293986-8d0400bd4745?w=700&q=80',
+      price: '$21,400', auction_price: '$16,800', shipping_price: '$1,350', customs_price: '$2,800', service_fee: '$450',
+      days: '41 gün', description: 'Bu Honda CR-V Florida ştatındakı Copart auksionundan tapıldı və 9 gün ərzində qazanıldı. Konteynerlə Bakı limanına sığortalı şəkildə daşındı.'
+    },
+    {
+      id: 'static-2', title: 'Ford F-150 2020', country: 'Kanada', country_code: 'CA',
+      photo_url: 'https://images.unsplash.com/photo-1605893477799-b99e3b8b93fe?w=700&q=80',
+      price: '$26,900', auction_price: '$21,200', shipping_price: '$1,600', customs_price: '$3,650', service_fee: '$450',
+      days: '38 gün', description: 'Ford F-150 Ontario əyalətindəki IAAI auksionundan alındı. Yüngül zədəli lot kimi əldə edildi, servisdə tam yoxlanıldı.'
+    },
+    {
+      id: 'static-3', title: 'BMW 3 Series 2021', country: 'ABŞ', country_code: 'US',
+      photo_url: 'https://images.unsplash.com/photo-1555215695-3004980ad54e?w=700&q=80',
+      price: '$24,150', auction_price: '$19,400', shipping_price: '$1,400', customs_price: '$2,900', service_fee: '$450',
+      days: '44 gün', description: 'BMW 3 Series Texas ştatındakı auksiondan zədəsiz vəziyyətdə qazanıldı və birbaşa Bakıya göndərildi.'
+    }
+  ];
+
+  function renderGallery(cases){
+    var grid = document.getElementById('galleryGrid');
+    grid.innerHTML = '';
+    cases.forEach(function(c, i){
+      var photo = c.photo_url && c.photo_url.trim() ? c.photo_url : fallbackPhotos[i % fallbackPhotos.length];
+      var flag = countryCodeToFlag(c.country_code);
+      var card = document.createElement('a');
+      card.className = 'case-card';
+      card.href = 'example-detail.html?id=' + c.id;
+      card.innerHTML =
+        '<div class="case-photo">' +
+          '<img src="' + photo + '" alt="' + c.title + '">' +
+          '<span class="flag-badge"><span class="flag-emoji">' + flag + '</span>' + (c.country || '') + '</span>' +
+          '<span class="status-badge">Təhvil verildi</span>' +
+        '</div>' +
+        '<div class="case-body">' +
+          '<h3>' + c.title + '</h3>' +
+          '<div class="case-meta"><span>Yekun qiymət<strong>' + c.price + '</strong></span><span>Müddət<strong>' + c.days + '</strong></span></div>' +
+          '<div class="case-cta">Tam məlumata bax →</div>' +
+        '</div>';
+      grid.appendChild(card);
+    });
+  }
+
+  fetch('/api/cases.php')
+    .then(function(res){ return res.json(); })
+    .then(function(cases){
+      if (!cases || !cases.length) {
+        renderGallery(staticFallbackCases);
+        return;
+      }
+      renderGallery(cases);
+    })
+    .catch(function(){
+      renderGallery(staticFallbackCases);
+    });
+</script>
+
+</body>
+</html>
