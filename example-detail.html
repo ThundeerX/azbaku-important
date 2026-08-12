@@ -77,7 +77,7 @@
     display:flex;align-items:center;gap:8px;padding:8px 16px 8px 10px;border-radius:999px;
     font-size:14px;font-weight:700;color:var(--blue);box-shadow:0 6px 14px rgba(0,0,0,0.18);
   }
-  .flag-badge .flag-emoji{font-size:20px;line-height:1;}
+  .flag-badge .flag-img{width:24px;height:18px;object-fit:cover;border-radius:2px;}
   .status-badge{
     position:absolute;top:20px;right:20px;background:var(--red);color:var(--white);
     font-size:12.5px;font-weight:700;padding:8px 16px;border-radius:999px;
@@ -157,7 +157,7 @@
 <div class="wrap" id="detailContent">
   <div class="detail-hero">
     <img id="detailPhoto" src="" alt="">
-    <span class="flag-badge"><span class="flag-emoji" id="detailFlag">🌍</span><span id="detailCountry"></span></span>
+    <span class="flag-badge"><span id="detailFlag"></span><span id="detailCountry"></span></span>
     <span class="status-badge">Təhvil verildi</span>
   </div>
 
@@ -211,10 +211,8 @@
   });
 
   function countryCodeToFlag(code){
-    if (!code || code.length !== 2) return '🌍';
-    var A = 0x1F1E6;
-    return String.fromCodePoint(A + code.toUpperCase().charCodeAt(0) - 65) +
-           String.fromCodePoint(A + code.toUpperCase().charCodeAt(1) - 65);
+    if (!code || code.length !== 2) return '<img src="https://flagcdn.com/24x18/us.png" alt="flag" class="flag-img">';
+    return '<img src="https://flagcdn.com/24x18/' + code.toLowerCase() + '.png" alt="' + code + '" class="flag-img">';
   }
 
   var staticFallbackCases = {
@@ -250,7 +248,7 @@
     document.getElementById('detailDesc').textContent = c.description || '';
     document.getElementById('detailPhoto').src = c.photo_url && c.photo_url.trim() ? c.photo_url : 'https://images.unsplash.com/photo-1568844293986-8d0400bd4745?w=1200&q=80';
     document.getElementById('detailPhoto').alt = c.title;
-    document.getElementById('detailFlag').textContent = countryCodeToFlag(c.country_code);
+    document.getElementById('detailFlag').innerHTML = countryCodeToFlag(c.country_code);
     document.getElementById('detailCountry').textContent = c.country || '';
     document.getElementById('statCountry').textContent = c.country || '—';
     document.getElementById('statDays').textContent = c.days || '—';
