@@ -185,6 +185,9 @@
   .path-card:hover{border-color:var(--blue);transform:translateY(-2px);}
   .path-card h3{font-size:22px;margin-bottom:10px;}
   .path-card p{color:var(--steel);font-size:14.5px;margin-bottom:24px;}
+  .auction-logos{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:4px;}
+  .auction-logo{display:flex;align-items:center;gap:6px;background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:8px 14px;font-size:12.5px;font-weight:600;color:var(--blue);}
+  .auction-logo img{width:18px;height:18px;object-fit:contain;border-radius:3px;}
   @media (max-width:760px){ .paths{grid-template-columns:1fr;} }
 
   /* CTA band */
@@ -354,7 +357,14 @@
       <div class="path-card">
         <h3>Auksion nümunələrinə baxın</h3>
         <p>Hazırda auksionlarda olan seçilmiş lotlara baxın, bəyəndiyinizi bizə göstərin.</p>
-        <a href="examples.html" style="color:var(--blue);font-weight:700;border:1.5px solid var(--blue);border-radius:7px;padding:13px 26px;display:inline-block;">Nümunə lotlara bax</a>
+        <div class="auction-logos">
+          <div class="auction-logo"><img src="https://www.copart.com/favicon.ico" alt="Copart" onerror="this.style.display='none'"><span>Copart</span></div>
+          <div class="auction-logo"><img src="https://www.iaai.com/favicon.ico" alt="IAAI" onerror="this.style.display='none'"><span>IAAI</span></div>
+          <div class="auction-logo"><img src="https://www.manheim.com/favicon.ico" alt="Manheim" onerror="this.style.display='none'"><span>Manheim</span></div>
+          <div class="auction-logo"><img src="https://www.adesa.com/favicon.ico" alt="Adesa" onerror="this.style.display='none'"><span>Adesa</span></div>
+          <div class="auction-logo"><img src="https://www.encar.com/favicon.ico" alt="EnCar" onerror="this.style.display='none'"><span>EnCar</span></div>
+        </div>
+        <a href="examples.html" style="color:var(--blue);font-weight:700;border:1.5px solid var(--blue);border-radius:7px;padding:13px 26px;display:inline-block;margin-top:20px;">Nümunə lotlara bax</a>
       </div>
     </div>
   </div>
@@ -456,10 +466,8 @@
   });
 
   function countryCodeToFlag(code){
-    if (!code || code.length !== 2) return '🌍';
-    var A = 0x1F1E6;
-    return String.fromCodePoint(A + code.toUpperCase().charCodeAt(0) - 65) +
-           String.fromCodePoint(A + code.toUpperCase().charCodeAt(1) - 65);
+    if (!code || code.length !== 2) return '<img src="https://flagcdn.com/24x18/us.png" alt="flag" style="width:20px;height:14px;object-fit:cover;border-radius:2px;vertical-align:middle;">';
+    return '<img src="https://flagcdn.com/24x18/' + code.toLowerCase() + '.png" alt="' + code + '" style="width:20px;height:14px;object-fit:cover;border-radius:2px;vertical-align:middle;">';
   }
 
   fetch('/api/cases.php')
