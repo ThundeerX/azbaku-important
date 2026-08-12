@@ -161,29 +161,80 @@ footer{background:linear-gradient(180deg,var(--blue) 0%,var(--blue-deep) 100%);c
 
 <script>
 (function(){
-  var yf=document.getElementById('yearFrom'),yt=document.getElementById('yearTo');
-  for(var y=2027;y>=2000;y--){var o1=document.createElement('option');o1.value=y;o1.textContent=y;var o2=o1.cloneNode(true);yf.appendChild(o1);yt.appendChild(o2);}
-  yf.value=2020;yt.value=2026;
- var payload = {
-  make: form.make.value.trim(),
-  model: form.model.value.trim(),
-  year_from: form.yearFrom.value,
-  year_to: form.yearTo.value,
-  condition_pref: form.querySelector('input[name="condition"]:checked').value,
-  budget: parseInt(form.budgetMax.value) || parseInt(form.budgetMin.value) || 0,
-  customer_name: form.name.value.trim(),
-  phone: form.phone.value.trim(),
-  notes: form.notes.value.trim()
-};
-  form.addEventListener('submit',function(e){e.preventDefault();if(!validate()){var fi=form.querySelector('.field.invalid input');if(fi)fi.focus();return;}
-    var sb=form.querySelector('button[type="submit"]');sb.disabled=true;sb.textContent='Göndərilir...';
-    var payload={make:form.make.value.trim(),model:form.model.value.trim(),yearFrom:form.yearFrom.value,yearTo:form.yearTo.value,condition:form.querySelector('input[name="condition"]:checked').value,mileage:form.mileage.value||'',budget:form.budgetMin.value+'-'+form.budgetMax.value,name:form.name.value.trim(),phone:form.phone.value.trim(),notes:form.notes.value.trim()};
-    fetch('/api/submissions.php',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}).then(function(r){return r.json();}).then(function(){document.getElementById('formView').style.display='none';document.getElementById('successView').classList.add('show');window.scrollTo({top:0,behavior:'smooth'});}).catch(function(){sb.disabled=false;sb.textContent='Sorğunu göndər';alert('Xəta. Yenidən cəhd edin.');});
+  var yf = document.getElementById('yearFrom'), yt = document.getElementById('yearTo');
+  for(var y = 2027; y >= 2000; y--){
+    var o1 = document.createElement('option'); o1.value = y; o1.textContent = y;
+    var o2 = o1.cloneNode(true);
+    yf.appendChild(o1); yt.appendChild(o2);
+  }
+  yf.value = 2020; yt.value = 2026;
+
+  var form = document.getElementById('carRequestForm');
+
+  function validate() {
+    var valid = true;
+    var make = document.getElementById('make');
+    var name = document.getElementById('name');
+    var phone = document.getElementById('phone');
+
+    [make, name, phone].forEach(function(el) {
+      var field = el.closest('.field');
+      if (!el.value.trim()) {
+        field.classList.add('invalid');
+        valid = false;
+      } else {
+        field.classList.remove('invalid');
+      }
+    });
+    return valid;
+  }
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    if(!validate()){
+      var fi = form.querySelector('.field.invalid input');
+      if(fi) fi.focus();
+      return;
+    }
+
+    var sb = form.querySelector('button[type="submit"]');
+    sb.disabled = true;
+    sb.textContent = 'Göndürülür...';
+
+    var payload = {
+      make: form.make.value.trim(),
+      model: form.model.value.trim(),
+      year_from: form.yearFrom.value,
+      year_to: form.yearTo.value,
+      condition_pref: form.querySelector('input[name="condition"]:checked').value,
+      budget: parseInt(form.budgetMax.value) || parseInt(form.budgetMin.value) || 0,
+      customer_name: form.name.value.trim(),
+      phone: form.phone.value.trim(),
+      notes: form.notes.value.trim()
+    };
+
+    fetch('api/submissions.php', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(payload)
+    })
+    .then(function(r){ return r.json(); })
+    .then(function(res){
+      document.getElementById('formView').style.display = 'none';
+      document.getElementById('successView').classList.add('show');
+      window.scrollTo({top: 0, behavior: 'smooth'});
+    })
+    .catch(function(){
+      sb.disabled = false;
+      sb.textContent = 'Sorğunu göndər';
+      alert('Xəta. Yenidən cəhd edin.');
+    });
   });
-  var btn=document.getElementById('hamburgerBtn'),menu=document.getElementById('mobileMenu'),hdr=document.querySelector('header');
-  btn.addEventListener('click',function(){menu.style.top=hdr.offsetHeight+'px';menu.classList.toggle('open');});
-  menu.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){menu.classList.remove('open');});});
-  document.addEventListener('click',function(e){if(menu.classList.contains('open')&&!menu.contains(e.target)&&!btn.contains(e.target))menu.classList.remove('open');});
+
+  var btn = document.getElementById('hamburgerBtn'), menu = document.getElementById('mobileMenu'), hdr = document.querySelector('header');
+  btn.addEventListener('click', function(){ menu.style.top = hdr.offsetHeight + 'px'; menu.classList.toggle('open'); });
+  menu.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ menu.classList.remove('open'); }); });
+  document.addEventListener('click', function(e){ if(menu.classList.contains('open') && !menu.contains(e.target) && !btn.contains(e.target)) menu.classList.remove('open'); });
 })();
 </script>
 </body>
