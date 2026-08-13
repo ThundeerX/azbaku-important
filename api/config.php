@@ -2,12 +2,12 @@
 // ===== FILL THESE IN with your Hostinger MySQL details =====
 // Find them in hPanel → Databases → MySQL Databases
 define('DB_HOST', 'localhost');           // usually 'localhost' on Hostinger
-define('DB_NAME', 'u123456789_azbaku');   // your database name
-define('DB_USER', 'u123456789_admin');    // your database username
-define('DB_PASS', 'YOUR_DB_PASSWORD');    // your database password
+define('DB_NAME', 'u433991115_1234_azbaku');   // your database name
+define('DB_USER', 'u433991115_u1234_admin');    // your database username
+define('DB_PASS', 'Azbaku2030@');    // your database password
 
 // Change this to your own secret admin password before uploading
-define('ADMIN_PASSWORD', 'azbaku2026');
+define('ADMIN_PASSWORD', 'Azbaku2030@');
 
 // Allow requests from your domain only (update once your domain is live)
 header('Access-Control-Allow-Origin: *');
