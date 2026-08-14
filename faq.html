@@ -24,9 +24,13 @@ nav{display:none;}nav a{font-size:14px;font-weight:600;color:var(--charcoal);}na
 .header-cta{display:none !important;}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 24px;border-radius:7px;font-weight:700;font-size:14px;border:1.5px solid transparent;cursor:pointer;white-space:nowrap;}
 .btn:hover{transform:translateY(-1px);}.btn-red{background:var(--red);color:var(--white);}.btn-outline{background:transparent;color:var(--blue);border-color:var(--blue);}.btn-outline:hover{background:var(--blue);color:var(--white);}
+.lang-btn{display:flex;align-items:center;gap:5px;padding:6px 10px;border:1.5px solid var(--line);border-radius:6px;background:var(--white);font-size:11px;font-weight:700;color:var(--blue);cursor:pointer;flex-shrink:0;}
+.lang-btn:hover{border-color:var(--blue);}
 .hamburger{display:flex;flex-direction:column;justify-content:center;gap:4px;width:36px;height:36px;flex-shrink:0;border:1.5px solid var(--line);border-radius:8px;background:var(--white);cursor:pointer;}.hamburger span{width:15px;height:2px;background:var(--blue);margin:0 auto;}
 .mobile-menu{display:none;flex-direction:column;padding:8px 20px 16px;position:fixed;left:0;right:0;top:0;z-index:70;background:var(--white);box-shadow:0 12px 24px rgba(0,0,0,0.12);}.mobile-menu.open{display:flex;}.mobile-menu a{padding:13px 0;font-size:15px;font-weight:600;color:var(--blue);border-bottom:1px solid var(--line);}
-@media(min-width:769px){.topbar{display:none;}header{background:transparent;padding:12px 20px 0;}.navwrap{max-width:1380px;margin:0 auto;border-radius:999px;box-shadow:0 10px 30px rgba(27,54,93,0.14);border:1px solid rgba(255,255,255,0.5);background:rgba(255,255,255,0.82);backdrop-filter:blur(16px);}.navwrap .wrap{padding:12px 28px 12px 32px;}.brand{font-size:17px;gap:7px;}.brand-mark{width:50px;height:34px;}nav{display:flex;gap:24px;}.header-cta{display:inline-flex !important;padding:11px 22px;}.hamburger{display:none;}.wrap{padding:0 32px;}}
+@media(min-width:769px){.topbar{display:none;}header{background:transparent;padding:12px 20px 0;}.navwrap{max-width:1380px;margin:0 auto;border-radius:999px;box-shadow:0 10px 30px rgba(27,54,93,0.14);border:1px solid rgba(255,255,255,0.5);background:rgba(255,255,255,0.82);backdrop-filter:blur(16px);}.navwrap .wrap{padding:12px 28px 12px 32px;}.brand{font-size:17px;gap:7px;}.brand-mark{width:50px;height:34px;}nav{display:flex;gap:24px;}.header-cta{display:inline-flex !important;padding:11px 22px;}.lang-btn{display:flex;align-items:center;gap:5px;padding:6px 10px;border:1.5px solid var(--line);border-radius:6px;background:var(--white);font-size:11px;font-weight:700;color:var(--blue);cursor:pointer;flex-shrink:0;}
+.lang-btn:hover{border-color:var(--blue);}
+.hamburger{display:none;}.wrap{padding:0 32px;}}
 
 .page-hero{background:var(--blue);padding:52px 0 44px;}
 .breadcrumb{font-size:13px;color:var(--silver);margin-bottom:14px;}.breadcrumb a:hover{color:var(--white);}
@@ -66,7 +70,7 @@ nav{display:none;}nav a{font-size:14px;font-weight:600;color:var(--charcoal);}na
 .faq-cta .btns{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;}
 
 /* Footer */
-footer{background:linear-gradient(180deg,var(--blue) 0%,var(--blue-deep) 100%);color:var(--silver);padding:48px 0 24px;font-size:14px;}
+footer{background:linear-gradient(180deg,#3a3f47 0%,#1a1d21 100%);color:var(--silver);padding:48px 0 24px;font-size:14px;}
 .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:28px;margin-bottom:32px;}
 .foot-grid h4{color:var(--white);font-size:14px;font-weight:700;margin-bottom:12px;}
 .foot-grid a{display:block;color:var(--silver);margin-bottom:8px;font-size:13px;}.foot-grid a:hover{color:var(--white);}
@@ -83,30 +87,31 @@ footer{background:linear-gradient(180deg,var(--blue) 0%,var(--blue-deep) 100%);c
   <div class="navwrap"><div class="wrap">
     <a href="index.html" class="brand"><span class="brand-mark"><img src="images/azbaku-logo-v2.png" alt="AzBaku"></span><span style="display:flex;flex-direction:column;line-height:1.15;"><span>AZBAKU</span><span>AUTOIMPORT</span></span></a>
     <nav>
-      <a href="about.html">Haqqımızda</a>
-      <a href="examples.html">Nümunələr</a>
-      <a href="request.html">Sifariş ver</a>
-      <a href="calculator.html">Kalkulyator</a>
-      <a href="faq.html">FAQ</a>
-      <a href="index.html#contact">Əlaqə</a>
+      <a href="about.html" data-i18n="nav-about">Haqqımızda</a>
+      <a href="examples.html" data-i18n="nav-examples">Nümunələr</a>
+      <a href="request.html" data-i18n="nav-request">Sifariş ver</a>
+      <a href="calculator.html" data-i18n="nav-calc">Kalkulyator</a>
+      <a href="faq.html" data-i18n="nav-faq">FAQ</a>
+      <a href="index.html#contact" data-i18n="nav-contact">Əlaqə</a>
     </nav>
-    <div style="display:flex;align-items:center;gap:12px;"><a href="request.html" class="btn btn-red header-cta">Sifariş ver</a><button class="hamburger" id="hamburgerBtn"><span></span><span></span><span></span></button></div>
+    <div style="display:flex;align-items:center;gap:12px;"><a href="request.html" class="btn btn-red header-cta" data-i18n="nav-request">Sifariş ver</a><button id="langToggle" class="lang-btn"><img src="https://flagcdn.com/24x18/ru.png" alt="RU" style="width:20px;height:14px;border-radius:2px;vertical-align:middle;"> RU</button>
+        <button class="hamburger" id="hamburgerBtn"><span></span><span></span><span></span></button></div>
   </div></div>
 </header>
 <div class="mobile-menu" id="mobileMenu">
-  <a href="about.html">Haqqımızda</a>
-      <a href="about.html">Haqqımızda</a>
-  <a href="examples.html">Nümunələr</a>
-  <a href="request.html">Sifariş ver</a>
-  <a href="calculator.html">Kalkulyator</a>
-  <a href="faq.html">FAQ</a>
-  <a href="index.html#contact">Əlaqə</a>
+  <a href="about.html" data-i18n="nav-about">Haqqımızda</a>
+      <a href="about.html" data-i18n="nav-about">Haqqımızda</a>
+  <a href="examples.html" data-i18n="nav-examples">Nümunələr</a>
+  <a href="request.html" data-i18n="nav-request">Sifariş ver</a>
+  <a href="calculator.html" data-i18n="nav-calc">Kalkulyator</a>
+  <a href="faq.html" data-i18n="nav-faq">FAQ</a>
+  <a href="index.html#contact" data-i18n="nav-contact">Əlaqə</a>
 </div>
 
 <section class="page-hero"><div class="wrap">
   <div class="breadcrumb"><a href="index.html">Ana səhifə</a> / FAQ</div>
-  <span class="eyebrow">Tez-tez verilən suallar</span>
-  <h1>Suallarınıza Cavablar</h1>
+  <span class="eyebrow" data-i18n="faq-eye">Tez-tez verilən suallar</span>
+  <h1 data-i18n="faq-h1">Suallarınıza Cavablar</h1>
   <p>Auksion prosesindən gömrük rəsmiləşdirilməsinə qədər hər şeyi burada izah edirik.</p>
 </div></section>
 
@@ -271,10 +276,10 @@ footer{background:linear-gradient(180deg,var(--blue) 0%,var(--blue-deep) 100%);c
     </div>
 
     <div class="faq-cta">
-      <h3>Sualınız Cavablanmadımı?</h3>
+      <h3 data-i18n="faq-cta-h">Sualınız Cavablanmadımı?</h3>
       <p>Komandamız hər sualınıza cavab vermək üçün hazırdır.</p>
       <div class="btns">
-        <a href="request.html" class="btn btn-red">Sifariş ver</a>
+        <a href="request.html" class="btn btn-red" data-i18n="nav-request">Sifariş ver</a>
         <a href="tel:+994708884242" class="btn" style="background:rgba(255,255,255,0.15);color:var(--white);border-color:rgba(255,255,255,0.3);">070 888 42 42</a>
       </div>
     </div>
@@ -289,10 +294,10 @@ footer{background:linear-gradient(180deg,var(--blue) 0%,var(--blue-deep) 100%);c
       <div class="foot-brand"><img src="images/azbaku-logo-v2.png" alt="AzBaku" style="width:30px;height:30px;object-fit:contain;"><span style="color:var(--white);font-weight:800;font-size:14px;text-transform:uppercase;letter-spacing:0.04em;">AzBaku AutoImport</span></div>
       <p style="color:var(--silver);max-width:260px;font-size:13px;">ABŞ və Kanada auksionlarından Azərbaycana sifarişlə avtomobil idxalı.</p>
     </div>
-    <div><h4>Naviqasiya</h4><a href="about.html">Haqqımızda</a>
-      <a href="examples.html">Nümunələr</a><a href="request.html">Sifariş ver</a><a href="calculator.html">Kalkulyator</a><a href="faq.html">FAQ</a></div>
-    <div><h4>Əlaqə</h4><a href="tel:+994708884242">070 888 42 42</a><a href="mailto:info@azbaku.az">info@azbaku.az</a><a>Bakı, Azərbaycan</a></div>
-    <div><h4>Sosial</h4><a href="#">Instagram</a><a href="#">Facebook</a><a href="#">WhatsApp</a></div>
+    <div><h4 data-i18n="foot-nav">Naviqasiya</h4><a href="about.html" data-i18n="nav-about">Haqqımızda</a>
+      <a href="examples.html" data-i18n="nav-examples">Nümunələr</a><a href="request.html" data-i18n="nav-request">Sifariş ver</a><a href="calculator.html" data-i18n="nav-calc">Kalkulyator</a><a href="faq.html" data-i18n="nav-faq">FAQ</a></div>
+    <div><h4 data-i18n="nav-contact">Əlaqə</h4><a href="tel:+994708884242">070 888 42 42</a><a href="mailto:info@azbaku.az">info@azbaku.az</a><a>Bakı, Azərbaycan</a></div>
+    <div><h4 data-i18n="foot-social">Sosial</h4><a href="#">Instagram</a><a href="#">Facebook</a><a href="#">WhatsApp</a></div>
   </div>
   <div class="foot-bottom"><span>© 2026 AzBaku AutoImport</span><span>Şəffaf idxal, etibarlı proses.</span></div>
 </div></footer>
@@ -325,5 +330,6 @@ footer{background:linear-gradient(180deg,var(--blue) 0%,var(--blue-deep) 100%);c
   });
 })();
 </script>
+<script src="lang.js"></script>
 </body>
 </html>
