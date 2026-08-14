@@ -117,8 +117,9 @@ section{padding:80px 0;}
 .path-card:hover{border-color:var(--blue);}
 .path-card h3{font-size:22px;margin-bottom:10px;}
 .path-card p{color:var(--steel);font-size:14.5px;margin-bottom:20px;}
-.auction-logos{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;}
-.auction-logo{display:flex;align-items:center;gap:5px;background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:7px 12px;font-size:12px;font-weight:700;color:var(--blue);}
+.auction-logos{display:grid;grid-template-columns:repeat(3,auto);gap:8px;justify-content:start;margin-bottom:16px;}
+.auction-logo{display:flex;align-items:center;gap:5px;background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:7px 12px;font-size:12px;font-weight:700;color:var(--blue);text-decoration:none;transition:border-color .15s ease;}
+.auction-logo:hover{border-color:var(--blue);background:var(--white);}
 .auction-logo .a-img{width:18px;height:18px;border-radius:3px;object-fit:contain;flex-shrink:0;}
 .auction-logo .a-icon{width:18px;height:18px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:9px;color:var(--white);flex-shrink:0;}
 @media(max-width:760px){.paths{grid-template-columns:1fr;}}
@@ -278,12 +279,12 @@ footer{background:linear-gradient(180deg,var(--blue) 0%,var(--blue-deep) 100%);c
         <h3>Auksion nümunələrinə baxın</h3>
         <p>Hazırda auksionlarda olan seçilmiş lotlara baxın, bəyəndiyinizi bizə göstərin.</p>
         <div class="auction-logos">
-          <div class="auction-logo"><img src="https://www.copart.com/favicon.ico" alt="C" class="a-img" onerror="this.outerHTML='<span class=a-icon style=background:#F7B500>C</span>'">Copart</div>
-          <div class="auction-logo"><img src="https://www.iaai.com/favicon.ico" alt="I" class="a-img" onerror="this.outerHTML='<span class=a-icon style=background:#0057B8>I</span>'">IAAI</div>
-          <div class="auction-logo"><img src="https://cdn.manheim.com/favicon.ico" alt="M" class="a-img" onerror="this.outerHTML='<span class=a-icon style=background:#E31837>M</span>'">Manheim</div>
-          <div class="auction-logo"><img src="https://www.adesa.com/favicon.ico" alt="A" class="a-img" onerror="this.outerHTML='<span class=a-icon style=background:#003DA5>A</span>'">Adesa</div>
-          <div class="auction-logo"><img src="https://www.encar.com/favicon.ico" alt="E" class="a-img" onerror="this.outerHTML='<span class=a-icon style=background:#1A1A1A>E</span>'">EnCar</div>
-          <div class="auction-logo"><img src="https://www.edgepipeline.com/favicon.ico" alt="E" class="a-img" onerror="this.outerHTML='<span class=a-icon style=background:#FF6600>E</span>'">EDGE</div>
+          <a href="https://www.copart.com" target="_blank" class="auction-logo"><img src="https://www.copart.com/favicon.ico" alt="C" class="a-img" onerror="this.outerHTML='<span class=a-icon style=background:#F7B500>C</span>'">Copart</a>
+          <a href="https://www.iaai.com" target="_blank" class="auction-logo"><img src="https://www.iaai.com/favicon.ico" alt="I" class="a-img" onerror="this.outerHTML='<span class=a-icon style=background:#0057B8>I</span>'">IAAI</a>
+          <a href="https://www.manheim.com" target="_blank" class="auction-logo"><img src="https://cdn.manheim.com/favicon.ico" alt="M" class="a-img" onerror="this.outerHTML='<span class=a-icon style=background:#E31837>M</span>'">Manheim</a>
+          <a href="https://www.adesa.com" target="_blank" class="auction-logo"><img src="https://www.adesa.com/favicon.ico" alt="A" class="a-img" onerror="this.outerHTML='<span class=a-icon style=background:#003DA5>A</span>'">Adesa</a>
+          <a href="https://www.encar.com" target="_blank" class="auction-logo"><img src="https://www.encar.com/favicon.ico" alt="E" class="a-img" onerror="this.outerHTML='<span class=a-icon style=background:#1A1A1A>E</span>'">EnCar</a>
+          <a href="https://www.edgepipeline.com" target="_blank" class="auction-logo"><img src="https://www.edgepipeline.com/favicon.ico" alt="E" class="a-img" onerror="this.outerHTML='<span class=a-icon style=background:#FF6600>E</span>'">EDGE</a>
         </div>
         <a href="examples.html" class="btn btn-outline">Nümunə lotlara bax</a>
       </div>
