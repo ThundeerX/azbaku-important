@@ -37,6 +37,8 @@ nav a:hover{color:var(--blue);}
 .btn-outline{background:transparent;color:var(--blue);border-color:var(--blue);}
 .btn-outline:hover{background:var(--blue);color:var(--white);}
 .btn-outline-light{background:transparent;color:var(--white);border-color:rgba(255,255,255,0.5);}
+.lang-btn{display:flex;align-items:center;gap:5px;padding:6px 10px;border:1.5px solid var(--line);border-radius:6px;background:var(--white);font-size:11px;font-weight:700;color:var(--blue);cursor:pointer;flex-shrink:0;}
+.lang-btn:hover{border-color:var(--blue);}
 .hamburger{display:flex;flex-direction:column;justify-content:center;gap:4px;width:36px;height:36px;flex-shrink:0;border:1.5px solid var(--line);border-radius:8px;background:var(--white);cursor:pointer;}
 .hamburger span{width:15px;height:2px;background:var(--blue);margin:0 auto;}
 .mobile-menu{display:none;flex-direction:column;padding:8px 20px 16px;position:fixed;left:0;right:0;top:0;z-index:70;background:var(--white);box-shadow:0 12px 24px rgba(0,0,0,0.12);overflow-y:auto;}
@@ -53,7 +55,9 @@ nav a:hover{color:var(--blue);}
   .brand-mark{width:50px;height:34px;}
   nav{display:flex;gap:28px;}
   .header-cta{display:inline-flex !important;padding:11px 22px;}
-  .hamburger{display:none;}
+  .lang-btn{display:flex;align-items:center;gap:5px;padding:6px 10px;border:1.5px solid var(--line);border-radius:6px;background:var(--white);font-size:11px;font-weight:700;color:var(--blue);cursor:pointer;flex-shrink:0;}
+.lang-btn:hover{border-color:var(--blue);}
+.hamburger{display:none;}
   .wrap{padding:0 32px;}
 }
 
@@ -159,28 +163,29 @@ footer{background:linear-gradient(180deg,#3a3f47 0%,#1a1d21 100%);color:var(--si
   <div class="navwrap"><div class="wrap">
     <a href="index.html" class="brand"><span class="brand-mark"><img src="images/azbaku-logo-v2.png" alt="AzBaku"></span><span style="display:flex;flex-direction:column;line-height:1.15;"><span>AZBAKU</span><span>AUTOIMPORT</span></span></a>
     <nav>
-      <a href="about.html">Haqqımızda</a>
-      <a href="examples.html">Nümunələr</a>
-      <a href="request.html">Sifariş ver</a>
-      <a href="calculator.html">Kalkulyator</a>
-      <a href="faq.html">FAQ</a>
-      <a href="#contact">Əlaqə</a>
+      <a href="about.html" data-i18n="nav-about">Haqqımızda</a>
+      <a href="examples.html" data-i18n="nav-examples">Nümunələr</a>
+      <a href="request.html" data-i18n="nav-request">Sifariş ver</a>
+      <a href="calculator.html" data-i18n="nav-calc">Kalkulyator</a>
+      <a href="faq.html" data-i18n="nav-faq">FAQ</a>
+      <a href="#contact" data-i18n="nav-contact">Əlaqə</a>
     </nav>
     <div style="display:flex;align-items:center;gap:12px;">
-      <a href="request.html" class="btn btn-red header-cta">Sifariş ver</a>
-      <button class="hamburger" id="hamburgerBtn" aria-label="Menyu"><span></span><span></span><span></span></button>
+      <a href="request.html" class="btn btn-red header-cta" data-i18n="nav-request">Sifariş ver</a>
+      <button id="langToggle" class="lang-btn"><img src="https://flagcdn.com/24x18/ru.png" alt="RU" style="width:20px;height:14px;border-radius:2px;vertical-align:middle;"> RU</button>
+        <button class="hamburger" id="hamburgerBtn" aria-label="Menyu"><span></span><span></span><span></span></button>
     </div>
   </div></div>
 </header>
 
 <div class="mobile-menu" id="mobileMenu">
-  <a href="about.html">Haqqımızda</a>
-      <a href="about.html">Haqqımızda</a>
-  <a href="examples.html">Nümunələr</a>
-  <a href="request.html">Sifariş ver</a>
-  <a href="calculator.html">Kalkulyator</a>
-  <a href="faq.html">FAQ</a>
-  <a href="#contact">Əlaqə</a>
+  <a href="about.html" data-i18n="nav-about">Haqqımızda</a>
+      <a href="about.html" data-i18n="nav-about">Haqqımızda</a>
+  <a href="examples.html" data-i18n="nav-examples">Nümunələr</a>
+  <a href="request.html" data-i18n="nav-request">Sifariş ver</a>
+  <a href="calculator.html" data-i18n="nav-calc">Kalkulyator</a>
+  <a href="faq.html" data-i18n="nav-faq">FAQ</a>
+  <a href="#contact" data-i18n="nav-contact">Əlaqə</a>
 </div>
 
 <section class="hero">
@@ -190,11 +195,11 @@ footer{background:linear-gradient(180deg,#3a3f47 0%,#1a1d21 100%);color:var(--si
   <div class="hero-dots"><span class="hero-dot active"></span><span class="hero-dot"></span><span class="hero-dot"></span></div>
   <div class="wrap hero-inner">
     
-    <h1>Siz sifariş verin,<br><em>biz tapıb gətirək.</em></h1>
-    <p class="lead">Sizin üçün ABŞ və Kanada auksionlarından dəqiq istədiyiniz avtomobili axtarır, alır və Bakıya qədər sığortalı çatdırırıq.</p>
+    <h1 data-i18n="hero-h1">Siz sifariş verin,<br><em>biz tapıb gətirək.</em></h1>
+    <p class="lead" data-i18n="hero-lead">Sizin üçün ABŞ və Kanada auksionlarından dəqiq istədiyiniz avtomobili axtarır, alır və Bakıya qədər sığortalı çatdırırıq.</p>
     <div class="hero-btns">
-      <a href="request.html" class="btn btn-red">Sifariş ver ›</a>
-      <a href="examples.html" class="btn btn-outline-light">Nümunələrə bax</a>
+      <a href="request.html" class="btn btn-red" data-i18n="hero-btn1">Sifariş ver ›</a>
+      <a href="examples.html" class="btn btn-outline-light" data-i18n="hero-btn2">Nümunələrə bax</a>
     </div>
   </div>
 </section>
@@ -209,8 +214,8 @@ footer{background:linear-gradient(180deg,#3a3f47 0%,#1a1d21 100%);color:var(--si
 <section id="process">
   <div class="wrap">
     <div class="section-head">
-      <span class="eyebrow">Prosesimiz</span>
-      <h2>Auksiondan qapınıza qədər</h2>
+      <span class="eyebrow" data-i18n="process-eye">Prosesimiz</span>
+      <h2 data-i18n="process-h2">Auksiondan qapınıza qədər</h2>
       <p>Hər addımda sizə məlumat veririk — avtomobili görmədən pul ödəmək narahatedicidir.</p>
     </div>
     <div class="route-split">
@@ -229,8 +234,8 @@ footer{background:linear-gradient(180deg,#3a3f47 0%,#1a1d21 100%);color:var(--si
 <section id="examples" class="bg-paper">
   <div class="wrap">
     <div class="section-head">
-      <span class="eyebrow">Sübut</span>
-      <h2>Bunları biz artıq gətirmişik</h2>
+      <span class="eyebrow" data-i18n="cases-eye">Sübut</span>
+      <h2 data-i18n="cases-h2">Bunları biz artıq gətirmişik</h2>
       <p>Real qiymət və müddətlərlə keçmiş sifarişlər.</p>
     </div>
     <div class="cases" id="casesContainer">
@@ -259,24 +264,24 @@ footer{background:linear-gradient(180deg,#3a3f47 0%,#1a1d21 100%);color:var(--si
         <div class="case-body"><h3>BMW 3 Series 2021</h3><div class="case-meta"><span>Yekun qiymət<strong>$24,150</strong></span><span>Müddət<strong>44 gün</strong></span></div></div>
       </a>
     </div>
-    <div style="text-align:center;margin-top:32px;"><a href="examples.html" class="btn btn-outline">Bütün nümunələrə bax →</a></div>
+    <div style="text-align:center;margin-top:32px;"><a href="examples.html" class="btn btn-outline" data-i18n="cases-btn">Bütün nümunələrə bax →</a></div>
   </div>
 </section>
 
 <section id="request-paths">
   <div class="wrap">
     <div class="section-head">
-      <span class="eyebrow">İki yol</span>
-      <h2>Necə başlamaq istəyirsiniz?</h2>
+      <span class="eyebrow" data-i18n="paths-eye">İki yol</span>
+      <h2 data-i18n="paths-h2">Necə başlamaq istəyirsiniz?</h2>
     </div>
     <div class="paths">
       <div class="path-card">
-        <h3>Dəqiq sifariş verin</h3>
+        <h3 data-i18n="path1-h">Dəqiq sifariş verin</h3>
         <p>Marka, model, il və büdcənizi bildirin. 24 saat ərzində uyğun variantlarla sizinlə əlaqə saxlayırıq.</p>
-        <a href="request.html" class="btn btn-red">Sifariş formasını doldur</a>
+        <a href="request.html" class="btn btn-red" data-i18n="path1-btn">Sifariş formasını doldur</a>
       </div>
       <div class="path-card">
-        <h3>Auksion nümunələrinə baxın</h3>
+        <h3 data-i18n="path2-h">Auksion nümunələrinə baxın</h3>
         <p>Hazırda auksionlarda olan seçilmiş lotlara baxın, bəyəndiyinizi bizə göstərin.</p>
         <div class="auction-logos">
           <a href="https://www.copart.com" target="_blank" class="auction-logo"><img src="https://www.copart.com/favicon.ico" alt="C" class="a-img" onerror="this.outerHTML='<span class=a-icon style=background:#F7B500>C</span>'">Copart</a>
@@ -286,7 +291,7 @@ footer{background:linear-gradient(180deg,#3a3f47 0%,#1a1d21 100%);color:var(--si
           <a href="https://www.encar.com" target="_blank" class="auction-logo"><img src="https://www.encar.com/favicon.ico" alt="E" class="a-img" onerror="this.outerHTML='<span class=a-icon style=background:#1A1A1A>E</span>'">EnCar</a>
           <a href="https://www.edgepipeline.com" target="_blank" class="auction-logo"><img src="https://www.edgepipeline.com/favicon.ico" alt="E" class="a-img" onerror="this.outerHTML='<span class=a-icon style=background:#FF6600>E</span>'">EDGE</a>
         </div>
-        <a href="examples.html" class="btn btn-outline">Nümunə lotlara bax</a>
+        <a href="examples.html" class="btn btn-outline" data-i18n="path2-btn">Nümunə lotlara bax</a>
       </div>
     </div>
   </div>
@@ -295,8 +300,8 @@ footer{background:linear-gradient(180deg,#3a3f47 0%,#1a1d21 100%);color:var(--si
 <section id="why" class="bg-paper">
   <div class="wrap">
     <div class="why-band">
-      <span class="eyebrow" style="color:var(--silver);">Niyə AzBaku</span>
-      <h2>Stokumuz yoxdur. Etibarımız var.</h2>
+      <span class="eyebrow" style="color:var(--silver);" data-i18n="why-eye">Niyə AzBaku</span>
+      <h2 data-i18n="why-h2">Stokumuz yoxdur. Etibarımız var.</h2>
       <div class="why-grid">
         <div class="why-item"><h3>Gizli xərc yoxdur</h3><p>Auksion, daşınma, gömrük və xidmət haqqı ayrıca göstərilir.</p></div>
         <div class="why-item"><h3>Təsdiqsiz alış yoxdur</h3><p>Heç bir lot sizin razılığınız olmadan qazanılmır.</p></div>
@@ -308,11 +313,11 @@ footer{background:linear-gradient(180deg,#3a3f47 0%,#1a1d21 100%);color:var(--si
 
 <div class="cta-band">
   <div class="wrap">
-    <span class="eyebrow">Hazırsınız?</span>
-    <h2>Hansı avtomobili axtarırsınız?</h2>
+    <span class="eyebrow" data-i18n="cta-eye">Hazırsınız?</span>
+    <h2 data-i18n="cta-h2">Hansı avtomobili axtarırsınız?</h2>
     <p>Formanı doldurun, 24 saat ərzində uyğun variantlarla geri dönüş edək.</p>
     <div class="cta-btns">
-      <a href="request.html" class="btn btn-red">Sifariş ver</a>
+      <a href="request.html" class="btn btn-red" data-i18n="nav-request">Sifariş ver</a>
       <a href="tel:+994708884242" class="btn btn-outline-light">Zəng edin</a>
     </div>
   </div>
@@ -325,9 +330,9 @@ footer{background:linear-gradient(180deg,#3a3f47 0%,#1a1d21 100%);color:var(--si
         <div class="foot-brand"><img src="images/azbaku-logo-v2.png" alt="AzBaku"><span style="color:var(--white);font-weight:800;font-size:16px;text-transform:uppercase;letter-spacing:0.04em;">AzBaku AutoImport</span></div>
         <p style="color:var(--silver);max-width:260px;font-size:13.5px;">ABŞ və Kanada auksionlarından Azərbaycana sifarişlə avtomobil idxalı.</p>
       </div>
-      <div><h4>Naviqasiya</h4><a href="about.html">Haqqımızda</a>
-      <a href="examples.html">Nümunələr</a><a href="request.html">Sifariş ver</a><a href="calculator.html">Kalkulyator</a><a href="#process">Prosesimiz</a><a href="#why">Niyə Biz</a></div>
-      <div><h4>Əlaqə</h4><a href="tel:+994708884242">070 888 42 42</a><a href="mailto:[email protected]">[email protected]</a><a href="#">Bakı, Azərbaycan</a></div>
+      <div><h4 data-i18n="foot-nav">Naviqasiya</h4><a href="about.html" data-i18n="nav-about">Haqqımızda</a>
+      <a href="examples.html" data-i18n="nav-examples">Nümunələr</a><a href="request.html" data-i18n="nav-request">Sifariş ver</a><a href="calculator.html" data-i18n="nav-calc">Kalkulyator</a><a href="#process">Prosesimiz</a><a href="#why">Niyə Biz</a></div>
+      <div><h4 data-i18n="nav-contact">Əlaqə</h4><a href="tel:+994708884242">070 888 42 42</a><a href="mailto:[email protected]">[email protected]</a><a href="#">Bakı, Azərbaycan</a></div>
       <div><h4>Sosial</h4><a href="#">Instagram</a><a href="#">Facebook</a><a href="#">WhatsApp</a></div>
     </div>
     <div class="foot-bottom"><span>© 2026 AzBaku AutoImport</span><span>Şəffaf idxal, etibarlı proses.</span></div>
@@ -344,5 +349,6 @@ footer{background:linear-gradient(180deg,#3a3f47 0%,#1a1d21 100%);color:var(--si
   document.addEventListener('click',function(e){if(menu.classList.contains('open')&&!menu.contains(e.target)&&!btn.contains(e.target))menu.classList.remove('open');});
 })();
 </script>
+<script src="lang.js"></script>
 </body>
 </html>
