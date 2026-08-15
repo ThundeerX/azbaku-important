@@ -18,32 +18,35 @@ img{max-width:100%;display:block;}
 .eyebrow{font-size:12.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--red);font-weight:700;margin-bottom:14px;display:inline-block;}
 
 /* ===== HEADER — mobile first ===== */
-header{position:sticky;top:0;z-index:60;background:var(--white);padding:0;}
-.topbar{background:var(--blue);}
-.topbar .wrap{display:flex;justify-content:center;align-items:center;padding:7px 20px;}
-.topbar a{color:var(--white);font-weight:600;font-size:12.5px;}
-.navwrap{background:rgba(255,255,255,0.94);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);}
-.navwrap .wrap{display:flex;align-items:center;justify-content:space-between;padding:10px 20px;gap:10px;flex-wrap:nowrap;}
-.brand{font-family:'Inter',sans-serif;font-weight:800;font-size:12px;letter-spacing:0.03em;text-transform:uppercase;color:var(--blue);display:flex;align-items:center;gap:7px;white-space:nowrap;overflow:hidden;}
-.brand-mark{width:38px;height:26px;flex-shrink:0;}
-.brand-mark img{width:100%;height:100%;object-fit:contain;}
-nav{display:none;}
-nav a{font-size:14px;font-weight:600;color:var(--charcoal);padding:6px 0;}
-nav a:hover{color:var(--blue);}
-.header-cta{display:none !important;}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 24px;border-radius:7px;font-weight:700;font-size:14px;border:1.5px solid transparent;cursor:pointer;white-space:nowrap;}
-.btn:hover{transform:translateY(-1px);}
-.btn-red{background:var(--red);color:var(--white);}
-.btn-outline{background:transparent;color:var(--blue);border-color:var(--blue);}
-.btn-outline:hover{background:var(--blue);color:var(--white);}
-.btn-outline-light{background:transparent;color:var(--white);border-color:rgba(255,255,255,0.5);}
-.lang-btn{display:flex;align-items:center;gap:5px;padding:6px 10px;border:1.5px solid var(--line);border-radius:6px;background:var(--white);font-size:11px;font-weight:700;color:var(--blue);cursor:pointer;flex-shrink:0;}
-.lang-btn:hover{border-color:var(--blue);}
-.hamburger{display:flex;flex-direction:column;justify-content:center;gap:4px;width:36px;height:36px;flex-shrink:0;border:1.5px solid var(--line);border-radius:8px;background:var(--white);cursor:pointer;}
-.hamburger span{width:15px;height:2px;background:var(--blue);margin:0 auto;}
-.mobile-menu{display:none;flex-direction:column;padding:8px 20px 16px;position:fixed;left:0;right:0;top:0;z-index:70;background:var(--white);box-shadow:0 12px 24px rgba(0,0,0,0.12);overflow-y:auto;}
-.mobile-menu.open{display:flex;}
-.mobile-menu a{padding:13px 0;font-size:15px;font-weight:600;color:var(--blue);border-bottom:1px solid var(--line);}
+<header>
+  <div class="topbar"><div class="wrap"><a href="tel:+994708884242">070 888 42 42</a></div></div>
+  <div class="navwrap"><div class="wrap">
+    
+    <!-- Dəyişdirilmiş Loqo Hissəsi -->
+    <a href="index.html" class="brand" style="flex-direction: column; align-items: flex-start; gap: 4px;">
+      <span class="brand-mark"><img src="images/azbaku-logo-v2.png" alt="AzBaku"></span>
+      <span style="display:flex; flex-direction:row; gap: 5px; line-height:1.15;">
+        <span>AZBAKU</span>
+        <span>AUTOIMPORT</span>
+      </span>
+    </a>
+    <!-- Dəyişdirilmiş Loqo Hissəsinin Sonu -->
+
+    <nav>
+      <a href="about.html" data-i18n="nav-about">Haqqımızda</a>
+      <a href="examples.html" data-i18n="nav-examples">Nümunələr</a>
+      <a href="request.html" data-i18n="nav-request">Sifariş ver</a>
+      <a href="calculator.html" data-i18n="nav-calc">Kalkulyator</a>
+      <a href="faq.html" data-i18n="nav-faq">FAQ</a>
+      <a href="#contact" data-i18n="nav-contact">Əlaqə</a>
+    </nav>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <a href="request.html" class="btn btn-red header-cta" data-i18n="nav-request">Sifariş ver</a>
+      <button id="langToggle" class="lang-btn"><img src="https://flagcdn.com/24x18/ru.png" alt="RU" style="width:20px;height:14px;border-radius:2px;vertical-align:middle;"> RU</button>
+        <button class="hamburger" id="hamburgerBtn" aria-label="Menyu"><span></span><span></span><span></span></button>
+    </div>
+  </div></div>
+</header>
 
 /* Desktop: floating pill, hide topbar */
 @media(min-width:769px){
