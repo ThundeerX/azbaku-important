@@ -96,25 +96,28 @@ tr:hover td{background:var(--paper);}
 .sec-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:var(--steel);margin:20px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--line);}
 .sec-title:first-child{margin-top:0;}
 
-/* Receipt print styles */
-.rcpt-preview{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:36px;margin-top:16px;}
-.rcpt-header{text-align:center;border-bottom:2px solid var(--charcoal);padding-bottom:16px;margin-bottom:20px;}
-.rcpt-header img{width:50px;height:34px;object-fit:contain;margin:0 auto 8px;}
-.rcpt-header h2{font-size:18px;color:var(--charcoal);margin-bottom:2px;}
-.rcpt-header p{font-size:11px;color:var(--steel);}
-.rcpt-table{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:20px;}
-.rcpt-table td{padding:8px 10px;border:1px solid var(--line);vertical-align:top;}
-.rcpt-table td:first-child{font-weight:700;color:var(--steel);width:40%;background:var(--paper);white-space:nowrap;}
+/* Receipt */
+.rcpt-preview{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:28px;margin-top:16px;}
+.rcpt-header{text-align:center;border-bottom:2px solid var(--charcoal);padding-bottom:10px;margin-bottom:14px;}
+.rcpt-header img{width:44px;height:30px;object-fit:contain;margin:0 auto 6px;}
+.rcpt-header h2{font-size:16px;color:var(--charcoal);margin-bottom:1px;}
+.rcpt-header p{font-size:10px;color:var(--steel);}
+.rcpt-table{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:8px;}
+.rcpt-table td{padding:5px 8px;border:1px solid var(--line);vertical-align:top;}
+.rcpt-table td:first-child{font-weight:700;color:var(--steel);width:35%;background:var(--paper);white-space:nowrap;}
 .rcpt-table td:last-child{color:var(--charcoal);}
-.rcpt-footer{text-align:center;border-top:2px solid var(--charcoal);padding-top:14px;margin-top:20px;font-size:11px;color:var(--steel);}
-.rcpt-sign{display:flex;justify-content:space-between;margin-top:36px;padding-top:16px;}
-.rcpt-sign div{text-align:center;width:40%;}
-.rcpt-sign .line{border-top:1px solid var(--charcoal);margin-top:40px;padding-top:6px;font-size:11px;color:var(--steel);}
+.rcpt-footer{text-align:center;border-top:1.5px solid var(--charcoal);padding-top:8px;margin-top:12px;font-size:9px;color:var(--steel);}
 
 @media print{
   body *{visibility:hidden;}
   .rcpt-preview,.rcpt-preview *{visibility:visible;}
-  .rcpt-preview{position:absolute;left:0;top:0;width:100%;border:none;border-radius:0;padding:20px;box-shadow:none;}
+  .rcpt-preview{position:absolute;left:0;top:0;width:100%;border:none;border-radius:0;padding:12px;box-shadow:none;font-size:11px;}
+  .rcpt-preview .rcpt-header h2{font-size:15px;margin-bottom:2px;}
+  .rcpt-preview .rcpt-header p{font-size:9px;}
+  .rcpt-preview .rcpt-header img{width:36px;height:24px;margin-bottom:4px;}
+  .rcpt-preview .rcpt-header{padding-bottom:8px;margin-bottom:10px;}
+  .rcpt-preview .rcpt-table td{padding:4px 8px;font-size:11px;}
+  .rcpt-preview .rcpt-footer{margin-top:10px;padding-top:8px;font-size:9px;}
   .no-print{display:none !important;}
 }
 </style>
@@ -364,9 +367,30 @@ tr:hover td{background:var(--paper);}
 
       <!-- RECEIPT -->
       <div class="tab-panel" id="tab-receipt">
-        <div class="card no-print">
-          <h3>Qəbz hazırla</h3><p class="card-sub">Məlumatları doldurun, aşağıda önizləmə görünəcək. "Çap et" düyməsini basın.</p>
 
+        <!-- Aylıq xülasə -->
+        <div class="card no-print">
+          <h3>Aylıq hesabat</h3>
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+            <input type="month" id="rcMonth" style="padding:8px 12px;border:1.5px solid var(--line);border-radius:7px;font-family:inherit;font-size:13px;">
+            <button class="btn btn-sm btn-outline" onclick="loadReceipts()">Göstər</button>
+          </div>
+          <div class="stats" style="margin-bottom:0;">
+            <div class="stat"><div class="lbl">Satılan maşın</div><div class="val" id="rcCount">0</div></div>
+            <div class="stat"><div class="lbl">Ümumi satış</div><div class="val" id="rcRevenue">$0</div></div>
+            <div class="stat accent"><div class="lbl">Ümumi mənfəət</div><div class="val" id="rcProfit">$0</div></div>
+          </div>
+        </div>
+
+        <!-- Qəbz siyahısı -->
+        <div class="card no-print">
+          <h3>Saxlanmış qəbzlər</h3>
+          <div class="tbl-wrap" id="rcList"><div class="empty">Ay seçib "Göstər" basın</div></div>
+        </div>
+
+        <!-- Yeni qəbz formu -->
+        <div class="card no-print">
+          <h3>Yeni qəbz yarat</h3><p class="card-sub">Məlumatları doldurun, "Saxla" basın. Sonra istənilən vaxt çap edə bilərsiniz.</p>
           <div class="sec-title">Müştəri</div>
           <div class="row2">
             <div class="field"><label>Ad Soyad</label><input type="text" id="rc_name" placeholder="Əliyev Aykhan"></div>
@@ -376,17 +400,15 @@ tr:hover td{background:var(--paper);}
             <div class="field"><label>Ödəniş edən</label><input type="text" id="rc_payer" placeholder="Ad Soyad"></div>
             <div class="field"><label>Rəsmiləşdirən</label><input type="text" id="rc_officer" placeholder="Şirkət əməkdaşı"></div>
           </div>
-
           <div class="sec-title">Avtomobil</div>
           <div class="row2">
             <div class="field"><label>Maşın markası / modeli</label><input type="text" id="rc_car" placeholder="Toyota Camry 2022"></div>
             <div class="field"><label>VIN kod</label><input type="text" id="rc_vin" placeholder="1HGCG5655WA..." style="font-family:monospace;"></div>
           </div>
           <div class="row2">
-            <div class="field"><label>Probeg (km)</label><input type="text" id="rc_mileage" placeholder="45,000 km"></div>
+            <div class="field"><label>Probeg</label><input type="text" id="rc_mileage" placeholder="45,000 km"></div>
             <div class="field"><label>Təxmini təmir xərci</label><input type="text" id="rc_repair" placeholder="$1,200"></div>
           </div>
-
           <div class="sec-title">Maliyyə</div>
           <div class="row2">
             <div class="field"><label>Təhvil qiyməti (yekun)</label><input type="text" id="rc_total" placeholder="$22,400"></div>
@@ -396,33 +418,44 @@ tr:hover td{background:var(--paper);}
             <div class="field"><label>Çalaq (ön ödəniş)</label><input type="text" id="rc_deposit" placeholder="$5,000"></div>
             <div class="field"><label>Daşınma şirkəti ödənişi</label><input type="text" id="rc_shipping_pay" placeholder="$1,350"></div>
           </div>
-
-          <div class="sec-title">Logistika & Təhvil</div>
+          <div class="sec-title">Logistika</div>
           <div class="row2">
             <div class="field"><label>Logistika şirkəti</label><input type="text" id="rc_logistics" placeholder="GLB Logistics"></div>
-            <div class="field"><label>Qəbzin tarixi</label><input type="date" id="rc_date"></div>
+            <div class="field"><label>Tarix</label><input type="date" id="rc_date"></div>
           </div>
-          <div class="field"><label>Maşın nə vaxt təhvil verildi</label><input type="text" id="rc_delivery_date" placeholder="15.08.2026"></div>
-
+          <div class="field"><label>Təhvil tarixi</label><input type="text" id="rc_delivery_date" placeholder="15.08.2026"></div>
           <div style="display:flex;gap:10px;margin-top:16px;">
-            <button class="btn btn-blue" onclick="genReceipt()">Önizləmə</button>
+            <button class="btn btn-blue" onclick="saveReceipt()">💾 Saxla</button>
+            <button class="btn btn-outline" onclick="genReceipt()">Önizləmə</button>
             <button class="btn btn-red" onclick="window.print()">🖨 Çap et</button>
           </div>
         </div>
 
+        <!-- Çap önizləmə -->
         <div class="rcpt-preview" id="receiptPreview" style="display:none;">
           <div class="rcpt-header">
             <img src="images/azbaku-logo-v2.png" alt="AzBaku">
             <h2>AZBAKU AUTOIMPORT</h2>
-            <p>ABŞ və Kanada auksionlarından avtomobil idxalı</p>
-            <p style="margin-top:4px;font-weight:700;color:var(--charcoal);">QƏBZ / RECEIPT</p>
+            <p>QƏBZ / RECEIPT</p>
           </div>
-          <table class="rcpt-table"><tr><td>Tarix</td><td id="rp_date"></td></tr><tr><td>Müştəri</td><td id="rp_name"></td></tr><tr><td>Əlaqə</td><td id="rp_phone"></td></tr><tr><td>Ödəniş edən</td><td id="rp_payer"></td></tr><tr><td>Rəsmiləşdirən</td><td id="rp_officer"></td></tr></table>
-          <table class="rcpt-table"><tr><td>Avtomobil</td><td id="rp_car" style="font-weight:700;font-size:15px;"></td></tr><tr><td>VIN kod</td><td id="rp_vin" style="font-family:monospace;letter-spacing:1px;"></td></tr><tr><td>Probeg</td><td id="rp_mileage"></td></tr><tr><td>Təxmini təmir</td><td id="rp_repair"></td></tr></table>
-          <table class="rcpt-table"><tr><td>Təhvil qiyməti</td><td id="rp_total" style="font-weight:700;font-size:15px;color:var(--blue);"></td></tr><tr><td>Mənfəət</td><td id="rp_profit"></td></tr><tr><td>Çalaq (ön ödəniş)</td><td id="rp_deposit"></td></tr><tr><td>Daşınma ödənişi</td><td id="rp_shipping_pay"></td></tr></table>
-          <table class="rcpt-table"><tr><td>Logistika</td><td id="rp_logistics"></td></tr><tr><td>Təhvil tarixi</td><td id="rp_delivery_date"></td></tr></table>
-          <div class="rcpt-sign"><div><div class="line">Təhvil verən (AzBaku)</div></div><div><div class="line">Təhvil alan (Müştəri)</div></div></div>
-          <div class="rcpt-footer">AzBaku AutoImport | 070 888 42 42 | info@azbaku.az | Bakı, Azərbaycan<br>Bu sənəd rəsmi təhvil-təslim qəbzidir.</div>
+          <table class="rcpt-table">
+            <tr><td>Tarix</td><td id="rp_date"></td></tr>
+            <tr><td>Müştəri</td><td id="rp_name"></td></tr>
+            <tr><td>Əlaqə</td><td id="rp_phone"></td></tr>
+            <tr><td>Ödəniş edən</td><td id="rp_payer"></td></tr>
+            <tr><td>Rəsmiləşdirən</td><td id="rp_officer"></td></tr>
+            <tr><td>Avtomobil</td><td id="rp_car" style="font-weight:700;"></td></tr>
+            <tr><td>VIN</td><td id="rp_vin" style="font-family:monospace;letter-spacing:1px;"></td></tr>
+            <tr><td>Probeg</td><td id="rp_mileage"></td></tr>
+            <tr><td>Təmir xərci</td><td id="rp_repair"></td></tr>
+            <tr><td>Təhvil qiyməti</td><td id="rp_total" style="font-weight:700;color:var(--blue);"></td></tr>
+            <tr><td>Mənfəət</td><td id="rp_profit"></td></tr>
+            <tr><td>Çalaq</td><td id="rp_deposit"></td></tr>
+            <tr><td>Daşınma ödənişi</td><td id="rp_shipping_pay"></td></tr>
+            <tr><td>Logistika</td><td id="rp_logistics"></td></tr>
+            <tr><td>Təhvil tarixi</td><td id="rp_delivery_date"></td></tr>
+          </table>
+          <div class="rcpt-footer">AzBaku AutoImport | 070 888 42 42 | info@azbaku.az<br>Bakı, Azərbaycan</div>
         </div>
       </div>
 
@@ -566,8 +599,75 @@ function genReceipt(){
   $('receiptPreview').style.display='block';
   $('receiptPreview').scrollIntoView({behavior:'smooth'});
 }
-// Auto-set today's date
+
+function saveReceipt(){
+  var d={customer_name:$('rc_name').value,phone:$('rc_phone').value,payer:$('rc_payer').value,officer:$('rc_officer').value,car:$('rc_car').value,vin:$('rc_vin').value,mileage:$('rc_mileage').value,repair_cost:$('rc_repair').value,total_price:$('rc_total').value,profit:$('rc_profit').value,deposit:$('rc_deposit').value,shipping_pay:$('rc_shipping_pay').value,logistics:$('rc_logistics').value,receipt_date:$('rc_date').value,delivery_date:$('rc_delivery_date').value};
+  if(!d.customer_name||!d.car){toast('Ad və maşın yazın',true);return;}
+  api('api/receipts.php',{method:'POST',body:JSON.stringify(d)}).then(function(r){
+    if(r.status==='success'){toast('Qəbz saxlanıldı');loadReceipts();genReceipt();}
+    else toast('Xəta',true);
+  }).catch(function(){toast('API xətası',true);});
+}
+
+function loadReceipts(){
+  var month=$('rcMonth').value;
+  var url='api/receipts.php'+(month?'?month='+month:'');
+  api(url).then(function(list){
+    if(!list||!list.length){
+      $('rcList').innerHTML='<div class="empty">Bu ayda qəbz yoxdur.</div>';
+      $('rcCount').textContent='0';$('rcRevenue').textContent='$0';$('rcProfit').textContent='$0';
+      return;
+    }
+    var totalRev=0,totalProfit=0;
+    list.forEach(function(r){
+      totalRev+=parseFloat(String(r.total_price||'0').replace(/[^0-9.]/g,''))||0;
+      totalProfit+=parseFloat(String(r.profit||'0').replace(/[^0-9.]/g,''))||0;
+    });
+    $('rcCount').textContent=list.length;
+    $('rcRevenue').textContent='$'+Math.round(totalRev).toLocaleString();
+    $('rcProfit').textContent='$'+Math.round(totalProfit).toLocaleString();
+
+    var h='<table><thead><tr><th>Tarix</th><th>Müştəri</th><th>Avtomobil</th><th>Qiymət</th><th>Mənfəət</th><th>Rəsmiləşdirən</th><th></th></tr></thead><tbody>';
+    list.forEach(function(r){
+      h+='<tr><td style="font-size:11px;color:var(--steel);">'+esc(r.receipt_date)+'</td><td style="font-weight:700;">'+esc(r.customer_name)+'</td><td>'+esc(r.car)+'</td><td style="font-weight:700;color:var(--blue);">'+esc(r.total_price)+'</td><td style="color:var(--green);font-weight:700;">'+esc(r.profit)+'</td><td>'+esc(r.officer)+'</td><td><button class="btn-ghost" onclick="viewReceipt('+r.id+')">Çap</button> <button class="btn-ghost" onclick="delReceipt('+r.id+')">Sil</button></td></tr>';
+    });
+    h+='</tbody></table>';
+    $('rcList').innerHTML=h;
+  }).catch(function(){$('rcList').innerHTML='<div class="empty">API xətası</div>';});
+}
+
+function viewReceipt(id){
+  api('api/receipts.php').then(function(list){
+    var r=list.find(function(x){return x.id==id;});
+    if(!r)return;
+    $('rp_date').textContent=r.receipt_date||'—';
+    $('rp_name').textContent=r.customer_name||'—';
+    $('rp_phone').textContent=r.phone||'—';
+    $('rp_payer').textContent=r.payer||'—';
+    $('rp_officer').textContent=r.officer||'—';
+    $('rp_car').textContent=r.car||'—';
+    $('rp_vin').textContent=r.vin||'—';
+    $('rp_mileage').textContent=r.mileage||'—';
+    $('rp_repair').textContent=r.repair_cost||'—';
+    $('rp_total').textContent=r.total_price||'—';
+    $('rp_profit').textContent=r.profit||'—';
+    $('rp_deposit').textContent=r.deposit||'—';
+    $('rp_shipping_pay').textContent=r.shipping_pay||'—';
+    $('rp_logistics').textContent=r.logistics||'—';
+    $('rp_delivery_date').textContent=r.delivery_date||'—';
+    $('receiptPreview').style.display='block';
+    $('receiptPreview').scrollIntoView({behavior:'smooth'});
+    setTimeout(function(){window.print();},300);
+  });
+}
+
+function delReceipt(id){
+  if(!confirm('Bu qəbzi silmək istəyirsiniz?'))return;
+  api('api/receipts.php',{method:'DELETE',body:JSON.stringify({id:id})}).then(function(){toast('Silindi');loadReceipts();}).catch(function(){toast('Xəta',true);});
+}
+
 if($('rc_date'))$('rc_date').valueAsDate=new Date();
+if($('rcMonth')){var now=new Date();$('rcMonth').value=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0');}
 
 function saveGroup(g){
   var d={};contentKeys.forEach(function(k){if($(k))d[k]=$(k).value;});
