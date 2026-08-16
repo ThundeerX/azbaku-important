@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sifariş ver — AzBaku AutoImport</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--blue:#002B8A;--blue-deep:#001A54;--silver:#C4C9CC;--white:#FFFFFF;--charcoal:#1A1A1A;--red:#D7263D;--paper:#F5F7F9;--steel:#5B6672;--line:#E1E5E8;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Inter',sans-serif;color:var(--charcoal);background:var(--white);line-height:1.6;-webkit-font-smoothing:antialiased;}
+h1,h2,h3{font-family:'Fraunces',serif;font-weight:600;color:var(--blue);}
+a{color:inherit;text-decoration:none;}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px;}
+.eyebrow{font-size:12.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--red);font-weight:700;margin-bottom:14px;display:inline-block;}
+
+header{position:sticky;top:0;z-index:60;background:var(--white);padding:0;}
+.topbar{background:var(--blue);}.topbar .wrap{display:flex;justify-content:center;align-items:center;padding:7px 20px;}.topbar a{color:var(--white);font-weight:600;font-size:12.5px;}
+.navwrap{background:rgba(255,255,255,0.94);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);}
+.navwrap .wrap{display:flex;align-items:center;justify-content:space-between;padding:10px 20px;gap:10px;flex-wrap:nowrap;}
+.brand{font-family:'Inter',sans-serif;font-weight:800;font-size:12px;letter-spacing:0.03em;text-transform:uppercase;color:var(--blue);display:flex;align-items:center;gap:7px;white-space:nowrap;overflow:hidden;}
+.brand-mark{width:38px;height:26px;flex-shrink:0;}.brand-mark img{width:100%;height:100%;object-fit:contain;}
+nav{display:none;}nav a{font-size:14px;font-weight:600;color:var(--charcoal);}nav a:hover{color:var(--blue);}
+nav a.active{background:var(--blue);color:#fff !important;padding:6px 14px;border-radius:999px;}
+.header-cta{display:none !important;}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 24px;border-radius:7px;font-weight:700;font-size:14px;border:1.5px solid transparent;cursor:pointer;white-space:nowrap;}
+.btn:hover{transform:translateY(-1px);}.btn-red{background:var(--red);color:var(--white);}.btn-outline{background:transparent;color:var(--blue);border-color:var(--blue);}.btn-outline:hover{background:var(--blue);color:var(--white);}
+.lang-btn{display:flex;align-items:center;gap:5px;padding:6px 10px;border:1.5px solid var(--line);border-radius:6px;background:var(--white);font-size:11px;font-weight:700;color:var(--blue);cursor:pointer;flex-shrink:0;}
+.lang-btn:hover{border-color:var(--blue);}
+.hamburger{display:flex;flex-direction:column;justify-content:center;gap:4px;width:36px;height:36px;flex-shrink:0;border:1.5px solid var(--line);border-radius:8px;background:var(--white);cursor:pointer;}.hamburger span{width:15px;height:2px;background:var(--blue);margin:0 auto;}
+.mobile-menu{display:none;flex-direction:column;padding:8px 20px 16px;position:fixed;left:0;right:0;top:0;z-index:70;background:var(--white);box-shadow:0 12px 24px rgba(0,0,0,0.12);}.mobile-menu.open{display:flex;}.mobile-menu a{padding:13px 0;font-size:15px;font-weight:600;color:var(--blue);border-bottom:1px solid var(--line);}
+@media(min-width:769px){.topbar{display:none;}header{background:transparent;padding:12px 20px 0;}.navwrap{max-width:1380px;margin:0 auto;border-radius:999px;box-shadow:0 10px 30px rgba(0,43,138,0.14);border:1px solid rgba(255,255,255,0.5);}.navwrap .wrap{padding:12px 28px 12px 32px;}.brand{font-size:18px;font-weight:800;gap:8px;}.brand-mark{width:50px;height:34px;}nav{display:flex;gap:28px;}.header-cta{display:inline-flex !important;padding:11px 22px;}.lang-btn{display:flex;align-items:center;gap:5px;padding:6px 10px;border:1.5px solid var(--line);border-radius:6px;background:var(--white);font-size:11px;font-weight:700;color:var(--blue);cursor:pointer;flex-shrink:0;}
+.lang-btn:hover{border-color:var(--blue);}
+.hamburger{display:none;}.wrap{padding:0 32px;}}
+
+.page-hero{position:relative;min-height:240px;display:flex;align-items:flex-end;color:var(--white);background:linear-gradient(180deg,rgba(0,43,138,0) 0%,rgba(0,43,138,0.45) 12%,rgba(0,26,84,0.9) 100%),url('https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=1800&q=80') center 35%/cover no-repeat;}
+.page-hero .wrap{padding:56px 32px 40px;}
+.breadcrumb{font-size:13px;color:var(--silver);margin-bottom:14px;}.breadcrumb a:hover{color:var(--white);}
+.page-hero h1{color:var(--white);font-size:clamp(26px,3.6vw,38px);margin-bottom:8px;}
+.page-hero p{color:var(--silver);font-size:15.5px;max-width:520px;}
+
+.form-wrap{padding:56px 0 88px;background:var(--paper);}
+.form-grid{display:grid;grid-template-columns:1.3fr 0.9fr;gap:44px;align-items:start;}
+.form-card{background:var(--white);border:1px solid var(--line);border-radius:16px;padding:36px;box-shadow:0 16px 40px rgba(0,43,138,0.06);}
+fieldset{border:none;margin-bottom:28px;}
+legend{font-family:'Fraunces',serif;font-size:18px;font-weight:600;color:var(--blue);margin-bottom:4px;padding:0;}
+.legend-sub{color:var(--steel);font-size:13px;margin-bottom:18px;}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
+.field{margin-bottom:14px;}
+.field label{display:block;font-size:13px;font-weight:700;color:var(--charcoal);margin-bottom:6px;}
+.field .hint{font-weight:400;color:var(--steel);font-size:12px;}
+.field input,.field select,.field textarea{width:100%;padding:11px 13px;border:1.5px solid var(--line);border-radius:8px;font-family:'Inter',sans-serif;font-size:14px;color:var(--charcoal);background:var(--white);}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--blue);outline:none;}
+.field textarea{resize:vertical;min-height:80px;}
+.field-error{color:var(--red);font-size:12px;margin-top:5px;display:none;}
+.field.invalid input,.field.invalid select{border-color:var(--red);}.field.invalid .field-error{display:block;}
+.radio-group{display:flex;gap:8px;flex-wrap:wrap;}
+.radio-pill{position:relative;}.radio-pill input{position:absolute;opacity:0;inset:0;cursor:pointer;width:100%;height:100%;}
+.radio-pill span{display:block;padding:9px 16px;border:1.5px solid var(--line);border-radius:999px;font-size:13px;font-weight:600;color:var(--steel);}
+.radio-pill input:checked+span{background:var(--blue);border-color:var(--blue);color:var(--white);}
+.submit-row{display:flex;align-items:center;gap:14px;margin-top:8px;}
+.submit-row .btn{padding:13px 28px;font-size:14.5px;}
+.submit-note{font-size:12px;color:var(--steel);}
+
+.side-photo{border-radius:16px;overflow:hidden;margin-bottom:18px;box-shadow:0 16px 36px rgba(0,43,138,0.1);}.side-photo img{width:100%;height:190px;object-fit:cover;}
+.side-panel{background:var(--white);border:1px solid var(--line);border-radius:16px;padding:24px;}
+.side-panel h3{font-size:16px;font-weight:700;margin-bottom:16px;}
+.side-step{display:flex;gap:12px;margin-bottom:16px;}.side-step:last-child{margin-bottom:0;}
+.side-num{width:26px;height:26px;border-radius:50%;background:var(--blue);color:var(--white);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;flex-shrink:0;}
+.side-step p{font-size:13px;color:var(--steel);}.side-step strong{display:block;color:var(--charcoal);font-size:13.5px;margin-bottom:2px;}
+.side-divider{height:1px;background:var(--line);margin:18px 0;}
+.side-contact{font-size:13px;color:var(--steel);}.side-contact a{color:var(--blue);font-weight:700;}
+
+.success{display:none;text-align:center;padding:52px 20px;}.success.show{display:block;}
+.success-icon{width:52px;height:52px;border-radius:50%;background:var(--blue);color:var(--white);display:flex;align-items:center;justify-content:center;margin:0 auto 18px;font-size:22px;}
+.success h2{font-size:22px;margin-bottom:10px;}.success p{color:var(--steel);font-size:14.5px;max-width:400px;margin:0 auto 24px;}
+
+footer{background:linear-gradient(180deg,#6B7280 0%,#1F2937 100%);color:#E8EAED;padding:48px 0 24px;font-size:14px;}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:28px;margin-bottom:32px;}
+.foot-grid h4{color:var(--white);font-size:14px;font-weight:700;margin-bottom:12px;}
+.foot-grid a{display:block;color:#E8EAED;margin-bottom:8px;font-size:13px;}
+.foot-grid a:hover{color:var(--white);}
+.foot-brand{display:flex;align-items:center;gap:8px;margin-bottom:12px;}
+.foot-bottom{border-top:1px solid rgba(255,255,255,0.2);padding-top:18px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:12px;color:#C9CDD3;}
+@media(max-width:880px){.foot-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:560px){.foot-grid{grid-template-columns:1fr;}}
+
+@media(max-width:920px){.form-grid{grid-template-columns:1fr;}.side-col{order:-1;}}
+@media(max-width:640px){.field-row{grid-template-columns:1fr;gap:0;}.submit-row{flex-direction:column;align-items:stretch;}.submit-row .btn{width:100%;text-align:center;}.field input,.field select,.field textarea{font-size:16px;}}
+
+/* ===== RESPONSIVE: MOBILE / TABLET / LAPTOP ===== */
+/* Tablet 481–1024px */
+@media(min-width:481px) and (max-width:1024px){
+  .wrap{padding:0 24px;}
+  .cases{grid-template-columns:repeat(2,1fr);}
+  .gallery-grid{grid-template-columns:repeat(2,1fr);}
+  .values-grid{grid-template-columns:repeat(2,1fr);}
+  .how-steps{grid-template-columns:repeat(3,1fr);}
+  .about-stats{grid-template-columns:repeat(4,1fr);}
+  .foot-grid{grid-template-columns:repeat(2,1fr);}
+  .calc-grid{grid-template-columns:1fr;}
+  .result-card{position:static;}
+  .form-grid{grid-template-columns:1fr;}
+  .detail-grid{grid-template-columns:1fr;}
+  .faq-layout{grid-template-columns:170px 1fr;}
+  .paths{grid-template-columns:1fr 1fr;}
+  .route-split{grid-template-columns:1fr;}
+  nav{gap:16px;}
+  nav a{font-size:13px;}
+}
+/* Mobile ≤480px */
+@media(max-width:480px){
+  .wrap{padding:0 14px;}
+  .r2,.r3,.r4,.row2,.row3,.row4,.field-row{grid-template-columns:1fr !important;gap:0 !important;}
+  .cases,.gallery-grid,.values-grid,.how-steps,.paths,.info-grid,.foot-grid,.calc-grid,.form-grid,.detail-grid,.faq-layout,.route-split,.about-intro{grid-template-columns:1fr !important;}
+  .about-stats,.stats,.quick-stats{grid-template-columns:1fr 1fr !important;}
+  .result-card,.faq-filters{position:static !important;}
+  h1{font-size:clamp(21px,6.5vw,30px) !important;}
+  h2{font-size:clamp(19px,5.8vw,26px) !important;}
+  h3{font-size:16px !important;}
+  .hero-inner{padding:34px 0 30px !important;}
+  .page-hero{padding:32px 0 26px !important;}
+  .page-hero .wrap{padding:32px 14px 26px !important;}
+  section{padding:44px 0 !important;}
+  .why-band,.how-section,.about-cta,.faq-cta{padding:26px 16px !important;}
+  .calc-card,.form-card,.card{padding:18px !important;}
+  .detail-hero img{height:200px !important;}
+  .about-img img{height:200px !important;}
+  .route-photo img{height:200px !important;}
+  .case-photo{height:170px !important;}
+  .hero-btns,.cta-btns,.btns{flex-direction:column;width:100%;}
+  .hero-btns .btn,.cta-btns .btn,.btns .btn{width:100%;}
+  input,select,textarea{font-size:16px !important;}
+  .foot-bottom{flex-direction:column;text-align:center;}
+  .trust-strip .wrap{grid-template-columns:1fr 1fr !important;}
+}
+/* Small mobile ≤360px */
+@media(max-width:360px){
+  .brand{font-size:10px !important;}
+  .brand-mark{width:30px !important;height:21px !important;}
+  .stats,.about-stats,.quick-stats{grid-template-columns:1fr !important;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="topbar"><div class="wrap"><a href="tel:+994708884242">070 888 42 42</a></div></div>
+  <div class="navwrap"><div class="wrap">
+    <a href="index.html" class="brand"><span class="brand-mark"><img src="images/azbaku-logo-v2.png" alt="AzBaku"></span><span style="display:flex;flex-direction:column;line-height:1.15;"><span>AZBAKU</span><span>AUTOIMPORT</span></span></a>
+    <nav>
+      <a href="index.html" data-i18n="nav-home">Ana Səhifə</a>
+      <a href="about.html" data-i18n="nav-about">Haqqımızda</a>
+      <a href="examples.html" data-i18n="nav-examples">Nümunələr</a>
+      <a href="request.html" class="active" data-i18n="nav-request">Sifariş ver</a>
+      <a href="calculator.html" data-i18n="nav-calc">Kalkulyator</a>
+      <a href="faq.html" data-i18n="nav-faq">FAQ</a>
+      <a href="index.html#contact" data-i18n="nav-contact">Əlaqə</a>
+    </nav>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <a href="tel:+994708884242" class="btn btn-outline header-cta" data-i18n="call-btn">Zəng edin</a>
+      <button id="langToggle" class="lang-btn"><img src="https://flagcdn.com/24x18/ru.png" alt="RU" style="width:20px;height:14px;border-radius:2px;vertical-align:middle;"> RU</button>
+        <button class="hamburger" id="hamburgerBtn" aria-label="Menyu"><span></span><span></span><span></span></button>
+    </div>
+  </div></div>
+</header>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html" data-i18n="nav-home">Ana Səhifə</a>
+  <a href="about.html" data-i18n="nav-about">Haqqımızda</a>
+  <a href="examples.html" data-i18n="nav-examples">Nümunələr</a>
+  <a href="request.html" data-i18n="nav-request">Sifariş ver</a>
+  <a href="calculator.html" data-i18n="nav-calc">Kalkulyator</a>
+  <a href="faq.html" data-i18n="nav-faq">FAQ</a>
+  <a href="index.html#contact" data-i18n="nav-contact">Əlaqə</a>
+</div>
+
+<section class="page-hero"><div class="wrap">
+  <div class="breadcrumb"><a href="index.html" data-i18n="bc-home">Ana səhifə</a> / Sifariş ver</div>
+  <span class="eyebrow" data-i18n="req-eye">2 dəqiqə çəkir</span>
+  <h1 data-i18n="req-h1">Hansı avtomobili axtarırsınız?</h1>
+  <p data-i18n="req-sub">Heç nə ödəmirsiniz — bu, sadəcə axtarış sorğusudur.</p>
+</div></section>
+
+<div class="form-wrap"><div class="wrap"><div class="form-grid">
+  <div>
+    <div id="formView" class="form-card">
+      <form id="carRequestForm" novalidate>
+        <fieldset>
+          <legend data-i18n="req-leg1">Avtomobil</legend>
+          <p class="legend-sub" data-i18n="req-leg1-sub">Dəqiq bilmirsinizsə, təxmini yazın.</p>
+          <div class="field-row">
+            <div class="field"><label for="make" data-i18n="req-make">Marka</label><input type="text" id="make" name="make" placeholder="Toyota"><div class="field-error" data-i18n="err-make">Marka daxil edin</div></div>
+            <div class="field"><label for="model" data-i18n="req-model">Model</label><input type="text" id="model" name="model" placeholder="Camry"><div class="field-error" data-i18n="err-model">Model daxil edin</div></div>
+          </div>
+          <div class="field-row">
+            <div class="field"><label for="yearFrom" data-i18n="req-yearmin">İl (min)</label><select id="yearFrom" name="yearFrom"></select></div>
+            <div class="field"><label for="yearTo" data-i18n="req-yearmax">İl (maks)</label><select id="yearTo" name="yearTo"></select></div>
+          </div>
+          <div class="field"><label data-i18n="req-cond">Vəziyyət</label>
+            <div class="radio-group">
+              <label class="radio-pill"><input type="radio" name="condition" value="new" checked><span data-i18n="req-cond1">Zədəsiz</span></label>
+              <label class="radio-pill"><input type="radio" name="condition" value="light"><span data-i18n="req-cond2">Yüngül zədəli</span></label>
+              <label class="radio-pill"><input type="radio" name="condition" value="any"><span data-i18n="req-cond3">Fərq etməz</span></label>
+            </div>
+          </div>
+          <div class="field"><label for="mileage" data-i18n="req-mileage">Maksimum yürüş (km)</label><input type="number" id="mileage" name="mileage" min="0" max="500000" step="1000" placeholder="məs. 120000"></div>
+        </fieldset>
+        <fieldset>
+          <legend data-i18n="req-leg2">Büdcə</legend>
+          <p class="legend-sub" data-i18n="req-leg2-sub">Yekun qiymətə auksion + daşınma + gömrük + xidmət haqqı daxildir.</p>
+          <div class="field-row">
+            <div class="field"><label for="budgetMin" data-i18n="req-min">Minimum ($)</label><input type="number" id="budgetMin" name="budgetMin" min="0" max="300000" step="500" value="5000"></div>
+            <div class="field"><label for="budgetMax" data-i18n="req-max">Maksimum ($)</label><input type="number" id="budgetMax" name="budgetMax" min="0" max="300000" step="500" value="30000"></div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend data-i18n="nav-contact">Əlaqə</legend>
+          <p class="legend-sub" data-i18n="req-leg3-sub">24 saat ərzində əlaqə saxlayacağıq.</p>
+          <div class="field-row">
+            <div class="field"><label for="name" data-i18n="req-name">Ad Soyad</label><input type="text" id="name" name="name" placeholder="Adınız Soyadınız"><div class="field-error" data-i18n="err-name">Adınızı daxil edin</div></div>
+            <div class="field"><label for="phone" data-i18n="req-phone">Telefon</label><input type="tel" id="phone" name="phone" placeholder="+994 XX XXX XX XX"><div class="field-error" data-i18n="err-phone">Telefon daxil edin</div></div>
+          </div>
+          <div class="field"><label for="notes"><span data-i18n="req-notes">Əlavə qeydlər</span> <span class="hint" data-i18n="req-notes-hint">(istəyə görə)</span></label><textarea id="notes" name="notes" placeholder="Rəng, komplektasiya və s."></textarea></div>
+        </fieldset>
+        <div class="submit-row"><button type="submit" class="btn btn-red" data-i18n="req-submit">Sorğunu göndər</button><span class="submit-note" data-i18n="req-nobind">Öhdəlik yaratmır</span></div>
+      </form>
+    </div>
+    <div class="success form-card" id="successView"><div class="success-icon">✓</div><h2 data-i18n="req-succ-h">Sorğunuz qəbul edildi</h2><p data-i18n="req-succ-p">24 saat ərzində sizinlə əlaqə saxlayacağıq.</p><a href="index.html" class="btn btn-outline" data-i18n="req-succ-btn">Ana səhifəyə qayıt</a></div>
+  </div>
+  <aside class="side-col">
+    <div class="side-photo"><img src="https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?w=700&q=80" alt="Auksion"></div>
+    <div class="side-panel">
+      <h3 data-i18n="req-side-h">Sonra nə baş verir</h3>
+      <div class="side-step"><div class="side-num">1</div><p><strong data-i18n="req-s1">24 saat ərzində zəng</strong data-i18n="req-s1p">Sorğunuzu araşdırıb əlaqə saxlayırıq.</p></div>
+      <div class="side-step"><div class="side-num">2</div><p><strong data-i18n="req-s2">2-3 uyğun lot</strong>Tam vəziyyət hesabatı ilə variantlar göndəririk.</p></div>
+      <div class="side-step"><div class="side-num">3</div><p><strong data-i18n="req-s3">Siz qərar verirsiniz</strong data-i18n="req-s3p">Təsdiqləyənə qədər heç nə ödəmirsiniz.</p></div>
+      <div class="side-divider"></div>
+      <div class="side-contact" data-i18n="req-urgent">Tələsikdirsə:<br><a href="tel:+994708884242">070 888 42 42</a></div>
+    </div>
+  </aside>
+</div></div></div>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-brand"><img src="images/azbaku-logo-v2.png" alt="AzBaku" style="width:30px;height:30px;object-fit:contain;"><span style="color:var(--white);font-weight:800;font-size:14px;text-transform:uppercase;letter-spacing:0.04em;">AzBaku AutoImport</span></div>
+        <p style="color:#E8EAED;max-width:260px;font-size:13px;" data-i18n="foot-desc">ABŞ və Kanada auksionlarından Azərbaycana sifarişlə avtomobil idxalı.</p>
+      </div>
+      <div><h4 data-i18n="foot-nav">Naviqasiya</h4><a href="about.html" data-i18n="nav-about">Haqqımızda</a>
+      <a href="examples.html" data-i18n="nav-examples">Nümunələr</a><a href="request.html" data-i18n="nav-request">Sifariş ver</a><a href="calculator.html" data-i18n="nav-calc">Kalkulyator</a><a href="index.html#process">Prosesimiz</a></div>
+      <div><h4 data-i18n="nav-contact">Əlaqə</h4><a href="tel:+994708884242">070 888 42 42</a><a href="mailto:info@azbaku.az">info@azbaku.az</a><a href="#" data-i18n="foot-addr">Bakı, Azərbaycan</a></div>
+      <div><h4 data-i18n="foot-social">Sosial</h4><a href="#">Instagram</a><a href="#">Facebook</a><a href="#">WhatsApp</a></div>
+    </div>
+    <div class="foot-bottom"><span>© 2026 AzBaku AutoImport</span><span data-i18n="foot-copy">Şəffaf idxal, etibarlı proses.</span></div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var yf=document.getElementById('yearFrom'),yt=document.getElementById('yearTo');
+  for(var y=2027;y>=2000;y--){var o1=document.createElement('option');o1.value=y;o1.textContent=y;var o2=o1.cloneNode(true);yf.appendChild(o1);yt.appendChild(o2);}
+  yf.value=2020;yt.value=2026;
+  var form=document.getElementById('carRequestForm'),req=['make','model','name','phone'];
+  function validate(){var ok=true;req.forEach(function(n){var el=form.querySelector('[name="'+n+'"]'),w=el.closest('.field');if(!el.value.trim()){w.classList.add('invalid');ok=false;}else{w.classList.remove('invalid');}});return ok;}
+  req.forEach(function(n){form.querySelector('[name="'+n+'"]').addEventListener('input',function(){if(this.value.trim())this.closest('.field').classList.remove('invalid');});});
+  form.addEventListener('submit',function(e){e.preventDefault();if(!validate()){var fi=form.querySelector('.field.invalid input');if(fi)fi.focus();return;}
+    var sb=form.querySelector('button[type="submit"]');sb.disabled=true;sb.textContent='Göndərilir...';
+    var payload={make:form.make.value.trim(),model:form.model.value.trim(),yearFrom:form.yearFrom.value,yearTo:form.yearTo.value,condition:form.querySelector('input[name="condition"]:checked').value,mileage:form.mileage.value||'',budget:form.budgetMin.value+'-'+form.budgetMax.value,name:form.name.value.trim(),phone:form.phone.value.trim(),notes:form.notes.value.trim()};
+    fetch('/api/submissions.php',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}).then(function(r){return r.json();}).then(function(){document.getElementById('formView').style.display='none';document.getElementById('successView').classList.add('show');window.scrollTo({top:0,behavior:'smooth'});}).catch(function(){sb.disabled=false;sb.textContent='Sorğunu göndər';alert('Xəta. Yenidən cəhd edin.');});
+  });
+  var btn=document.getElementById('hamburgerBtn'),menu=document.getElementById('mobileMenu'),hdr=document.querySelector('header');
+  btn.addEventListener('click',function(){menu.style.top=hdr.offsetHeight+'px';menu.classList.toggle('open');});
+  menu.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){menu.classList.remove('open');});});
+  document.addEventListener('click',function(e){if(menu.classList.contains('open')&&!menu.contains(e.target)&&!btn.contains(e.target))menu.classList.remove('open');});
+})();
+</script>
+<script src="lang.js"></script>
+</body>
+</html>
