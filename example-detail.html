@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nümunə — AzBaku AutoImport</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--blue:#002B8A;--blue-deep:#001A54;--silver:#C4C9CC;--white:#FFFFFF;--charcoal:#1A1A1A;--red:#D7263D;--paper:#F5F7F9;--steel:#5B6672;--line:#E1E5E8;}
+*{margin:0;padding:0;box-sizing:border-box;}body{font-family:'Inter',sans-serif;color:var(--charcoal);background:var(--white);line-height:1.6;}
+h1,h2,h3{font-family:'Fraunces',serif;font-weight:600;color:var(--blue);}a{color:inherit;text-decoration:none;}img{max-width:100%;display:block;}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px;}.eyebrow{font-size:12.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--red);font-weight:700;margin-bottom:14px;display:inline-block;}
+header{position:sticky;top:0;z-index:60;background:var(--white);padding:0;}
+.topbar{background:var(--blue);}
+.topbar .wrap{display:flex;justify-content:center;align-items:center;padding:7px 20px;}
+.topbar a{color:var(--white);font-weight:600;font-size:12.5px;}
+.navwrap{background:rgba(255,255,255,0.72);backdrop-filter:blur(22px) saturate(160%);-webkit-backdrop-filter:blur(22px) saturate(160%);}
+.navwrap .wrap{display:flex;align-items:center;justify-content:space-between;padding:10px 20px;gap:14px;flex-wrap:nowrap;}
+.brand{flex-shrink:0;font-family:'Inter',sans-serif;font-weight:800;font-size:12px;letter-spacing:0.03em;text-transform:uppercase;color:var(--blue);display:flex;align-items:center;gap:7px;white-space:nowrap;overflow:hidden;line-height:1.15;}
+.brand-mark{width:38px;height:26px;flex-shrink:0;}
+.brand-mark img{width:100%;height:100%;object-fit:contain;display:block;}
+nav{display:none;}
+nav a{font-size:14px;font-weight:600;color:var(--charcoal);padding:7px 14px;white-space:nowrap;border-radius:999px;transition:background .15s ease,color .15s ease;}
+nav a:hover{color:var(--blue);}
+nav a.active{background:var(--blue);color:#fff !important;font-weight:700;}
+.mobile-menu a.active{color:var(--blue);font-weight:800;}
+.header-cta{display:none !important;}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 24px;border-radius:7px;font-weight:700;font-size:14px;border:1.5px solid transparent;cursor:pointer;white-space:nowrap;}
+.btn:hover{transform:translateY(-1px);}
+.btn-red{background:var(--red);color:var(--white);}
+.btn-outline{background:transparent;color:var(--blue);border-color:var(--blue);}
+.btn-outline:hover{background:var(--blue);color:var(--white);}
+.btn-outline-light{background:transparent;color:var(--white);border-color:rgba(255,255,255,0.5);}
+.lang-btn{display:flex;align-items:center;gap:5px;padding:6px 10px;border:1.5px solid var(--line);border-radius:6px;background:var(--white);font-size:11px;font-weight:700;color:var(--blue);cursor:pointer;flex-shrink:0;}
+.lang-btn:hover{border-color:var(--blue);}
+.hamburger{display:flex;flex-direction:column;justify-content:center;gap:4px;width:36px;height:36px;flex-shrink:0;border:1.5px solid var(--line);border-radius:8px;background:var(--white);cursor:pointer;}
+.hamburger span{width:15px;height:2px;background:var(--blue);margin:0 auto;}
+.mobile-menu{display:none;flex-direction:column;padding:8px 20px 16px;position:fixed;left:0;right:0;top:0;z-index:70;background:var(--white);box-shadow:0 12px 24px rgba(0,0,0,0.12);overflow-y:auto;}
+.mobile-menu.open{display:flex;}
+.mobile-menu a{padding:13px 0;font-size:15px;font-weight:600;color:var(--blue);border-bottom:1px solid var(--line);}
+
+/* Desktop: floating centered pill nav */
+@media(min-width:769px){
+  .topbar{display:none;}
+  header{background:transparent;padding:14px 20px 0;}
+  .navwrap{max-width:1200px;margin:0 auto;border-radius:999px;box-shadow:0 10px 30px rgba(0,43,138,0.14);border:1px solid rgba(255,255,255,0.5);background:rgba(255,255,255,0.75);backdrop-filter:blur(24px) saturate(160%);-webkit-backdrop-filter:blur(24px) saturate(160%);}
+  .navwrap .wrap{padding:10px 16px 10px 24px;}
+  .brand{font-size:17px;font-weight:800;gap:9px;}
+  .brand-mark{width:46px;height:31px;}
+  nav{display:flex;align-items:center;gap:2px;flex-shrink:1;min-width:0;}
+  nav a{font-size:13.5px;padding:8px 15px;}
+  .header-cta{display:inline-flex !important;padding:11px 22px;}
+  .hamburger{display:none;}
+  .wrap{padding:0 32px;}
+}
+/* Mobile ≤480px */
+@media(max-width:480px){
+  .wrap{padding:0 14px;}
+  .r2,.r3,.r4,.row2,.row3,.row4,.field-row{grid-template-columns:1fr !important;gap:0 !important;}
+  .cases,.gallery-grid,.values-grid,.how-steps,.paths,.info-grid,.foot-grid,.calc-grid,.form-grid,.detail-grid,.faq-layout,.route-split,.about-intro{grid-template-columns:1fr !important;}
+  .about-stats,.stats,.quick-stats{grid-template-columns:1fr 1fr !important;}
+  .result-card,.faq-filters{position:static !important;}
+  h1{font-size:clamp(21px,6.5vw,30px) !important;}
+  h2{font-size:clamp(19px,5.8vw,26px) !important;}
+  h3{font-size:16px !important;}
+  .hero-inner{padding:34px 0 30px !important;}
+  .page-hero{padding:32px 0 26px !important;}
+  .page-hero .wrap{padding:32px 14px 26px !important;}
+  section{padding:44px 0 !important;}
+  .why-band,.how-section,.about-cta,.faq-cta{padding:26px 16px !important;}
+  .calc-card,.form-card,.card{padding:18px !important;}
+  .detail-hero img{height:200px !important;}
+  .about-img img{height:200px !important;}
+  .route-photo img{height:200px !important;}
+  .case-photo{height:170px !important;}
+  .hero-btns,.cta-btns,.btns{flex-direction:column;width:100%;}
+  .hero-btns .btn,.cta-btns .btn,.btns .btn{width:100%;}
+  input,select,textarea{font-size:16px !important;}
+  .foot-bottom{flex-direction:column;text-align:center;}
+  .trust-strip .wrap{grid-template-columns:1fr 1fr !important;}
+}
+/* Small mobile ≤360px */
+@media(max-width:360px){
+  .brand{font-size:10px !important;}
+  .brand-mark{width:30px !important;height:21px !important;}
+  .stats,.about-stats,.quick-stats{grid-template-columns:1fr !important;}
+}
+
+.breadcrumb{font-size:13px;color:var(--steel);margin:20px 0;}
+.breadcrumb a:hover{color:var(--blue);}
+.loading-state,.error-state{text-align:center;padding:80px 20px;color:var(--steel);font-size:14px;}
+
+.detail-hero{position:relative;max-width:1180px;margin:0 auto;border-radius:16px;overflow:hidden;height:380px;}
+.detail-hero img{width:100%;height:100%;object-fit:cover;display:block;}
+.flag-badge{position:absolute;top:16px;left:16px;background:rgba(255,255,255,0.94);padding:6px 12px;border-radius:999px;font-size:13px;font-weight:700;display:flex;align-items:center;gap:6px;color:var(--charcoal);}
+.flag-img{width:16px;height:11px;border-radius:2px;object-fit:cover;}
+.status-badge{position:absolute;top:16px;right:16px;background:var(--blue);color:var(--white);padding:6px 14px;border-radius:999px;font-size:12px;font-weight:700;}
+
+.detail-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:36px;padding:36px 0 80px;align-items:start;}
+.detail-title h1{font-size:clamp(24px,3.2vw,34px);margin-bottom:14px;}
+.detail-desc{color:var(--steel);font-size:15px;line-height:1.75;margin-bottom:26px;}
+.quick-stats{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.stat-box{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:16px;}
+.stat-box .label{font-size:11px;color:var(--steel);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:6px;}
+.stat-box .value{font-size:18px;font-weight:800;color:var(--blue);}
+
+.breakdown-card{background:var(--white);border:1px solid var(--line);border-radius:16px;padding:26px;position:sticky;top:100px;box-shadow:0 8px 30px rgba(0,43,138,0.06);}
+.breakdown-card h3{font-size:17px;margin-bottom:16px;}
+.breakdown-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--line);font-size:13.5px;color:var(--steel);}
+.breakdown-row span:last-child{color:var(--charcoal);font-weight:600;}
+.breakdown-total{display:flex;justify-content:space-between;padding:16px 0 0;margin-top:8px;font-weight:800;font-size:17px;color:var(--blue);}
+.breakdown-note{font-size:11.5px;color:var(--steel);margin-top:14px;line-height:1.6;}
+.cta-box{margin-top:18px;text-align:center;}
+.cta-box p{font-size:11.5px;color:var(--steel);margin-top:8px;}
+
+footer{background:linear-gradient(180deg,#6B7280 0%,#1F2937 100%);color:#E8EAED;padding:52px 0 24px;font-size:14px;}
+.foot-bottom{border-top:1px solid rgba(255,255,255,0.1);padding-top:20px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:12.5px;color:rgba(196,201,204,0.6);}
+.foot-brand{display:flex;align-items:center;gap:8px;margin-bottom:12px;}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:28px;margin-bottom:32px;}
+.foot-grid h4{color:var(--white);font-size:14px;font-weight:700;margin-bottom:12px;}
+.foot-grid a{display:block;color:#E8EAED;margin-bottom:8px;font-size:13px;}
+.foot-grid a:hover{color:var(--white);}
+
+@media(max-width:900px){.detail-grid{grid-template-columns:1fr;}.breakdown-card{position:static;}.detail-hero{height:260px;}}
+@media(max-width:560px){.quick-stats{grid-template-columns:1fr;}}
+@media(max-width:880px){.foot-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:560px){.foot-grid{grid-template-columns:1fr;}}
+
+</style>
+</head>
+<body>
+<header>
+  <div class="topbar"><div class="wrap"><a href="tel:+994708884242">070 888 42 42</a></div></div>
+  <div class="navwrap"><div class="wrap">
+    <a href="index.html" class="brand"><span class="brand-mark"><img src="images/azbaku-logo-v2.png" alt="AzBaku"></span><span style="display:flex;flex-direction:column;line-height:1.15;"><span>AZBAKU</span><span>AUTOIMPORT</span></span></a>
+    <nav>
+      <a href="index.html" data-i18n="nav-home">Ana Səhifə</a>
+      <a href="about.html" data-i18n="nav-about">Haqqımızda</a>
+      <a href="examples.html" class="active" data-i18n="nav-examples">Nümunələr</a>
+      <a href="request.html" data-i18n="nav-request">Sifariş ver</a>
+      <a href="calculator.html" data-i18n="nav-calc">Kalkulyator</a>
+      <a href="faq.html" data-i18n="nav-faq">FAQ</a>
+      <a href="index.html#contact" data-i18n="nav-contact">Əlaqə</a>
+    </nav>
+    <div style="display:flex;align-items:center;gap:12px;"><a href="request.html" class="btn btn-red header-cta" data-i18n="nav-request">Sifariş ver</a><button id="langToggle" class="lang-btn"><img src="https://flagcdn.com/24x18/ru.png" alt="RU" style="width:20px;height:14px;border-radius:2px;vertical-align:middle;"> RU</button>
+        <button class="hamburger" id="hamburgerBtn" aria-label="Menyu"><span></span><span></span><span></span></button></div>
+  </div></div>
+</header>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html" data-i18n="nav-home">Ana Səhifə</a>
+  <a href="about.html" data-i18n="nav-about">Haqqımızda</a>
+  <a href="examples.html" class="active" data-i18n="nav-examples">Nümunələr</a>
+  <a href="request.html" data-i18n="nav-request">Sifariş ver</a>
+  <a href="calculator.html" data-i18n="nav-calc">Kalkulyator</a>
+  <a href="faq.html" data-i18n="nav-faq">FAQ</a>
+  <a href="index.html#contact" data-i18n="nav-contact">Əlaqə</a>
+</div>
+
+<div class="wrap"><div class="breadcrumb"><a href="index.html" data-i18n="bc-home">Ana səhifə</a> / <a href="about.html" data-i18n="nav-about">Haqqımızda</a>
+      <a href="examples.html" data-i18n="nav-examples">Nümunələr</a> / <span id="breadcrumbTitle">...</span></div></div>
+<div class="loading-state" id="loadingState">Yüklənir...</div>
+<div class="error-state" id="errorState" style="display:none;"><span data-i18n="det-notfound">Tapılmadı.</span> <a href="examples.html" data-i18n="det-back" style="color:var(--blue);font-weight:700;">Nümunələrə qayıt →</a></div>
+
+<div class="wrap" id="detailContent">
+  <div class="detail-hero">
+    <img id="detailPhoto" src="" alt="">
+    <span class="flag-badge"><span id="detailFlag"></span><span id="detailCountry"></span></span>
+    <span class="status-badge" data-i18n="delivered">Təhvil verildi</span>
+  </div>
+  <div class="detail-grid">
+    <div>
+      <div class="detail-title"><h1 id="detailTitle"></h1></div>
+      <p class="detail-desc" id="detailDesc"></p>
+      <div class="quick-stats">
+        <div class="stat-box"><div class="label" data-i18n="det-country">Mənşə ölkə</div><div class="value" id="statCountry"></div></div>
+        <div class="stat-box"><div class="label" data-i18n="det-days">Ümumi müddət</div><div class="value" id="statDays"></div></div>
+      </div>
+    </div>
+    <aside class="breakdown-card">
+      <h3 data-i18n="det-breakdown">Qiymət bölgüsü</h3>
+      <div class="breakdown-row"><span data-i18n="det-auction">Auksion qiyməti</span><span id="bdAuction">—</span></div>
+      <div class="breakdown-row"><span data-i18n="det-shipping">Daşınma (gəmi)</span><span id="bdShipping">—</span></div>
+      <div class="breakdown-row"><span data-i18n="det-customs">Gömrük rüsumu</span><span id="bdCustoms">—</span></div>
+      <div class="breakdown-row"><span data-i18n="det-service">Xidmət haqqımız</span><span id="bdService">—</span></div>
+      <div class="breakdown-total"><span data-i18n="det-total">Yekun qiymət</span><span id="bdTotal">—</span></div>
+      <p class="breakdown-note" data-i18n="det-note">Bu rəqəmlər real sifarişin bölgüsüdür.</p>
+      <div class="cta-box"><a href="request.html" class="btn btn-red" style="width:100%;" data-i18n="det-cta">Oxşar avtomobil sifariş ver</a><p data-i18n="det-nobind">Öhdəlik yaratmır</p></div>
+    </aside>
+  </div>
+</div>
+<footer id="contact">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-brand"><img src="images/azbaku-logo-v2.png" alt="AzBaku" style="width:30px;height:30px;object-fit:contain;"><span style="color:#5C8DFF;font-weight:800;font-size:14px;text-transform:uppercase;letter-spacing:0.04em;text-shadow:0 1px 2px rgba(0,0,0,0.3);">AzBaku AutoImport</span></div>
+        <p style="color:#E8EAED;max-width:260px;font-size:13px;" data-i18n="foot-desc">ABŞ və Kanada auksionlarından Azərbaycana sifarişlə avtomobil idxalı.</p>
+      </div>
+      <div><h4 data-i18n="foot-nav">Naviqasiya</h4><a href="about.html" data-i18n="nav-about">Haqqımızda</a>
+      <a href="examples.html" data-i18n="nav-examples">Nümunələr</a><a href="request.html" data-i18n="nav-request">Sifariş ver</a><a href="calculator.html" data-i18n="nav-calc">Kalkulyator</a><a href="index.html#process">Prosesimiz</a></div>
+      <div><h4 data-i18n="nav-contact">Əlaqə</h4><a href="tel:+994708884242">070 888 42 42</a><a href="mailto:info@azbaku.az">info@azbaku.az</a><a href="#" data-i18n="foot-addr">Bakı, Azərbaycan</a></div>
+      <div><h4 data-i18n="foot-social">Sosial</h4><a href="#">Instagram</a><a href="#">Facebook</a><a href="#">WhatsApp</a></div>
+    </div>
+    <div class="foot-bottom"><span>© 2026 <span style="color:#5C8DFF;font-weight:700;">AzBaku AutoImport</span></span><span data-i18n="foot-copy">Şəffaf idxal, etibarlı proses.</span></div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var btn=document.getElementById('hamburgerBtn'),menu=document.getElementById('mobileMenu'),hdr=document.querySelector('header');
+  btn.addEventListener('click',function(){menu.style.top=hdr.offsetHeight+'px';menu.classList.toggle('open');});
+  menu.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){menu.classList.remove('open');});});
+  document.addEventListener('click',function(e){if(menu.classList.contains('open')&&!menu.contains(e.target)&&!btn.contains(e.target))menu.classList.remove('open');});
+
+  function flag(code){if(!code||code.length!==2)return'<img src="https://flagcdn.com/24x18/us.png" alt="flag" class="flag-img">';return'<img src="https://flagcdn.com/24x18/'+code.toLowerCase()+'.png" alt="'+code+'" class="flag-img">';}
+  var fb={'static-1':{title:'Honda CR-V 2022',country:'ABŞ',country_code:'US',photo_url:'https://images.unsplash.com/photo-1568844293986-8d0400bd4745?w=1200&q=80',price:'$21,400',auction_price:'$16,800',shipping_price:'$1,350',customs_price:'$2,800',service_fee:'$450',days:'41 gün',description:'Bu Honda CR-V Florida ştatındakı Copart auksionundan tapıldı və 9 gün ərzində qazanıldı.'},'static-2':{title:'Ford F-150 2020',country:'Kanada',country_code:'CA',photo_url:'https://images.unsplash.com/photo-1605893477799-b99e3b8b93fe?w=1200&q=80',price:'$26,900',auction_price:'$21,200',shipping_price:'$1,600',customs_price:'$3,650',service_fee:'$450',days:'38 gün',description:'Ford F-150 Ontario əyalətindəki IAAI auksionundan alındı.'},'static-3':{title:'BMW 3 Series 2021',country:'ABŞ',country_code:'US',photo_url:'https://images.unsplash.com/photo-1555215695-3004980ad54e?w=1200&q=80',price:'$24,150',auction_price:'$19,400',shipping_price:'$1,400',customs_price:'$2,900',service_fee:'$450',days:'44 gün',description:'BMW 3 Series Texas ştatındakı auksiondan zədəsiz vəziyyətdə qazanıldı.'}};
+
+  function show(c){document.getElementById('loadingState').style.display='none';if(!c){document.getElementById('errorState').style.display='block';return;}
+    document.title=c.title+' — AzBaku AutoImport';document.getElementById('breadcrumbTitle').textContent=c.title;document.getElementById('detailTitle').textContent=c.title;document.getElementById('detailDesc').textContent=c.description||'';
+    document.getElementById('detailPhoto').src=c.photo_url||'';document.getElementById('detailPhoto').alt=c.title;document.getElementById('detailFlag').innerHTML=flag(c.country_code);document.getElementById('detailCountry').textContent=' '+(c.country||'');
+    document.getElementById('statCountry').textContent=c.country||'—';document.getElementById('statDays').textContent=c.days||'—';
+    document.getElementById('bdAuction').textContent=c.auction_price||'—';document.getElementById('bdShipping').textContent=c.shipping_price||'—';document.getElementById('bdCustoms').textContent=c.customs_price||'—';document.getElementById('bdService').textContent=c.service_fee||'—';document.getElementById('bdTotal').textContent=c.price||'—';
+    document.getElementById('detailContent').classList.add('show');}
+
+  var id=new URLSearchParams(window.location.search).get('id');
+  if(!id){document.getElementById('loadingState').style.display='none';document.getElementById('errorState').style.display='block';}
+  else if(fb[id]){show(fb[id]);}
+  else{fetch('/api/cases.php?id='+encodeURIComponent(id)).then(function(r){return r.json();}).then(function(c){show(c);}).catch(function(){document.getElementById('loadingState').style.display='none';document.getElementById('errorState').style.display='block';});}
+})();
+</script>
+<script src="lang.js"></script>
+</body>
+</html>
