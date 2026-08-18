@@ -597,17 +597,28 @@ function doLogin(){
   if(!u||!p){showLoginErr('İstifadəçi adı və şifrə yazın');return;}
   $('loginBtn').textContent='Yoxlanılır...';$('loginBtn').disabled=true;
   fetch('api/login.php',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({user:u,pass:p})})
-    .then(function(r){return r.json();})
-    .then(function(d){
+    .then(function(r){
+      return r.text().then(function(txt){
+        var parsed=null; try{parsed=JSON.parse(txt);}catch(e){parsed=null;}
+        return {status:r.status, text:txt, json:parsed};
+      });
+    })
+    .then(function(result){
       $('loginBtn').textContent='Daxil ol';$('loginBtn').disabled=false;
-      if(!d.ok){showLoginErr(d.error||'Giriş alınmadı');return;}
+      var d=result.json;
+      if(!d){
+        var raw=(result.text||'').replace(/<[^>]*>/g,' ').trim().slice(0,200);
+        showLoginErr('Server xətası (HTTP '+result.status+'): '+(raw||'boş cavab'));
+        return;
+      }
+      if(!d.ok){showLoginErr((d.error||'Giriş alınmadı')+(d.debug?' — '+d.debug:''));return;}
       tok=d.token;role=d.role;uname=d.name||d.user;
       sessionStorage.setItem('ab_tok',tok);
       sessionStorage.setItem('ab_role',role);
       sessionStorage.setItem('ab_name',uname);
       enterApp();
     })
-    .catch(function(){$('loginBtn').textContent='Daxil ol';$('loginBtn').disabled=false;showLoginErr('Server xətası — api/login.php yüklənibmi?');});
+    .catch(function(err){$('loginBtn').textContent='Daxil ol';$('loginBtn').disabled=false;showLoginErr('Şəbəkə xətası: '+(err&&err.message?err.message:'naməlum'));});
 }
 function showLoginErr(m){var e=$('loginErr');e.textContent=m;e.style.display='block';}
 
