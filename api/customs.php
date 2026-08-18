@@ -84,7 +84,7 @@ if (!$curlErr && $httpCode === 404) {
 }
 
 if ($curlErr || !$resp) {
-    echo json_encode(["ok" => false, "error" => "DGK servisinə qoşulmaq mümkün olmadı", "debug" => $curlErr ?: "boş cavab, httpCode=$httpCode"]);
+    echo json_encode(["ok" => false, "error" => "DGK servisinə qoşulmaq mümkün olmadı", "debug" => $curlErr ?: "boşŞŞŞŞŞŞŞ cavab, httpCode=$httpCode"]);
     exit;
 }
 
