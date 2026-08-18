@@ -23,7 +23,7 @@ register_shutdown_function(function () {
 
 try {
 
-require_once 'config.php'; // CORS header-ləri buradan gəlir
+require_once __DIR__ . '/config.php'; // CORS header-ləri buradan gəlir — __DIR__ ilə dəqiq yol
 
 header('Content-Type: application/json; charset=UTF-8');
 
@@ -41,26 +41,46 @@ if (!function_exists('curl_init')) {
 $d = json_decode(file_get_contents('php://input'), true);
 
 $engine   = intval($d['engine']   ?? 0);   // sm³
+$day      = intval($d['day']      ?? 1);
+$month    = intval($d['month']    ?? 1);
 $year     = intval($d['year']     ?? 0);   // buraxılış ili
 $price    = floatval($d['price']  ?? 0);   // USD
 $category = $d['category']        ?? 'sedan';
+$fuelType = $d['fuelType']        ?? 'benzin';
 
 if (!$engine || !$year || $price <= 0) {
     echo json_encode(["ok" => false, "error" => "Mühərrik həcmi, il və qiymət tələb olunur"]);
     exit;
 }
 
-// Bizim kateqoriyalardan DGK-nın "engineType" kodlarına uyğunlaşdırma
+// Bizim qranular yanacaq növlərindən DGK-nın rəsmi 6 "engineType" kodundan birinə
+// uyğunlaşdırma — API bunlardan başqasını qəbul etmir:
 // 0=Benzin 1=Dizel 2=Qaz 3=Hibrid Benzin 4=Hibrid Dizel 5=Elektrik
-$engineTypeMap = [
-    'ev'     => '5',
-    'hybrid' => '3',
+$fuelTypeMap = [
+    'benzin'                => '0',
+    'dizel'                 => '1',
+    'qaz'                   => '2',
+    'benzin_qaz'            => '2',
+    'dizel_qaz'             => '2',
+    'hibrid_benzin'         => '3',
+    'mild_hibrid_benzin'    => '3',
+    'plugin_hibrid_benzin'  => '3',
+    'hibrid_dizel'          => '4',
+    'mild_hibrid_dizel'     => '4',
+    'plugin_hibrid_dizel'   => '4',
+    'hibrid_qaz'            => '2',
+    'mild_hibrid_qaz'       => '2',
+    'elektrik'              => '5',
 ];
-$engineType = $engineTypeMap[$category] ?? '0';
+// Köhnə kateqoriya-əsaslı sistemdən gələn sorğular üçün geriyə uyğunluq
+$categoryFallbackMap = ['ev' => '5', 'hybrid' => '3'];
 
-// Dəqiq gün/ay bilinmədiyi üçün ilin ortası (01.07) neytral təxmin kimi istifadə olunur —
-// yaş həddi (1-3, 4-7, 7+) illər arasında olduğu üçün nəticəyə praktik olaraq təsir etmir.
-$issueDate = sprintf('01.07.%04d', $year);
+$engineType = $fuelTypeMap[$fuelType] ?? ($categoryFallbackMap[$category] ?? '0');
+
+// Tam gün/ay/il verilibsə onu istifadə edir, verilməyibsə ilin ortası (01.07) ilə əvəz edir.
+$day   = max(1, min(28, $day));
+$month = max(1, min(12, $month));
+$issueDate = sprintf('%02d.%02d.%04d', $day, $month, $year);
 
 $payload = json_encode([
     "autoType"     => "0",   // Minik avtomobili
