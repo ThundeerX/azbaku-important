@@ -6,6 +6,23 @@
 // Mənbə: DGK-nın "Açıq məlumatlar" bölməsindəki rəsmi texniki sənəd
 // (calcAutoDuty), e.customs.gov.az saytından əldə edilib.
 
+// --- MÜVƏQQƏTİ DEBUG REJİMİ: hər hansı PHP xətasını JSON kimi tutub göstərir ---
+ini_set('display_errors', '0'); // xam HTML xəta çıxmasın
+error_reporting(E_ALL);
+register_shutdown_function(function () {
+    $e = error_get_last();
+    if ($e && in_array($e['type'], [E_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR])) {
+        if (!headers_sent()) header('Content-Type: application/json; charset=UTF-8');
+        echo json_encode([
+            "ok" => false,
+            "error" => "PHP fatal xəta",
+            "debug" => $e['message'] . ' (sətir ' . $e['line'] . ', fayl: ' . basename($e['file']) . ')'
+        ]);
+    }
+});
+
+try {
+
 require_once 'config.php'; // CORS header-ləri buradan gəlir
 
 header('Content-Type: application/json; charset=UTF-8');
@@ -64,7 +81,9 @@ function callDgk($path, $payload) {
         CURLOPT_POST           => true,
         CURLOPT_POSTFIELDS     => $payload,
         CURLOPT_TIMEOUT        => 12,
-        CURLOPT_SSL_VERIFYPEER => true,
+        CURLOPT_SSL_VERIFYPEER => false,
+        CURLOPT_SSL_VERIFYHOST => false,
+        CURLOPT_CONNECTTIMEOUT => 6,
         CURLOPT_HTTPHEADER     => [
             "Content-Type: application/json",
             "lang: az",
@@ -78,13 +97,15 @@ function callDgk($path, $payload) {
     return [$resp, $httpCode, $curlErr];
 }
 
-list($resp, $httpCode, $curlErr) = callDgk('calcAutoDuty', $payload);
+// Swagger sənədi təsdiqlədi: düzgün yol "calAutoDuty"-dir (c-siz).
+// Onu əvvəlcə sınayırıq, "calcAutoDuty" isə ehtiyat (fallback) olaraq qalır.
+list($resp, $httpCode, $curlErr) = callDgk('calAutoDuty', $payload);
 if (!$curlErr && $httpCode === 404) {
-    list($resp, $httpCode, $curlErr) = callDgk('calAutoDuty', $payload);
+    list($resp, $httpCode, $curlErr) = callDgk('calcAutoDuty', $payload);
 }
 
 if ($curlErr || !$resp) {
-    echo json_encode(["ok" => false, "error" => "DGK servisinə qoşulmaq mümkün olmadı", "debug" => $curlErr ?: "boşŞŞŞŞŞŞŞ cavab, httpCode=$httpCode"]);
+    echo json_encode(["ok" => false, "error" => "DGK servisinə qoşulmaq mümkün olmadı", "debug" => $curlErr ?: "boş cavab, httpCode=$httpCode"]);
     exit;
 }
 
@@ -112,3 +133,12 @@ echo json_encode([
         return ["name" => $x['name'], "azn" => $x['value']];
     }, $duties)
 ]);
+
+} catch (\Throwable $e) {
+    if (!headers_sent()) header('Content-Type: application/json; charset=UTF-8');
+    echo json_encode([
+        "ok" => false,
+        "error" => "PHP xəta (exception)",
+        "debug" => $e->getMessage() . ' (sətir ' . $e->getLine() . ')'
+    ]);
+}
