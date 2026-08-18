@@ -16,6 +16,11 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
+if (!function_exists('curl_init')) {
+    echo json_encode(["ok" => false, "error" => "cURL əlçatan deyil", "debug" => "PHP cURL modulu bu serverdə söndürülüb (Hostinger dəstəyinə yazın)"]);
+    exit;
+}
+
 $d = json_decode(file_get_contents('php://input'), true);
 
 $engine   = intval($d['engine']   ?? 0);   // sm³
