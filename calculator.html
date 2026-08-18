@@ -498,19 +498,31 @@ footer{background:linear-gradient(180deg,#6B7280 0%,#1F2937 100%);color:#E8EAED;
         method:'POST',
         headers:{'Content-Type':'application/json'},
         body:JSON.stringify({engine:cc, year:year, price:price, category:cat})
-      }).then(function(r){return r.json();}).then(function(res){
+      }).then(function(r){
+        return r.text().then(function(txt){
+          var parsed = null;
+          try { parsed = JSON.parse(txt); } catch(e) { parsed = null; }
+          return {status:r.status, text:txt, json:parsed};
+        });
+      }).then(function(result){
+        var res = result.json;
         if(res && res.ok){
           officialCustomsUsd = res.totalUsd;
           if(src) src.innerHTML='✓ Dövlət Gömrük Komitəsinin rəsmi məlumatı';
-        } else {
+        } else if(res){
           officialCustomsUsd = null;
-          var dbg = (res && (res.debug||res.error)) ? ' — '+(res.debug||res.error) : '';
+          var dbg = (res.debug||res.error) ? ' — '+(res.debug||res.error) : '';
           if(src) src.textContent='Təxmini hesablama (DGK əlçatan deyil)'+dbg;
+        } else {
+          // JSON deyil — server PHP xətası qaytarıb, xam mətni göstər
+          officialCustomsUsd = null;
+          var raw = (result.text||'').replace(/<[^>]*>/g,' ').trim().slice(0,200);
+          if(src) src.textContent='Server xətası (HTTP '+result.status+'): '+(raw||'boş cavab');
         }
         recalc();
-      }).catch(function(){
+      }).catch(function(err){
         officialCustomsUsd = null;
-        if(src) src.textContent='Təxmini hesablama (DGK əlçatan deyil)';
+        if(src) src.textContent='Təxmini hesablama — şəbəkə xətası: '+(err&&err.message?err.message:'naməlum');
         recalc();
       });
     }, 600);
