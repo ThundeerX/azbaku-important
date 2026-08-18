@@ -17,7 +17,7 @@ if (!function_exists('curl_init')) {
 }
 step("2. cURL mövcuddur");
 
-$ch = curl_init('https://c2b-fbusiness.customs.gov.az/api/v1/dictionaries/calcAutoDuty');
+$ch = curl_init('https://c2b-fbusiness.customs.gov.az/api/v1/dictionaries/calAutoDuty');
 step("3. curl_init tamamlandı");
 
 curl_setopt_array($ch, [
