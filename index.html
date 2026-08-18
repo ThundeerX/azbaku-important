@@ -11,8 +11,6 @@
 <meta name="description" content="AzBaku AutoImport — ABŞ və Kanada auksionlarından istədiyiniz avtomobili tapırıq, alırıq və Bakıya gətiririk.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="image" href="images/hero-1.jpeg" media="(min-width:641px)">
-<link rel="preload" as="image" href="images/hero-1-mobile.jpeg?v=2" media="(max-width:640px)">
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&display=swap" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"></noscript>
 <style>
@@ -74,10 +72,8 @@ nav a.active{background:var(--blue);color:#fff !important;font-weight:700;}
 
 /* ===== HERO — 3-slide auto ===== */
 .hero{position:relative;min-height:100vh;display:flex;align-items:flex-end;overflow:hidden;margin-top:-80px;padding-top:80px;}
-.hero-slide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity 1.4s ease;}
-.hero-bg-1{background-image:url('images/hero-1.jpeg');}
-.hero-bg-2{background-image:url('images/hero-2.jpeg');}
-.hero-bg-3{background-image:url('images/hero-3.jpeg');}
+.hero-slide{position:absolute;inset:0;opacity:0;transition:opacity 1.4s ease;display:block;}
+.hero-slide img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;}
 .hero-slide.active{opacity:1;}
 .hero::after{content:"";position:absolute;inset:0;z-index:1;}
 .hero-inner{padding-top:80px;padding-bottom:64px;position:relative;z-index:2;color:var(--white);text-align:center;display:flex;flex-direction:column;align-items:center;width:100%;box-sizing:border-box;}
@@ -88,7 +84,7 @@ nav a.active{background:var(--blue);color:#fff !important;font-weight:700;}
 .hero-dots{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);z-index:2;display:flex;gap:8px;}
 .hero-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.4);}
 .hero-dot.active{background:var(--white);width:22px;border-radius:4px;}
-@media(max-width:640px){.hero{min-height:70vh;margin-top:-56px;margin-left:6px;margin-right:6px;padding-top:56px;border-radius:22px;}.hero-inner{padding-top:44px;padding-bottom:40px;}.hero p.lead{font-size:15px;margin-bottom:24px;}.hero-bg-1{background-image:url('images/hero-1-mobile.jpeg?v=2') !important;}.hero-bg-2{background-image:url('images/hero-2-mobile.jpeg?v=2') !important;}.hero-bg-3{background-image:url('images/hero-3-mobile.jpeg?v=2') !important;}}
+@media(max-width:640px){.hero{min-height:70vh;margin-top:-56px;margin-left:6px;margin-right:6px;padding-top:56px;border-radius:22px;}.hero-inner{padding-top:44px;padding-bottom:40px;}.hero p.lead{font-size:15px;margin-bottom:24px;}}
 
 /* ===== TRUST STRIP ===== */
 .trust-strip{background:var(--paper);padding:22px 0;border-bottom:1px solid var(--line);}
@@ -258,9 +254,18 @@ footer{background:linear-gradient(180deg,#6B7280 0%,#1F2937 100%);color:#E8EAED;
 </div>
 
 <section class="hero">
-  <div class="hero-slide hero-bg-1 active"></div>
-  <div class="hero-slide hero-bg-2"></div>
-  <div class="hero-slide hero-bg-3"></div>
+  <picture class="hero-slide active">
+    <source media="(max-width:640px)" srcset="images/hero-1-mobile.jpeg?v=2">
+    <img src="images/hero-1.jpeg" alt="AzBaku AutoImport" fetchpriority="high">
+  </picture>
+  <picture class="hero-slide">
+    <source media="(max-width:640px)" srcset="images/hero-2-mobile.jpeg?v=2">
+    <img src="images/hero-2.jpeg" alt="" loading="eager">
+  </picture>
+  <picture class="hero-slide">
+    <source media="(max-width:640px)" srcset="images/hero-3-mobile.jpeg?v=2">
+    <img src="images/hero-3.jpeg" alt="" loading="eager">
+  </picture>
   <div class="hero-dots"><span class="hero-dot active"></span><span class="hero-dot"></span><span class="hero-dot"></span></div>
   <div class="wrap hero-inner">
     
