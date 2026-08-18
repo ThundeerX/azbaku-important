@@ -1,6 +1,6 @@
 <?php
-require_once 'config.php';
-require_once 'auth.php';
+require_once __DIR__ . '/config.php';
+require_once __DIR__ . '/auth.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
