@@ -1,4 +1,23 @@
 <?php
+// --- MÜVƏQQƏTİ DEBUG REJİMİ: hər hansı PHP xətasını JSON kimi tutub göstərir ---
+ini_set('display_errors', '0');
+error_reporting(E_ALL);
+header('Content-Type: application/json; charset=UTF-8');
+
+register_shutdown_function(function () {
+    $e = error_get_last();
+    if ($e && in_array($e['type'], [E_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR])) {
+        if (!headers_sent()) header('Content-Type: application/json; charset=UTF-8');
+        echo json_encode([
+            "ok" => false,
+            "error" => "PHP fatal xəta",
+            "debug" => $e['message'] . ' (sətir ' . $e['line'] . ', fayl: ' . basename($e['file']) . ')'
+        ]);
+    }
+});
+
+try {
+
 require_once __DIR__ . '/config.php';
 require_once __DIR__ . '/auth.php';
 
@@ -19,7 +38,7 @@ if ($user === '' || $pass === '') {
 
 $users = defined('AB_USERS') ? json_decode(AB_USERS, true) : null;
 if (!is_array($users)) {
-    echo json_encode(["ok" => false, "error" => "İstifadəçilər config.php-də təyin olunmayıb"]);
+    echo json_encode(["ok" => false, "error" => "İstifadəçilər config.php-də təyin olunmayıb", "debug" => "AB_USERS boş və ya səhv formatda"]);
     exit;
 }
 
@@ -41,3 +60,12 @@ echo json_encode([
     "name"  => $users[$user]['name'] ?? ucfirst($user),
     "role"  => $users[$user]['role'] ?? 'admin'
 ]);
+
+} catch (\Throwable $e) {
+    if (!headers_sent()) header('Content-Type: application/json; charset=UTF-8');
+    echo json_encode([
+        "ok" => false,
+        "error" => "PHP xəta (exception)",
+        "debug" => $e->getMessage() . ' (sətir ' . $e->getLine() . ')'
+    ]);
+}
