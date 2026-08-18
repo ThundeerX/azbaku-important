@@ -4,14 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin — AzBaku AutoImport</title>
-<link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16.png">
-<link rel="apple-touch-icon" sizes="180x180" href="images/favicon-180.png">
-<link rel="icon" type="image/png" sizes="192x192" href="images/favicon-192.png">
 <meta name="robots" content="noindex,nofollow">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--blue:#002B8A;--blue-deep:#001A54;--silver:#C4C9CC;--white:#FFF;--charcoal:#1A1A1A;--red:#D7263D;--paper:#F5F7F9;--steel:#5B6672;--line:#E1E5E8;--green:#1F8A4C;}
+:root{--blue:#1B365D;--blue-deep:#122844;--silver:#C4C9CC;--white:#FFF;--charcoal:#1A1A1A;--red:#D7263D;--paper:#F5F7F9;--steel:#5B6672;--line:#E1E5E8;--green:#1F8A4C;}
 *{margin:0;padding:0;box-sizing:border-box;}
 body{font-family:'Inter',sans-serif;color:var(--charcoal);background:var(--paper);line-height:1.5;}
 h2,h3{font-weight:700;color:var(--blue);}
@@ -19,7 +15,7 @@ button{font-family:inherit;cursor:pointer;}
 
 /* Login */
 .login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;}
-.login-card{background:var(--white);border:1px solid var(--line);border-radius:16px;padding:40px;max-width:380px;width:100%;text-align:center;box-shadow:0 20px 50px rgba(0,43,138,0.08);}
+.login-card{background:var(--white);border:1px solid var(--line);border-radius:16px;padding:40px;max-width:380px;width:100%;text-align:center;box-shadow:0 20px 50px rgba(27,54,93,0.08);}
 .login-card h1{font-size:22px;margin-bottom:6px;color:var(--blue);}
 .login-card p{color:var(--steel);font-size:13px;margin-bottom:24px;}
 .login-card input{width:100%;padding:12px;border:1.5px solid var(--line);border-radius:8px;font-size:14px;text-align:center;letter-spacing:0.1em;margin-bottom:14px;font-family:inherit;}
@@ -30,7 +26,7 @@ button{font-family:inherit;cursor:pointer;}
 .app{display:none;}.app.show{display:flex;min-height:100vh;}
 
 /* Sidebar */
-.sidebar{width:235px;flex-shrink:0;background:var(--blue-deep);color:var(--white);display:flex;flex-direction:column;padding:16px 0;overflow-y:auto;position:fixed;left:0;top:0;height:100vh;z-index:50;}
+.sidebar{width:235px;flex-shrink:0;background:var(--blue-deep);color:var(--white);display:flex;flex-direction:column;padding:16px 0;overflow-y:auto;}
 .sb-brand{padding:0 16px 16px;border-bottom:1px solid rgba(255,255,255,0.1);margin-bottom:8px;display:flex;align-items:center;gap:8px;}
 .sb-brand img{width:36px;height:24px;object-fit:contain;}
 .sb-brand span{font-weight:800;font-size:12px;text-transform:uppercase;letter-spacing:0.04em;line-height:1.2;}
@@ -47,10 +43,10 @@ button{font-family:inherit;cursor:pointer;}
 .m-topbar{display:none;background:var(--blue-deep);color:var(--white);padding:12px 16px;align-items:center;justify-content:space-between;}
 .m-topbar span{font-weight:800;font-size:13px;text-transform:uppercase;}
 .m-topbar button{background:transparent;border:1px solid rgba(255,255,255,0.3);color:var(--white);padding:6px 12px;border-radius:6px;font-size:12px;}
-@media(max-width:860px){.app.show{flex-direction:column;}.sidebar{position:fixed;left:0;top:0;bottom:0;z-index:80;transform:translateX(-100%);transition:transform .2s;}.sidebar.open{transform:translateX(0);box-shadow:0 0 40px rgba(0,0,0,0.3);}.main{margin-left:0;}.m-topbar{display:flex;}}
+@media(max-width:860px){.app.show{flex-direction:column;}.sidebar{position:fixed;left:0;top:0;bottom:0;z-index:80;transform:translateX(-100%);transition:transform .2s;}.sidebar.open{transform:translateX(0);box-shadow:0 0 40px rgba(0,0,0,0.3);}.m-topbar{display:flex;}}
 
 /* Main */
-.main{flex:1;min-width:0;display:flex;flex-direction:column;margin-left:235px;}
+.main{flex:1;min-width:0;display:flex;flex-direction:column;}
 .main-hdr{background:var(--white);border-bottom:1px solid var(--line);padding:14px 24px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;flex-shrink:0;}
 .main-hdr h2{font-size:16px;}.main-hdr .sub{color:var(--steel);font-size:11.5px;}
 .main-body{padding:20px 24px 60px;flex:1;}
@@ -151,9 +147,7 @@ tr:hover td{background:var(--paper);}
   <div class="login-card">
     <div class="logo-mark"><img src="images/azbaku-logo-v2.png" alt="AB"></div>
     <h1>Admin Panel</h1><p>AzBaku AutoImport idarəetmə sistemi</p>
-    <input type="text" id="userInput" placeholder="İstifadəçi adı" autocomplete="username" style="letter-spacing:normal;">
-    <input type="password" id="pwInput" placeholder="Şifrə" autocomplete="current-password">
-    <div id="loginErr" style="display:none;color:var(--red);font-size:12px;margin-bottom:10px;font-weight:600;"></div>
+    <input type="password" id="pwInput" placeholder="Şifrə" autocomplete="off">
     <button class="btn btn-blue" style="width:100%;justify-content:center;" id="loginBtn">Daxil ol</button>
   </div>
 </div>
@@ -177,13 +171,12 @@ tr:hover td{background:var(--paper);}
       <button class="sb-btn" data-tab="cases">🚗 Nümunələr</button>
       <button class="sb-btn" data-tab="request">📝 Sifariş ver</button>
       <button class="sb-btn" data-tab="calc">🧮 Kalkulyator</button>
-      <button class="sb-btn" data-tab="api">🔑 API</button>
       <button class="sb-btn" data-tab="faq">❓ FAQ sualları</button>
 
       <div class="sb-label">Maliyyə</div>
       <button class="sb-btn" data-tab="receipt">🧾 Qəbzlər</button>
     </nav>
-    <div class="sb-foot"><div id="whoami" style="font-size:11px;color:rgba(255,255,255,0.55);margin-bottom:8px;padding:6px 8px;background:rgba(255,255,255,0.06);border-radius:6px;"></div>
+    <div class="sb-foot">
       <a href="index.html" target="_blank">↗ Sayta bax</a>
       <a href="faq.html" target="_blank">↗ FAQ səhifəsi</a>
       <button id="logoutBtn">Çıxış</button>
@@ -381,35 +374,11 @@ tr:hover td{background:var(--paper);}
   </div>
   <div class="card">
     <h3>Əsas tariflər</h3>
-    <div class="r2">
-      <div class="f"><label>ABŞ daxili daşınma — standart ($)</label><input type="number" id="inland_cost"><div class="hint">Ştat üçün ayrıca qiymət yazılmayıbsa bu istifadə olunur</div></div>
+    <div class="r3">
+      <div class="f"><label>ABŞ daxili daşınma ($)</label><input type="number" id="inland_cost"></div>
+      <div class="f"><label>Xidmət haqqı ($)</label><input type="number" id="service_fee"></div>
       <div class="f"><label>AZN məzənnəsi</label><input type="number" id="azn_rate" step="0.01"></div>
     </div>
-  </div>
-
-  <div class="card">
-    <h3>ABŞ daxili daşınma — ştat üzrə</h3>
-    <p class="csub">Auksion seçin, hər ştatın limanını və qiymətini ayrıca redaktə edin</p>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px;">
-      <select id="stAuction" style="padding:8px 11px;border:1.5px solid var(--line);border-radius:7px;font-family:inherit;font-size:13px;">
-        <option value="copart">Copart</option>
-        <option value="iaai">IAAI</option>
-        <option value="manheim">Manheim</option>
-        <option value="adesa">Adesa</option>
-        <option value="edge">EDGE Pipeline</option>
-        <option value="encar">EnCar (Koreya)</option>
-      </select>
-      <button class="btn btn-sm btn-outline" onclick="loadStates()">Yüklə</button>
-      <button class="btn btn-sm btn-outline" onclick="seedStates()">↓ Standart siyahını doldur</button>
-      <button class="btn btn-sm btn-outline" onclick="addStateRow()">+ Sətir</button>
-      <button class="btn btn-sm btn-blue" onclick="saveStates()">💾 Saxla</button>
-    </div>
-    <div style="display:flex;gap:8px;align-items:center;margin-bottom:12px;padding:10px 12px;background:var(--paper,#F5F7F9);border-radius:8px;">
-      <span style="font-size:12px;font-weight:600;color:var(--steel,#5B6672);">✓ Kutucuqla seçin →</span>
-      <input type="number" id="stBulkPrice" placeholder="Qiymət ($)" style="width:100px;padding:6px 9px;border:1.5px solid var(--line);border-radius:6px;font-size:12.5px;font-family:inherit;">
-      <button class="btn btn-sm btn-outline" onclick="applyBulkPrice()">Seçilənlərə tətbiq et</button>
-    </div>
-    <div class="tbl-wrap" id="statesBox"><div class="empty">Auksion seçib "Yüklə" basın</div></div>
   </div>
   <div class="card">
     <h3>Dəniz daşınması — Poti ($)</h3>
@@ -449,17 +418,11 @@ tr:hover td{background:var(--paper);}
     </div>
     <button class="btn btn-blue" onclick="saveSettings()">Bütün tarifləri yadda saxla</button>
   </div>
-</div>
-
-<!-- ===== API (yalnız Ceyhun) ===== -->
-<div class="tab-panel" id="tab-api">
-  <h2 class="tab-h">🔑 API Açarları</h2>
   <div class="card">
-    <h3>🤖 AI Tərcümə (Anthropic)</h3>
-    <p class="csub">Sayt AZ → RU / EN avtomatik tərcümə olunur. Anthropic API key lazımdır — <a href="https://console.anthropic.com" target="_blank" style="color:var(--blue);">console.anthropic.com</a> saytından alın. Tərcümələr bazada keşlənir, hər açılışda yenidən ödəniş olmur.</p>
-    <div class="f"><label>Anthropic API Key</label><input type="password" id="ai_api_key" placeholder="sk-ant-api03-..."></div>
+    <h3>🌐 Avtomatik Tərcümə (DeepL)</h3>
+    <p class="csub">FAQ suallarını AZ → RU avtomatik tərcümə üçün. <a href="https://www.deepl.com/pro-api" target="_blank" style="color:var(--blue);">Pulsuz API key al →</a> (500,000 simvol/ay pulsuzdur)</p>
+    <div class="f"><label>DeepL Free API Key</label><input type="text" id="deepl_key" placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx:fx"></div>
     <button class="btn btn-blue" onclick="saveSettings()">API key-i saxla</button>
-    <button class="btn btn-outline" onclick="clearTransCache()" style="margin-left:6px;">Tərcümə keşini təmizlə</button>
   </div>
 </div>
 
@@ -577,92 +540,26 @@ tr:hover td{background:var(--paper);}
 <div class="toast" id="toast"></div>
 
 <script>
-var tok='',role='',uname='',allSubs=[],allCases=[],allFaq=[],curFilter='all',settings={};
+var tok='',allSubs=[],allCases=[],allFaq=[],curFilter='all',settings={};
 var $=function(id){return document.getElementById(id);};
-
-// Rol üzrə görünən tablar
-var ROLE_TABS={
-  owner:['dash','subs','header','footer','home','about','cases','request','calc','api','faq','receipt'],
-  admin:['cases','calc','receipt'],
-  editor:['header','footer','home','about','cases','request','subs','calc','faq','receipt']
-};
 
 function toast(m,e){var t=$('toast');t.textContent=m;t.style.background=e?'var(--red)':'var(--green)';t.classList.add('show');setTimeout(function(){t.classList.remove('show');},2200);}
 function esc(s){var d=document.createElement('div');d.textContent=s==null?'':String(s);return d.innerHTML;}
 function api(u,o){o=o||{};o.headers=o.headers||{};o.headers.Authorization='Bearer '+tok;o.headers['Content-Type']='application/json';return fetch(u,o).then(function(r){return r.json();});}
 
 // --- AUTH ---
-function doLogin(){
-  var u=$('userInput').value.trim(), p=$('pwInput').value;
-  if(!u||!p){showLoginErr('İstifadəçi adı və şifrə yazın');return;}
-  $('loginBtn').textContent='Yoxlanılır...';$('loginBtn').disabled=true;
-  fetch('api/login.php',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({user:u,pass:p})})
-    .then(function(r){return r.json();})
-    .then(function(d){
-      $('loginBtn').textContent='Daxil ol';$('loginBtn').disabled=false;
-      if(!d.ok){showLoginErr(d.error||'Giriş alınmadı');return;}
-      tok=d.token;role=d.role;uname=d.name||d.user;
-      sessionStorage.setItem('ab_tok',tok);
-      sessionStorage.setItem('ab_role',role);
-      sessionStorage.setItem('ab_name',uname);
-      enterApp();
-    })
-    .catch(function(){$('loginBtn').textContent='Daxil ol';$('loginBtn').disabled=false;showLoginErr('Server xətası — api/login.php yüklənibmi?');});
-}
-function showLoginErr(m){var e=$('loginErr');e.textContent=m;e.style.display='block';}
-
-function applyRole(){
-  var allowed=ROLE_TABS[role]||ROLE_TABS.admin;
-  document.querySelectorAll('.sb-btn').forEach(function(b){
-    b.style.display = allowed.indexOf(b.dataset.tab)>-1 ? '' : 'none';
-  });
-  document.querySelectorAll('.sb-label').forEach(function(lb){
-    // Başlıqdan sonrakı görünən düymə varmı?
-    var n=lb.nextElementSibling,vis=false;
-    while(n && n.classList.contains('sb-btn')){ if(n.style.display!=='none'){vis=true;break;} n=n.nextElementSibling; }
-    lb.style.display = vis ? '' : 'none';
-  });
-  $('whoami').innerHTML='👤 <b>'+uname+'</b>';
-
-  // Admin rolunda qəbz tabında yalnız "Yeni qəbz" görünsün
-  if(role!=='owner'){
-    var rp=$('tab-receipt');
-    if(rp){
-      var cards=rp.querySelectorAll('.card');
-      // 0: aylıq hesabat, 1: saxlanmış qəbzlər, 2: yeni qəbz
-      if(cards[0])cards[0].style.display='none';
-      if(cards[1])cards[1].style.display='none';
-    }
-  }
-
-  // İlk icazəli tabı aç
-  var first=allowed[0];
-  var btn=document.querySelector('.sb-btn[data-tab="'+first+'"]');
-  if(btn)btn.click();
-}
-
-function enterApp(){
-  $('loginWrap').style.display='none';
-  $('app').classList.add('show');
-  applyRole();
-  loadAll();
-}
-
-$('loginBtn').addEventListener('click',doLogin);
-$('pwInput').addEventListener('keydown',function(e){if(e.key==='Enter')doLogin();});
-$('userInput').addEventListener('keydown',function(e){if(e.key==='Enter')$('pwInput').focus();});
-
-var sv=sessionStorage.getItem('ab_tok');
-if(sv){tok=sv;role=sessionStorage.getItem('ab_role')||'admin';uname=sessionStorage.getItem('ab_name')||'Admin';enterApp();}
-
-$('logoutBtn').addEventListener('click',function(){sessionStorage.clear();location.reload();});
+function tryLogin(){tok=$('pwInput').value;sessionStorage.setItem('ab_tok',tok);$('loginWrap').style.display='none';$('app').classList.add('show');loadAll();}
+$('loginBtn').addEventListener('click',tryLogin);
+$('pwInput').addEventListener('keydown',function(e){if(e.key==='Enter')tryLogin();});
+var sv=sessionStorage.getItem('ab_tok');if(sv){tok=sv;$('loginWrap').style.display='none';$('app').classList.add('show');loadAll();}
+$('logoutBtn').addEventListener('click',function(){sessionStorage.removeItem('ab_tok');location.reload();});
 
 // --- NAV ---
 var sb=$('sidebar');
 $('sbToggle').addEventListener('click',function(){sb.classList.toggle('open');});
 document.addEventListener('click',function(e){if(sb.classList.contains('open')&&!sb.contains(e.target)&&!$('sbToggle').contains(e.target))sb.classList.remove('open');});
 
-var pgNames={dash:['İcmal','Ümumi performans'],subs:['Sorğular','Müştəri sorğuları'],header:['Header & Nav','Naviqasiya idarəsi'],footer:['Footer & Əlaqə','Bütün səhifələrin altı'],home:['Ana səhifə','Baş səhifə məzmunu'],about:['Haqqımızda','Şirkət məlumatları'],cases:['Nümunələr','İdxal nümunələri'],request:['Sifariş ver','Form səhifəsi'],calc:['Kalkulyator','Tariflər'],api:['API Açarları','Yalnız Ceyhun'],faq:['FAQ sualları','Suallar idarəsi'],receipt:['Qəbzlər','Maliyyə qeydləri']};
+var pgNames={dash:['İcmal','Ümumi performans'],subs:['Sorğular','Müştəri sorğuları'],header:['Header & Nav','Naviqasiya idarəsi'],footer:['Footer & Əlaqə','Bütün səhifələrin altı'],home:['Ana səhifə','Baş səhifə məzmunu'],about:['Haqqımızda','Şirkət məlumatları'],cases:['Nümunələr','İdxal nümunələri'],request:['Sifariş ver','Form səhifəsi'],calc:['Kalkulyator','Tariflər'],faq:['FAQ sualları','Suallar idarəsi'],receipt:['Qəbzlər','Maliyyə qeydləri']};
 
 document.querySelectorAll('.sb-btn').forEach(function(b){
   b.addEventListener('click',function(){
@@ -680,7 +577,7 @@ document.querySelectorAll('.sb-btn').forEach(function(b){
 });
 $('refreshBtn').addEventListener('click',function(){loadAll();toast('Yeniləndi');});
 
-function loadAll(){loadSettings();if(role==='owner')loadDash();}
+function loadAll(){loadDash();loadSettings();}
 
 // --- DASHBOARD ---
 function loadDash(){
@@ -791,18 +688,16 @@ function drawFaq(){
         '<option value="price"'+(item.category==='price'?' selected':'')+'>💰 Qiymət</option>'+
         '<option value="tech"'+(item.category==='tech'?' selected':'')+'>🔧 Texniki</option>'+
       '</select></div>'+
-      '<div class="r3">'+
+      '<div class="r2">'+
         '<div class="f"><label>Sual (AZ)</label><textarea class="fq-q" rows="2">'+esc(item.question||'')+'</textarea></div>'+
         '<div class="f"><label>Sual (RU)</label><textarea class="fq-qru" rows="2">'+esc(item.question_ru||'')+'</textarea></div>'+
-        '<div class="f"><label>Sual (EN)</label><textarea class="fq-qen" rows="2">'+esc(item.question_en||'')+'</textarea></div>'+
       '</div>'+
-      '<div class="r3">'+
+      '<div class="r2">'+
         '<div class="f"><label>Cavab (AZ)</label><textarea class="fq-a" rows="4">'+esc(item.answer||'')+'</textarea></div>'+
         '<div class="f"><label>Cavab (RU)</label><textarea class="fq-aru" rows="4">'+esc(item.answer_ru||'')+'</textarea></div>'+
-        '<div class="f"><label>Cavab (EN)</label><textarea class="fq-aen" rows="4">'+esc(item.answer_en||'')+'</textarea></div>'+
       '</div>'+
       '<button class="btn btn-sm btn-green" data-id="'+item.id+'" onclick="saveFaqItem(this)">Saxla</button>'+
-      ' <button class="btn btn-sm btn-outline" onclick="autoTranslate(this)" style="margin-left:4px;">🌐 Avtomatik tərcümə</button>';
+      ' <button class="btn btn-sm btn-outline" onclick="autoTranslate(this)" style="margin-left:4px;">🌐 Avtomatik tərcümə (DeepL)</button>';
     l.appendChild(el);
   });
   l.querySelectorAll('.rm-faq').forEach(function(b){
@@ -817,7 +712,7 @@ function drawFaq(){
 function saveFaqItem(btn){
   var ed=btn.closest('.faq-ed');
   var id=btn.dataset.id;
-  var d={id:id,category:ed.querySelector('.fq-cat').value,question:ed.querySelector('.fq-q').value,question_ru:ed.querySelector('.fq-qru').value,question_en:ed.querySelector('.fq-qen').value,answer:ed.querySelector('.fq-a').value,answer_ru:ed.querySelector('.fq-aru').value,answer_en:ed.querySelector('.fq-aen').value};
+  var d={id:id,category:ed.querySelector('.fq-cat').value,question:ed.querySelector('.fq-q').value,question_ru:ed.querySelector('.fq-qru').value,answer:ed.querySelector('.fq-a').value,answer_ru:ed.querySelector('.fq-aru').value};
   api('api/faq.php',{method:'POST',body:JSON.stringify(d)}).then(function(){toast('Sual saxlanıldı');}).catch(function(){toast('Xəta',true);});
 }
 
@@ -826,131 +721,36 @@ function addFaqItem(){
   api('api/faq.php',{method:'POST',body:JSON.stringify(d)}).then(function(){toast('Yeni sual əlavə edildi');loadFaq();}).catch(function(){toast('Xəta',true);});
 }
 
-// Avtomatik tərcümə — Anthropic (Claude) API ilə, server tərəfindən (api/translate.php)
+// DeepL auto-translate (Free API key lazımdır — settings-dən)
 function autoTranslate(btn){
   var ed=btn.closest('.faq-ed');
-  var qaz=ed.querySelector('.fq-q').value.trim();
-  var aaz=ed.querySelector('.fq-a').value.trim();
-  if(!qaz||!aaz){toast('Əvvəlcə AZ sual və cavabı yazın',true);return;}
-
+  var qaz=ed.querySelector('.fq-q').value;
+  var aaz=ed.querySelector('.fq-a').value;
+  var apiKey=settings['deepl_key']||'';
+  if(!apiKey){toast('DeepL API key tapılmadı. Kalkulyator tabında "DeepL API Key" yazın.',true);return;}
+  
   btn.textContent='Tərcümə edilir...';btn.disabled=true;
-
-  function trTo(texts,target,cb){
-    fetch('api/translate.php',{
+  
+  function tr(text,cb){
+    fetch('https://api-free.deepl.com/v2/translate',{
       method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({texts:texts,target:target})
-    }).then(function(r){return r.json();}).then(function(dict){cb(dict||{});}).catch(function(){cb({});});
+      headers:{'Content-Type':'application/x-www-form-urlencoded'},
+      body:'auth_key='+apiKey+'&text='+encodeURIComponent(text)+'&target_lang=RU'
+    }).then(function(r){return r.json();}).then(function(d){cb(d.translations[0].text);}).catch(function(){cb('');});
   }
-
-  trTo([qaz,aaz],'ru',function(ruDict){
-    ed.querySelector('.fq-qru').value=ruDict[qaz]||'';
-    ed.querySelector('.fq-aru').value=ruDict[aaz]||'';
-    trTo([qaz,aaz],'en',function(enDict){
-      ed.querySelector('.fq-qen').value=enDict[qaz]||'';
-      ed.querySelector('.fq-aen').value=enDict[aaz]||'';
+  
+  tr(qaz,function(qru){
+    ed.querySelector('.fq-qru').value=qru;
+    tr(aaz,function(aru){
+      ed.querySelector('.fq-aru').value=aru;
       btn.textContent='🌐 Avtomatik tərcümə';btn.disabled=false;
-      toast('RU və EN tərcümə tamamlandı');
+      toast('Tərcümə tamamlandı');
     });
   });
 }
 
-
-// ===== ŞTAT ÜZRƏ DAŞINMA =====
-var US_STATES=[
-['Alabama (AL)','Savannah'],['Alaska (AK)','Seattle/Tacoma'],['Arizona (AZ)','Los Angeles'],
-['Arkansas (AR)','Houston'],['California (CA)','Los Angeles'],['Colorado (CO)','Los Angeles'],
-['Connecticut (CT)','New Jersey'],['Delaware (DE)','Baltimore'],['Florida (FL)','Savannah'],
-['Georgia (GA)','Savannah'],['Hawaii (HI)','Los Angeles'],['Idaho (ID)','Seattle/Tacoma'],
-['Illinois (IL)','Chicago → Baltimore'],['Indiana (IN)','Chicago → Baltimore'],['Iowa (IA)','Chicago → Baltimore'],
-['Kansas (KS)','Houston'],['Kentucky (KY)','Baltimore'],['Louisiana (LA)','Houston'],
-['Maine (ME)','New Jersey'],['Maryland (MD)','Baltimore'],['Massachusetts (MA)','New Jersey'],
-['Michigan (MI)','Detroit → Baltimore'],['Minnesota (MN)','Chicago → Baltimore'],['Mississippi (MS)','Houston'],
-['Missouri (MO)','Houston'],['Montana (MT)','Seattle/Tacoma'],['Nebraska (NE)','Houston'],
-['Nevada (NV)','Los Angeles'],['New Hampshire (NH)','New Jersey'],['New Jersey (NJ)','New Jersey'],
-['New Mexico (NM)','Los Angeles'],['New York (NY)','New Jersey'],['North Carolina (NC)','Savannah'],
-['North Dakota (ND)','Seattle/Tacoma'],['Ohio (OH)','Baltimore'],['Oklahoma (OK)','Houston'],
-['Oregon (OR)','Seattle/Tacoma'],['Pennsylvania (PA)','Baltimore'],['Rhode Island (RI)','New Jersey'],
-['South Carolina (SC)','Savannah'],['South Dakota (SD)','Houston'],['Tennessee (TN)','Savannah'],
-['Texas (TX)','Houston'],['Utah (UT)','Los Angeles'],['Vermont (VT)','New Jersey'],
-['Virginia (VA)','Baltimore'],['Washington (WA)','Seattle/Tacoma'],['West Virginia (WV)','Baltimore'],
-['Wisconsin (WI)','Chicago → Baltimore'],['Wyoming (WY)','Los Angeles']
-];
-var KOREA=[['Seoul','Busan'],['Busan','Busan'],['Incheon','Incheon'],['Daegu','Busan'],['Ulsan','Busan']];
-
-function stateRow(name,port,cost){
-  return '<tr>'+
-    '<td style="width:32px;text-align:center;"><input type="checkbox" class="st-chk"></td>'+
-    '<td><input class="st-name" value="'+esc(name)+'" style="width:100%;padding:5px 7px;border:1px solid var(--line);border-radius:5px;font-size:12px;font-family:inherit;"></td>'+
-    '<td><input class="st-port" value="'+esc(port)+'" style="width:100%;padding:5px 7px;border:1px solid var(--line);border-radius:5px;font-size:12px;font-family:inherit;"></td>'+
-    '<td style="width:110px;"><input type="number" class="st-cost" value="'+(cost||250)+'" style="width:100%;padding:5px 7px;border:1px solid var(--line);border-radius:5px;font-size:12px;font-family:inherit;"></td>'+
-    '<td style="width:40px;"><button class="btn-ghost st-del">✕</button></td></tr>';
-}
-function drawStates(rows){
-  var h='<table><thead><tr><th style="width:32px;"><input type="checkbox" id="stChkAll" title="Hamısını seç"></th><th>Ştat / Şəhər</th><th>Liman</th><th>Qiymət ($)</th><th></th></tr></thead><tbody>';
-  rows.forEach(function(r){h+=stateRow(r.state_name,r.port,r.cost);});
-  h+='</tbody></table>';
-  $('statesBox').innerHTML=h;
-  $('statesBox').querySelectorAll('.st-del').forEach(function(b){
-    b.addEventListener('click',function(){b.closest('tr').remove();});
-  });
-  var chkAll=$('stChkAll');
-  if(chkAll)chkAll.addEventListener('change',function(){
-    $('statesBox').querySelectorAll('.st-chk').forEach(function(c){c.checked=chkAll.checked;});
-  });
-}
-function loadStates(){
-  var a=$('stAuction').value;
-  fetch('api/states.php?auction='+a).then(function(r){return r.json();}).then(function(rows){
-    if(!rows||!rows.length){$('statesBox').innerHTML='<div class="empty">Bu auksion üçün ştat yoxdur. "↓ Standart siyahını doldur" basın.</div>';return;}
-    drawStates(rows);
-  }).catch(function(){$('statesBox').innerHTML='<div class="empty">Xəta — migration_states.sql işlətdinizmi?</div>';});
-}
-function seedStates(){
-  var a=$('stAuction').value;
-  var base=(a==='encar')?KOREA:US_STATES;
-  var def=parseInt($('inland_cost').value)||250;
-  drawStates(base.map(function(s){return {state_name:s[0],port:s[1],cost:def};}));
-  toast('Siyahı dolduruldu — qiymətləri redaktə edib Saxla basın');
-}
-function addStateRow(){
-  var tb=$('statesBox').querySelector('tbody');
-  if(!tb){drawStates([{state_name:'',port:'',cost:250}]);return;}
-  tb.insertAdjacentHTML('beforeend',stateRow('','',250));
-  tb.querySelectorAll('.st-del').forEach(function(b){
-    b.onclick=function(){b.closest('tr').remove();};
-  });
-}
-function applyBulkPrice(){
-  var val=parseInt($('stBulkPrice').value);
-  if(!val){toast('Əvvəlcə qiymət yazın',true);return;}
-  var checked=$('statesBox').querySelectorAll('.st-chk:checked');
-  if(!checked.length){toast('Heç bir ştat seçilməyib',true);return;}
-  checked.forEach(function(chk){
-    chk.closest('tr').querySelector('.st-cost').value=val;
-  });
-  toast(checked.length+' ştata tətbiq edildi — "Saxla" basmağı unutmayın');
-}
-function saveStates(){
-  var a=$('stAuction').value,rows=[];
-  $('statesBox').querySelectorAll('tbody tr').forEach(function(tr){
-    var n=tr.querySelector('.st-name').value.trim();
-    if(!n)return;
-    rows.push({state_name:n,port:tr.querySelector('.st-port').value.trim(),cost:parseInt(tr.querySelector('.st-cost').value)||250});
-  });
-  api('api/states.php',{method:'POST',body:JSON.stringify({auction:a,states:rows})})
-    .then(function(r){toast(r.status==='success'?('Saxlanıldı ('+r.count+' ştat)'):'Xəta',r.status!=='success');})
-    .catch(function(){toast('Xəta',true);});
-}
-$('stAuction').addEventListener('change',loadStates);
-
-function clearTransCache(){
-  if(!confirm('Bütün tərcümə keşi silinsin? Növbəti dəfə AI yenidən tərcümə edəcək.'))return;
-  api('api/translate.php',{method:'DELETE'}).then(function(){toast('Keş təmizləndi');}).catch(function(){toast('Xəta',true);});
-}
-
 // --- SETTINGS ---
-var settingIds=['fee_copart','fee_iaai','fee_manheim','fee_adesa','fee_edge','fee_encar','inland_cost','azn_rate','ocean_poti_sedan','ocean_poti_suv','ocean_poti_truck','ocean_poti_van','ocean_poti_ev','ocean_poti_hybrid','ocean_poti_premium','ocean_baku_sedan','ocean_baku_suv','ocean_baku_truck','ocean_baku_van','ocean_baku_ev','ocean_baku_hybrid','ocean_baku_premium','customs_1_3','customs_4_7','customs_8plus','customs_ev_discount','phone','email','address','instagram','facebook','whatsapp','hdr_phone','hdr_nav','hdr_cta','hdr_line1','hdr_line2','foot_desc','foot_desc_ru','foot_copy','h_hero_title','h_hero_title_ru','h_hero_lead','h_hero_lead_ru','h_s1v','h_s1l','h_s2v','h_s2l','h_why_h','h_why_h_ru','h_w1h','h_w2h','h_w3h','h_w1p','h_w2p','h_w3p','h_cta_h','h_cta_h_ru','ab_h1','ab_sub','ab_p1','ab_p2','ab_p3','ab_s1','ab_s2','ab_s3','ab_s4','rq_h1','rq_sub','rq_s1','rq_s2','rq_s3','rq_ok_h','rq_ok_p','ai_api_key'];
+var settingIds=['fee_copart','fee_iaai','fee_manheim','fee_adesa','fee_edge','fee_encar','inland_cost','service_fee','azn_rate','ocean_poti_sedan','ocean_poti_suv','ocean_poti_truck','ocean_poti_van','ocean_poti_ev','ocean_poti_hybrid','ocean_poti_premium','ocean_baku_sedan','ocean_baku_suv','ocean_baku_truck','ocean_baku_van','ocean_baku_ev','ocean_baku_hybrid','ocean_baku_premium','customs_1_3','customs_4_7','customs_8plus','customs_ev_discount','phone','email','address','instagram','facebook','whatsapp','hdr_phone','hdr_nav','hdr_cta','hdr_line1','hdr_line2','foot_desc','foot_desc_ru','foot_copy','h_hero_title','h_hero_title_ru','h_hero_lead','h_hero_lead_ru','h_s1v','h_s1l','h_s2v','h_s2l','h_why_h','h_why_h_ru','h_w1h','h_w2h','h_w3h','h_w1p','h_w2p','h_w3p','h_cta_h','h_cta_h_ru','ab_h1','ab_sub','ab_p1','ab_p2','ab_p3','ab_s1','ab_s2','ab_s3','ab_s4','rq_h1','rq_sub','rq_s1','rq_s2','rq_s3','rq_ok_h','rq_ok_p','deepl_key'];
 
 function loadSettings(){
   fetch('api/settings.php').then(function(r){return r.json();}).then(function(s){
