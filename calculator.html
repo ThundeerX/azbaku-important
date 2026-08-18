@@ -231,64 +231,12 @@ footer{background:linear-gradient(180deg,#6B7280 0%,#1F2937 100%);color:#E8EAED;
       <input type="number" id="auctionPrice" min="0" max="500000" step="100" placeholder="məs. 15000">
     </div>
 
-    <div class="row2">
-      <div class="step">
-        <label><span class="step-num">5</span>Kateqoriya</label>
-        <select id="selCategory">
-          <option value="sedan" data-i18n="cat-sedan">Sedan / Hatchback</option>
-          <option value="suv" data-i18n="cat-suv">SUV / Crossover</option>
-          <option value="truck" data-i18n="cat-truck">Truck / Pikap</option>
-          <option value="van" data-i18n="cat-van">Van / Minivan</option>
-          <option value="ev" data-i18n="cat-ev">⚡ Elektrik (EV)</option>
-          <option value="hybrid" data-i18n="cat-hybrid">Hibrid</option>
-          <option value="premium" data-i18n="cat-premium">Premium / Lüks</option>
-        </select>
-      </div>
-      <div class="step">
-        <label><span class="step-num">6</span>Çatdırılma portu</label>
-        <select id="selDest">
-          <option value="poti">🇬🇪 Poti — Tövsiyə</option>
-          <option value="baku">🇦🇿 Bakı Limanı</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="row2">
-      <div class="step">
-        <label><span class="step-num">7</span>Buraxılış tarixi</label>
-        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;">
-          <select id="selDay"></select>
-          <select id="selMonth"></select>
-          <select id="selYear"></select>
-        </div>
-        <div class="hint">Gün/ay/il — gömrük yaş hesabına təsir edir</div>
-      </div>
-      <div class="step">
-        <label><span class="step-num">8</span>Mühərrik həcmi</label>
-        <input type="text" id="engineVol" placeholder="2.0 və ya 1998" inputmode="decimal" autocomplete="off">
-        <div class="hint" id="engineHint">2.0 → 2000 sm³ kimi qəbul edilir</div>
-      </div>
-    </div>
-
     <div class="step">
-      <label><span class="step-num">9</span>Mühərrikin növü</label>
-      <select id="selFuelType">
-        <option value="benzin">Benzin</option>
-        <option value="dizel">Dizel</option>
-        <option value="qaz">Qaz</option>
-        <option value="benzin_qaz">Benzin qaz</option>
-        <option value="dizel_qaz">Dizel qaz</option>
-        <option value="hibrid_benzin">Hibrid Benzin</option>
-        <option value="hibrid_dizel">Hibrid Dizel</option>
-        <option value="mild_hibrid_benzin">Mild hibrid Benzin</option>
-        <option value="mild_hibrid_dizel">Mild Hibrid Dizel</option>
-        <option value="hibrid_qaz">Hibrid Qaz</option>
-        <option value="mild_hibrid_qaz">Mild Hibrid Qaz</option>
-        <option value="plugin_hibrid_benzin">Plug-in hibrid benzin</option>
-        <option value="plugin_hibrid_dizel">Plug-in hibrid dizel</option>
-        <option value="elektrik">Tam elektrik</option>
+      <label><span class="step-num">5</span>Çatdırılma portu</label>
+      <select id="selDest">
+        <option value="poti">🇬🇪 Poti — Tövsiyə</option>
+        <option value="baku">🇦🇿 Bakı Limanı</option>
       </select>
-      <div class="hint">DGK-nın rəsmi API-si yalnız 6 əsas kateqoriya qəbul edir — seçiminiz ən yaxın uyğun kateqoriyaya uyğunlaşdırılır</div>
     </div>
 
     <button class="btn btn-outline" id="resetBtn" style="margin-top:4px;width:100%;justify-content:center;" data-i18n="calc-reset">↺ Sıfırla</button>
@@ -301,8 +249,7 @@ footer{background:linear-gradient(180deg,#6B7280 0%,#1F2937 100%);color:#E8EAED;
     <div class="r-row zero" id="rRow2"><span><span data-i18n="r-fee">Buyer fee</span> (<span id="feeLabel">0</span>%)</span><span id="r2">$0</span></div>
     <div class="r-row" id="rRow3"><span data-i18n="r-inland">ABŞ daxili daşınma</span><span id="r3">$250</span></div>
     <div class="r-row zero" id="rRow4"><span data-i18n="r-ocean">Dəniz daşınması</span><span id="r4">$0</span></div>
-    <div class="r-row zero" id="rRow5"><span data-i18n="r-customs">Gömrük rüsumu (~)</span><span id="r5">$0</span></div>
-    <div id="customsSource" style="font-size:10.5px;color:rgba(196,201,204,0.55);text-align:right;margin-top:-6px;margin-bottom:4px;"></div>
+
     <div class="r-total"><span class="lbl" data-i18n="r-total">Yekun (təxmini)</span><span class="val" id="rTotal">$0</span></div>
     <div class="r-azn" id="rAzn">≈ 0 AZN</div>
     <div class="r-note" data-i18n="r-note">Bu rəqəmlər təxminidir (±10–15%). Dəqiq hesab üçün bizimlə əlaqə saxlayın.</div>
@@ -339,31 +286,6 @@ footer{background:linear-gradient(180deg,#6B7280 0%,#1F2937 100%);color:#E8EAED;
   btn.addEventListener('click',function(){menu.style.top=hdr.offsetHeight+'px';menu.classList.toggle('open');});
   menu.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){menu.classList.remove('open');});});
   document.addEventListener('click',function(e){if(menu.classList.contains('open')&&!menu.contains(e.target)&&!btn.contains(e.target))menu.classList.remove('open');});
-
-  // Year select
-  var ys=document.getElementById('selYear');
-  for(var y=2026;y>=2005;y--){var o=document.createElement('option');o.value=y;o.textContent=y;ys.appendChild(o);}
-  ys.value=2022;
-
-  var ds=document.getElementById('selDay');
-  for(var d=1;d<=31;d++){var od=document.createElement('option');od.value=d;od.textContent=d;ds.appendChild(od);}
-  ds.value=1;
-
-  var ms=document.getElementById('selMonth');
-  var monthNames=['Yan','Fev','Mar','Apr','May','İyn','İyl','Avq','Sen','Okt','Noy','Dek'];
-  monthNames.forEach(function(mn,i){var om=document.createElement('option');om.value=i+1;om.textContent=mn;ms.appendChild(om);});
-  ms.value=1;
-
-  // Bizim qranular yanacaq növlərindən DGK-nın rəsmi 6 kateqoriyasına uyğunlaşdırma
-  // (API yalnız bunları qəbul edir: 0=Benzin 1=Dizel 2=Qaz 3=Hibrid Benzin 4=Hibrid Dizel 5=Elektrik)
-  var fuelTypeMap={
-    benzin:'0', dizel:'1', qaz:'2',
-    benzin_qaz:'2', dizel_qaz:'2',
-    hibrid_benzin:'3', mild_hibrid_benzin:'3', plugin_hibrid_benzin:'3',
-    hibrid_dizel:'4', mild_hibrid_dizel:'4', plugin_hibrid_dizel:'4',
-    hibrid_qaz:'2', mild_hibrid_qaz:'2',
-    elektrik:'5'
-  };
 
   // Locations by auction (ABŞ stateləri + Korea)
   var usStates=[
@@ -420,7 +342,6 @@ footer{background:linear-gradient(180deg,#6B7280 0%,#1F2937 100%);color:#E8EAED;
   };
   var AZN=1.70, INLAND=250;
   var stateCostMap={}; // ştat adı → o ştata məxsus admin-təyin qiyməti
-  var customsRates={y1_3:20,y4_7:25,y8:30,evDiscount:50};
 
   // Admin paneldəki tarifləri yüklə
   fetch('api/settings.php').then(function(r){return r.json();}).then(function(s){
@@ -435,10 +356,6 @@ footer{background:linear-gradient(180deg,#6B7280 0%,#1F2937 100%);color:#E8EAED;
     if(s.azn_rate) AZN=parseFloat(s.azn_rate);
     
     if(s.inland_cost) INLAND=parseInt(s.inland_cost);
-    if(s.customs_1_3) customsRates.y1_3=parseFloat(s.customs_1_3);
-    if(s.customs_4_7) customsRates.y4_7=parseFloat(s.customs_4_7);
-    if(s.customs_8plus) customsRates.y8=parseFloat(s.customs_8plus);
-    if(s.customs_ev_discount) customsRates.evDiscount=parseFloat(s.customs_ev_discount);
     // Update fee labels in dropdown
     var sel=document.getElementById('selAuction');
     if(sel){
@@ -450,142 +367,13 @@ footer{background:linear-gradient(180deg,#6B7280 0%,#1F2937 100%);color:#E8EAED;
     recalc();
   }).catch(function(){});
 
-  // İstifadəçi 2, 2.0, 2,0, 1998, 1998cc — hamısını sm³-ə çevirir
-  function normalizeEngine(raw){
-    if(!raw) return 0;
-    var s=String(raw).toLowerCase().replace(/[^0-9.,]/g,'').replace(',','.');
-    if(!s) return 0;
-    var n=parseFloat(s);
-    if(isNaN(n)||n<=0) return 0;
-    // 0.5–9.9 aralığı = litr (2.0 → 2000)
-    if(n<10) return Math.round(n*1000);
-    // 10–99 = yanlış yazılmış litr (20 → 2000)
-    if(n<100) return Math.round(n*100);
-    // 100+ = artıq sm³
-    return Math.round(n);
-  }
-
-  // Azərbaycan gömrük rüsumu: mühərrik həcmi (sm³) × yaş üzrə tarif (AZN/sm³)
-  // Mənbə: AR Nazirlər Kabinetinin aksiz/rüsum cədvəli
-  function customsByEngine(cc, year, category){
-    if(!cc) return 0;
-    var age = 2026 - parseInt(year||2022);
-    var rate; // AZN / sm³
-    if (cc <= 1500)      rate = 0.30;
-    else if (cc <= 2000) rate = 0.60;
-    else if (cc <= 3000) rate = 1.20;
-    else if (cc <= 4000) rate = 2.40;
-    else if (cc <= 5000) rate = 4.00;
-    else                 rate = 6.00;
-
-    // Yaş əmsalı
-    var ageMul;
-    if (age <= 1)      ageMul = 1.0;
-    else if (age <= 3) ageMul = 1.2;
-    else if (age <= 7) ageMul = 1.5;
-    else               ageMul = 2.0;
-
-    var azn = cc * rate * ageMul;
-    var usd = azn / AZN;                    // AZN → USD
-
-    // Elektrik avtomobil güzəşti
-    if (category === 'ev') usd = usd * (1 - customsRates.evDiscount/100);
-    if (category === 'hybrid') usd = usd * 0.8;
-
-    return Math.round(usd);
-  }
-
-  // Mühərrik yazılmayıbsa köhnə üsul (qiymətə görə faiz)
-  function customsDuty(price,year,category){
-    var cc = normalizeEngine(document.getElementById('engineVol').value);
-    if (cc) return customsByEngine(cc, year, category);
-    var age=2026-parseInt(year||2022);
-    var rate;
-    if(age<=3)rate=customsRates.y1_3/100;
-    else if(age<=7)rate=customsRates.y4_7/100;
-    else rate=customsRates.y8/100;
-    var duty=Math.round(price*rate);
-    if(category==='ev')duty=Math.round(duty*(1-customsRates.evDiscount/100));
-    return duty;
-  }
-
-  // ===== RƏSMİ DGK (Dövlət Gömrük Komitəsi) hesablaması =====
-  // Mühərrik + il + qiymət dolduqda, ekrandakı təxmini rəqəmin yanında
-  // DGK-nın öz rəsmi API-sindən dəqiq rəqəmi çəkib əvəz edir.
-  var customsFetchTimer = null;
-  var officialCustomsUsd = null; // null = rəsmi nəticə yoxdur, formula istifadə olunur
-  var lastCustomsSig = '';
-
-  function scheduleOfficialCustoms(){
-    clearTimeout(customsFetchTimer);
-    var cc = normalizeEngine(document.getElementById('engineVol').value);
-    var day = parseInt(document.getElementById('selDay').value)||1;
-    var month = parseInt(document.getElementById('selMonth').value)||1;
-    var year = parseInt(document.getElementById('selYear').value)||0;
-    var price = parseInt(document.getElementById('auctionPrice').value)||0;
-    var cat = document.getElementById('selCategory').value||'sedan';
-    var fuelType = document.getElementById('selFuelType').value||'benzin';
-
-    if (!cc || !year || price<=0) {
-      officialCustomsUsd = null;
-      lastCustomsSig = '';
-      var src=document.getElementById('customsSource');
-      if(src) src.textContent='';
-      return;
-    }
-
-    var sig = cc+'|'+day+'|'+month+'|'+year+'|'+price+'|'+cat+'|'+fuelType;
-    if (sig === lastCustomsSig) return; // bu dəyərlər üçün artıq sorğulanıb, təkrar etmə
-
-    // Parametrlər dəyişib — yeni nəticə gələnə qədər köhnə rəsmi rəqəmi göstərmə
-    officialCustomsUsd = null;
-
-    customsFetchTimer = setTimeout(function(){
-      lastCustomsSig = sig;
-      var src=document.getElementById('customsSource');
-      if(src) src.textContent='DGK rəsmi məlumatı yoxlanılır...';
-      fetch('api/customs.php',{
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({engine:cc, day:day, month:month, year:year, price:price, category:cat, fuelType:fuelType})
-      }).then(function(r){
-        return r.text().then(function(txt){
-          var parsed = null;
-          try { parsed = JSON.parse(txt); } catch(e) { parsed = null; }
-          return {status:r.status, text:txt, json:parsed};
-        });
-      }).then(function(result){
-        var res = result.json;
-        if(res && res.ok){
-          officialCustomsUsd = res.totalUsd;
-          if(src) src.innerHTML='✓ Dövlət Gömrük Komitəsinin rəsmi məlumatı';
-        } else if(res){
-          officialCustomsUsd = null;
-          var dbg = (res.debug||res.error) ? ' — '+(res.debug||res.error) : '';
-          if(src) src.textContent='Təxmini hesablama (DGK əlçatan deyil)'+dbg;
-        } else {
-          // JSON deyil — server PHP xətası qaytarıb, xam mətni göstər
-          officialCustomsUsd = null;
-          var raw = (result.text||'').replace(/<[^>]*>/g,' ').trim().slice(0,200);
-          if(src) src.textContent='Server xətası (HTTP '+result.status+'): '+(raw||'boş cavab');
-        }
-        recalc();
-      }).catch(function(err){
-        officialCustomsUsd = null;
-        if(src) src.textContent='Təxmini hesablama — şəbəkə xətası: '+(err&&err.message?err.message:'naməlum');
-        recalc();
-      });
-    }, 600);
-  }
-
   function fmt(n){return'$'+Math.round(n).toLocaleString('en-US');}
 
   function recalc(){
     var auction=document.getElementById('selAuction').value;
     var price=parseInt(document.getElementById('auctionPrice').value)||0;
-    var cat=document.getElementById('selCategory').value||'sedan';
+    var cat='sedan'; // kateqoriya seçimi çıxarıldı, dəniz tarifi sabit "sedan" bazasında hesablanır
     var dest=document.getElementById('selDest').value||'poti';
-    var year=document.getElementById('selYear').value||2022;
 
     var feeRate=buyerFees[auction]||0;
     var fee=Math.round(price*(feeRate/100));
@@ -593,25 +381,21 @@ footer{background:linear-gradient(180deg,#6B7280 0%,#1F2937 100%);color:#E8EAED;
     var stateInland=(selLoc && stateCostMap[selLoc]!==undefined)?stateCostMap[selLoc]:INLAND;
     var inland=price>0?stateInland:0;
     var ocean=(price>0&&auction)?(oceanRates[dest]||oceanRates.poti)[cat]||0:0;
-    var customs=price>0?(officialCustomsUsd!==null?officialCustomsUsd:customsDuty(price,year,cat)):0;
-    var total=price+fee+inland+ocean+customs;
+    var total=price+fee+inland+ocean;
 
     document.getElementById('feeLabel').textContent=feeRate;
     document.getElementById('r1').textContent=price?fmt(price):'$0';
     document.getElementById('r2').textContent=fee?fmt(fee):'$0';
     document.getElementById('r3').textContent=inland?fmt(inland):'$0';
     document.getElementById('r4').textContent=ocean?fmt(ocean):'$0';
-    document.getElementById('r5').textContent=customs?fmt(customs):'$0';
     document.getElementById('rTotal').textContent=fmt(total);
     document.getElementById('rAzn').textContent='≈ '+Math.round(total*AZN).toLocaleString()+' AZN';
 
     // Zero styling
-    ['rRow1','rRow2','rRow4','rRow5'].forEach(function(id){
+    ['rRow1','rRow2','rRow4'].forEach(function(id){
       document.getElementById(id).classList.toggle('zero',
-        id==='rRow1'?!price:id==='rRow2'?!fee:id==='rRow4'?!ocean:!customs);
+        id==='rRow1'?!price:id==='rRow2'?!fee:!ocean);
     });
-
-    scheduleOfficialCustoms();
   }
 
   // Auction → populate locations (əvvəlcə admin-in ştat-üzrə qiymətlərini yoxlayır)
@@ -657,14 +441,7 @@ footer{background:linear-gradient(180deg,#6B7280 0%,#1F2937 100%);color:#E8EAED;
   });
 
   // Recalc on any change
-  var ev=document.getElementById('engineVol');
-  ev.addEventListener('input',function(){
-    var cc=normalizeEngine(this.value);
-    document.getElementById('engineHint').textContent = cc ? ('= '+cc.toLocaleString()+' sm³ kimi hesablanır') : '2.0 → 2000 sm³ kimi qəbul edilir';
-    recalc();
-  });
-
-  ['auctionPrice','selCategory','selDest','selYear','selDay','selMonth','selFuelType'].forEach(function(id){
+  ['auctionPrice','selDest'].forEach(function(id){
     var el=document.getElementById(id);
     el.addEventListener('change',recalc);el.addEventListener('input',recalc);
   });
@@ -674,14 +451,7 @@ footer{background:linear-gradient(180deg,#6B7280 0%,#1F2937 100%);color:#E8EAED;
     document.getElementById('selLocation').innerHTML='<option value="" data-i18n="opt-loc-first">— Əvvəlcə auksion seçin —</option>';
     document.getElementById('loadPort').value='— Lokasiya seçildikdən sonra —';
     document.getElementById('auctionPrice').value='';
-    document.getElementById('selCategory').value='sedan';
     document.getElementById('selDest').value='poti';
-    document.getElementById('selYear').value=2022;
-    document.getElementById('selDay').value=1;
-    document.getElementById('selMonth').value=1;
-    document.getElementById('selFuelType').value='benzin';
-    document.getElementById('engineVol').value='';
-    document.getElementById('engineHint').textContent='2.0 → 2000 sm³ kimi qəbul edilir';
     recalc();
   });
 
