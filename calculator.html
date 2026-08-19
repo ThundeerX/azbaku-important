@@ -390,6 +390,45 @@ footer{background:linear-gradient(180deg,#6B7280 0%,#1F2937 100%);color:#E8EAED;
     recalc();
   }).catch(function(){});
 
+  // ===== Xüsusi auksion dropdown-u (bayraq şəkilləri ilə) =====
+  var auctionSelectEl = document.getElementById('auctionSelect');
+  var auctionTriggerEl = document.getElementById('auctionTrigger');
+  var auctionHiddenInput = document.getElementById('selAuction');
+
+  auctionTriggerEl.addEventListener('click', function(e){
+    e.stopPropagation();
+    auctionSelectEl.classList.toggle('open');
+  });
+
+  document.querySelectorAll('#auctionMenu .cs-opt').forEach(function(opt){
+    opt.addEventListener('click', function(){
+      var val = this.dataset.value;
+      var flagImg = this.querySelector('img').cloneNode(true);
+      var label = this.querySelector('span').textContent;
+
+      // Trigger düyməsinin görünüşünü yenilə
+      auctionTriggerEl.querySelector('.cs-trigger-text').innerHTML = '';
+      auctionTriggerEl.querySelector('.cs-trigger-text').appendChild(flagImg);
+      auctionTriggerEl.querySelector('.cs-trigger-text').appendChild(document.createTextNode(label));
+
+      // Aktiv seçimi işarələ
+      document.querySelectorAll('#auctionMenu .cs-opt').forEach(function(o){o.classList.remove('active');});
+      this.classList.add('active');
+
+      // Menyunu bağla
+      auctionSelectEl.classList.remove('open');
+
+      // Gizli input-u yenilə və mövcud 'change' məntiqini işə sal
+      auctionHiddenInput.value = val;
+      auctionHiddenInput.dispatchEvent(new Event('change'));
+    });
+  });
+
+  // Kənara klikləyəndə menyunu bağla
+  document.addEventListener('click', function(e){
+    if(!auctionSelectEl.contains(e.target)) auctionSelectEl.classList.remove('open');
+  });
+
   function fmt(n){return'$'+Math.round(n).toLocaleString('en-US');}
 
   function recalc(){
@@ -471,6 +510,8 @@ footer{background:linear-gradient(180deg,#6B7280 0%,#1F2937 100%);color:#E8EAED;
 
   document.getElementById('resetBtn').addEventListener('click',function(){
     document.getElementById('selAuction').value='';
+    document.querySelectorAll('#auctionMenu .cs-opt').forEach(function(o){o.classList.remove('active');});
+    document.getElementById('auctionTrigger').querySelector('.cs-trigger-text').innerHTML='— Auksion seçin —';
     document.getElementById('selLocation').innerHTML='<option value="" data-i18n="opt-loc-first">— Əvvəlcə auksion seçin —</option>';
     document.getElementById('loadPort').value='— Lokasiya seçildikdən sonra —';
     document.getElementById('auctionPrice').value='';
