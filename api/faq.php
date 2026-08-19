@@ -2,7 +2,7 @@
 require_once __DIR__ . '/config.php';
 require_once __DIR__ . '/auth.php';
 try {
-    $pdo = new PDO("mysql:host=".DB_HOST.";dbname=".DB_NAME.";charset=utf8", DB_USER, DB_PASS);
+    $pdo = new PDO("mysql:host=".DB_HOST.";dbname=".DB_NAME.";charset=utf8mb4", DB_USER, DB_PASS);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) { http_response_code(500); echo json_encode(["error"=>"DB Error"]); exit; }
 
@@ -11,7 +11,14 @@ $method = $_SERVER['REQUEST_METHOD'];
 if ($method === 'GET') {
     $cat = $_GET['cat'] ?? '';
     $sql = "SELECT * FROM faq_items".($cat?" WHERE category='$cat'":'')." ORDER BY category, sort_order ASC";
-    echo json_encode($pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC));
+    $rows = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+    $json = json_encode($rows, JSON_UNESCAPED_UNICODE);
+    if ($json === false) {
+        http_response_code(500);
+        echo json_encode(["error" => "JSON xətası", "debug" => json_last_error_msg(), "row_count" => count($rows)]);
+        exit;
+    }
+    echo $json;
     exit;
 }
 
