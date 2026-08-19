@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="ABŞ və Kanada auksionlarından Azərbaycana avtomobil idxalının dəqiq qiymətini hesablayın — auksion, daşınma, gömrük.">
+<title>Kalkulyator — AzBaku AutoImport</title>
+<link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="images/favicon-180.png">
+<link rel="icon" type="image/png" sizes="192x192" href="images/favicon-192.png">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--blue:#002B8A;--blue-deep:#001A54;--silver:#C4C9CC;--white:#FFF;--charcoal:#1A1A1A;--red:#D7263D;--paper:#F5F7F9;--steel:#5B6672;--line:#E1E5E8;}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{overflow-x:hidden;}
+img{max-width:100%;display:block;}
+body{font-family:'Inter',sans-serif;color:var(--charcoal);background:var(--white);line-height:1.6;-webkit-font-smoothing:antialiased;}
+h1,h2,h3{font-family:'Fraunces',serif;font-weight:600;color:var(--blue);}
+a{color:inherit;text-decoration:none;}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px;}
+.eyebrow{font-size:12.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--red);font-weight:700;margin-bottom:14px;display:inline-block;}
+
+header{position:sticky;top:0;z-index:60;background:var(--white);padding:0;}
+.topbar{background:var(--blue);}
+.topbar .wrap{display:flex;justify-content:center;align-items:center;padding:7px 20px;}
+.topbar a{color:var(--white);font-weight:600;font-size:12.5px;}
+.navwrap{background:rgba(255,255,255,0.72);backdrop-filter:blur(22px) saturate(160%);-webkit-backdrop-filter:blur(22px) saturate(160%);}
+.navwrap .wrap{display:flex;align-items:center;justify-content:space-between;padding:10px 20px;gap:14px;flex-wrap:nowrap;}
+.brand-mark{width:42px;height:28px;flex-shrink:0;}
+.brand-mark img{width:100%;height:100%;object-fit:contain;display:block;}
+.brand{flex-shrink:0;font-family:'Inter',sans-serif;font-weight:800;font-size:12px;letter-spacing:0.03em;text-transform:uppercase;color:var(--blue);display:flex;align-items:center;gap:7px;white-space:nowrap;overflow:hidden;line-height:1.15;}
+nav{display:none;}
+nav a{font-size:14px;font-weight:600;color:var(--charcoal);padding:7px 14px;white-space:nowrap;border-radius:999px;transition:background .15s ease,color .15s ease;}
+nav a:hover{color:var(--blue);}
+nav a.active{background:var(--blue);color:#fff !important;font-weight:700;}
+.mobile-menu a.active{color:var(--blue);font-weight:800;}
+.header-cta{display:none !important;}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 24px;border-radius:7px;font-weight:700;font-size:14px;border:1.5px solid transparent;cursor:pointer;white-space:nowrap;}
+.btn:hover{transform:translateY(-1px);}
+.btn-red{background:var(--red);color:var(--white);}
+.btn-outline{background:transparent;color:var(--blue);border-color:var(--blue);}
+.btn-outline:hover{background:var(--blue);color:var(--white);}
+.btn-outline-light{background:transparent;color:var(--white);border-color:rgba(255,255,255,0.5);}
+.lang-btn{display:flex;align-items:center;gap:5px;padding:6px 10px;border:1.5px solid var(--line);border-radius:6px;background:var(--white);font-size:11px;font-weight:700;color:var(--blue);cursor:pointer;flex-shrink:0;}
+.lang-btn:hover{border-color:var(--blue);}
+.hamburger{display:flex;flex-direction:column;justify-content:center;gap:4px;width:36px;height:36px;flex-shrink:0;border:1.5px solid var(--line);border-radius:8px;background:var(--white);cursor:pointer;}
+.hamburger span{width:15px;height:2px;background:var(--blue);margin:0 auto;}
+.mobile-menu{display:none;flex-direction:column;padding:8px 20px 16px;position:fixed;left:0;right:0;top:0;z-index:70;background:var(--white);box-shadow:0 12px 24px rgba(0,0,0,0.12);overflow-y:auto;}
+.mobile-menu.open{display:flex;}
+.mobile-menu a{padding:13px 0;font-size:15px;font-weight:600;color:var(--blue);border-bottom:1px solid var(--line);}
+
+/* Desktop: floating centered pill nav */
+@media(min-width:769px){
+  .topbar{display:none;}
+  header{background:transparent;padding:14px 20px 0;}
+  .navwrap{max-width:1200px;margin:0 auto;border-radius:999px;box-shadow:0 10px 30px rgba(0,43,138,0.14);border:1px solid rgba(255,255,255,0.5);background:rgba(255,255,255,0.75);backdrop-filter:blur(24px) saturate(160%);-webkit-backdrop-filter:blur(24px) saturate(160%);}
+  .navwrap .wrap{padding:10px 16px 10px 24px;}
+  .brand{font-size:17px;font-weight:800;gap:9px;}
+  .brand-mark{width:46px;height:31px;}
+  nav{display:flex;align-items:center;gap:2px;flex-shrink:1;min-width:0;}
+  nav a{font-size:13.5px;padding:8px 15px;}
+  .header-cta{display:inline-flex !important;padding:11px 22px;}
+  .hamburger{display:none;}
+  .wrap{padding:0 32px;}
+}
+/* Mobile ≤480px */
+@media(max-width:480px){
+  .wrap{padding:0 14px;}
+  .r2,.r3,.r4,.row2,.row3,.row4,.field-row{grid-template-columns:1fr !important;gap:0 !important;}
+  .cases,.gallery-grid,.values-grid,.how-steps,.paths,.info-grid,.foot-grid,.calc-grid,.form-grid,.detail-grid,.faq-layout,.route-split,.about-intro{grid-template-columns:1fr !important;}
+  .about-stats,.stats,.quick-stats{grid-template-columns:1fr 1fr !important;}
+  .result-card,.faq-filters{position:static !important;}
+  h1{font-size:clamp(21px,6.5vw,30px) !important;}
+  h2{font-size:clamp(19px,5.8vw,26px) !important;}
+  h3{font-size:16px !important;}
+  .hero-inner{padding:34px 0 30px !important;}
+  .page-hero{padding:32px 0 26px !important;}
+  .page-hero .wrap{padding:32px 14px 26px !important;}
+  section{padding:44px 0 !important;}
+  .why-band,.how-section,.about-cta,.faq-cta{padding:26px 16px !important;}
+  .calc-card,.form-card,.card{padding:18px !important;}
+  .detail-hero img{height:200px !important;}
+  .about-img img{height:200px !important;}
+  .route-photo img{height:200px !important;}
+  .case-photo{height:170px !important;}
+  .hero-btns,.cta-btns,.btns{flex-direction:column;width:100%;}
+  .hero-btns .btn,.cta-btns .btn,.btns .btn{width:100%;}
+  input,select,textarea{font-size:16px !important;}
+  .foot-bottom{flex-direction:column;text-align:center;}
+  .trust-strip .wrap{grid-template-columns:1fr 1fr !important;}
+}
+/* Small mobile ≤360px */
+@media(max-width:360px){
+  .brand{font-size:10px !important;}
+  .brand-mark{width:35px !important;height:23px !important;}
+  .stats,.about-stats,.quick-stats{grid-template-columns:1fr !important;}
+}
+
+/* Page hero */
+.page-hero{background:var(--blue);padding:52px 0 44px;}
+.breadcrumb{font-size:13px;color:var(--silver);margin-bottom:14px;}
+.breadcrumb a:hover{color:var(--white);}
+.page-hero h1{color:var(--white);font-size:clamp(26px,3.6vw,38px);margin-bottom:8px;}
+.page-hero p{color:var(--silver);font-size:15.5px;max-width:560px;}
+
+/* Calculator layout */
+.calc-wrap{padding:48px 0 80px;background:var(--paper);}
+.calc-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:32px;align-items:start;}
+.calc-card{background:var(--white);border:1px solid var(--line);border-radius:16px;padding:32px;box-shadow:0 8px 30px rgba(0,43,138,0.06);}
+.calc-card h3{font-size:18px;margin-bottom:4px;}
+.calc-card .sub{color:var(--steel);font-size:13px;margin-bottom:24px;}
+.step{margin-bottom:22px;}
+.step label{display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;margin-bottom:7px;color:var(--charcoal);}
+.step-num{width:22px;height:22px;border-radius:50%;background:var(--blue);color:var(--white);font-size:11px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;}
+.step select,.step input{width:100%;padding:11px 13px;border:1.5px solid var(--line);border-radius:8px;font-size:14px;font-family:inherit;color:var(--charcoal);background:var(--white);}
+.step select{appearance:none;-webkit-appearance:none;background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 8"><path d="M1 1.5L6 6.5L11 1.5" stroke="%235B6672" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>');background-repeat:no-repeat;background-position:right 13px center;background-size:11px 8px;padding-right:34px;}
+.step select:focus,.step input:focus{border-color:var(--blue);outline:none;}
+.step .hint{font-size:11.5px;color:var(--steel);margin-top:4px;}
+.step input[readonly]{background:var(--paper);color:var(--steel);}
+
+.custom-select{position:relative;}
+.cs-trigger{width:100%;display:flex;align-items:center;justify-content:space-between;padding:11px 13px;border:1.5px solid var(--line);border-radius:8px;font-size:14px;font-family:inherit;color:var(--charcoal);background:var(--white);cursor:pointer;text-align:left;}
+.cs-trigger:hover{border-color:var(--blue);}
+.custom-select.open .cs-trigger{border-color:var(--blue);}
+.cs-trigger-text{display:flex;align-items:center;gap:8px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.cs-trigger-text img{width:20px;height:14px;border-radius:2px;flex-shrink:0;display:block;}
+.cs-chev{width:10px;height:10px;flex-shrink:0;margin-left:8px;transition:transform .15s ease;color:var(--steel);}
+.cs-chev svg{display:block;width:100%;height:100%;}
+.custom-select.open .cs-chev{transform:rotate(180deg);}
+.cs-menu{display:none;position:absolute;top:calc(100% + 6px);left:0;right:0;background:var(--white);border:1.5px solid var(--line);border-radius:10px;box-shadow:0 14px 32px rgba(0,43,138,0.14);padding:5px;z-index:50;max-height:280px;overflow-y:auto;}
+.custom-select.open .cs-menu{display:block;}
+.cs-opt{display:flex;align-items:center;gap:9px;padding:9px 10px;border-radius:7px;cursor:pointer;font-size:13.5px;color:var(--charcoal);}
+.cs-opt:hover{background:var(--paper);}
+.cs-opt.active{background:#E6F1FB;color:var(--blue);font-weight:700;}
+.cs-opt img{width:20px;height:14px;border-radius:2px;flex-shrink:0;display:block;}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+
+/* Result card */
+.result-card{background:var(--blue);border-radius:16px;padding:28px;color:var(--white);position:sticky;top:100px;}
+.result-card h3{color:var(--white);font-size:17px;margin-bottom:20px;border-bottom:1px solid rgba(255,255,255,0.15);padding-bottom:14px;}
+.r-row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid rgba(255,255,255,0.08);font-size:13.5px;}
+.r-row span:first-child{color:var(--silver);}
+.r-row span:last-child{font-weight:600;}
+.r-row.zero span:last-child{color:rgba(255,255,255,0.3);}
+.r-total{display:flex;justify-content:space-between;align-items:center;padding:16px 0 0;margin-top:10px;}
+.r-total .lbl{font-weight:700;font-size:15px;}
+.r-total .val{font-weight:800;font-size:28px;color:var(--white);}
+.r-azn{text-align:right;color:var(--silver);font-size:12.5px;margin-top:4px;}
+.r-note{color:rgba(196,201,204,0.7);font-size:12px;margin-top:18px;line-height:1.6;border-top:1px solid rgba(255,255,255,0.1);padding-top:14px;}
+.r-cta{margin-top:16px;}
+.r-cta .btn{width:100%;justify-content:center;}
+
+/* Info boxes */
+.info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:32px;}
+.info-box{background:var(--white);border:1px solid var(--line);border-radius:12px;padding:16px;}
+.info-box .ico{font-size:18px;margin-bottom:6px;}
+.info-box h4{font-size:13px;font-weight:700;margin-bottom:3px;}
+.info-box p{font-size:12px;color:var(--steel);}
+
+/* Footer */
+footer{background:linear-gradient(180deg,#6B7280 0%,#1F2937 100%);color:#E8EAED;padding:52px 0 24px;font-size:14px;}
+.foot-bottom{border-top:1px solid rgba(255,255,255,0.1);padding-top:20px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:12.5px;color:rgba(196,201,204,0.6);}
+.foot-brand{display:flex;align-items:center;gap:8px;margin-bottom:12px;}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:28px;margin-bottom:32px;}
+.foot-grid h4{color:var(--white);font-size:14px;font-weight:700;margin-bottom:12px;}
+.foot-grid a{display:block;color:#E8EAED;margin-bottom:8px;font-size:13px;}
+.foot-grid a:hover{color:var(--white);}
+
+@media(max-width:900px){.calc-grid{grid-template-columns:1fr;}}
+@media(max-width:640px){.row2{grid-template-columns:1fr;}.info-grid{grid-template-columns:1fr;}}
+@media(max-width:880px){.foot-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:560px){.foot-grid{grid-template-columns:1fr;}}
+
+</style>
+</head>
+<body>
+
+<header>
+  <div class="topbar"><div class="wrap"><a href="tel:+994502023080" class="phone-display">050 202 30 80</a></div></div>
+  <div class="navwrap"><div class="wrap">
+    <a href="index.html" class="brand"><span class="brand-mark"><img src="images/azbaku-logo-v2.png" alt="AzBaku"></span><span style="display:flex;flex-direction:column;line-height:1.15;"><span>AZBAKU</span><span>AUTOIMPORT</span></span></a>
+    <nav>
+      <a href="index.html" data-i18n="nav-home">Ana Səhifə</a>
+      <a href="about.html" data-i18n="nav-about">Haqqımızda</a>
+      <a href="examples.html" data-i18n="nav-examples">Nümunələr</a>
+      <a href="request.html" data-i18n="nav-request">Sifariş ver</a>
+      <a href="calculator.html" class="active" data-i18n="nav-calc">Kalkulyator</a>
+<a href="faq.html" data-i18n="nav-faq">FAQ</a>
+      <a href="vin-check.html" data-i18n="nav-vin">VIN Yoxla</a>
+      <a href="index.html#contact" data-i18n="nav-contact">Əlaqə</a>
+    </nav>
+    <div style="display:flex;align-items:center;gap:12px;"><a href="request.html" class="btn btn-red header-cta" id="headerCtaBtn" data-i18n="nav-request">Sifariş ver</a><button id="langToggle" class="lang-btn"><img src="https://flagcdn.com/24x18/ru.png" alt="RU" style="width:20px;height:14px;border-radius:2px;vertical-align:middle;"> RU</button>
+        <button class="hamburger" id="hamburgerBtn"><span></span><span></span><span></span></button></div>
+  </div></div>
+</header>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html" data-i18n="nav-home">Ana Səhifə</a>
+  <a href="about.html" data-i18n="nav-about">Haqqımızda</a>
+  <a href="examples.html" data-i18n="nav-examples">Nümunələr</a>
+  <a href="request.html" data-i18n="nav-request">Sifariş ver</a>
+  <a href="calculator.html" class="active" data-i18n="nav-calc">Kalkulyator</a>
+  <a href="faq.html" data-i18n="nav-faq">FAQ</a>
+  <a href="vin-check.html" data-i18n="nav-vin">VIN Yoxla</a>
+  <a href="index.html#contact" data-i18n="nav-contact">Əlaqə</a>
+</div>
+
+<section class="page-hero"><div class="wrap">
+  <div class="breadcrumb"><a href="index.html" data-i18n="bc-home">Ana səhifə</a> / Kalkulyator</div>
+  <span class="eyebrow" data-i18n="calc-eye">Qiymət hesablama</span>
+  <h1 data-i18n="calc-h1">Daşınma Kalkulyatoru</h1>
+  <p data-i18n="calc-sub">Auksiondan Bakıya qədər təxmini xərci hesablayın — nəticə dərhal görünəcək.</p>
+</div></section>
+
+<div class="calc-wrap"><div class="wrap">
+<div class="calc-grid">
+
+  <!-- FORM -->
+  <div class="calc-card">
+    <h3 data-i18n="nav-calc">Kalkulyator</h3>
+    <p class="sub" data-i18n="calc-desc">Sahələri doldurun, qiymət avtomatik hesablanacaq</p>
+
+    <div class="step">
+      <label><span class="step-num">1</span><span data-i18n="calc-s1">Auksion platformu</span></label>
+      <div class="custom-select" id="auctionSelect">
+        <button type="button" class="cs-trigger" id="auctionTrigger">
+          <span class="cs-trigger-text" data-i18n="opt-auction">— Auksion seçin —</span>
+          <span class="cs-chev"><svg viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </button>
+        <div class="cs-menu" id="auctionMenu">
+          <div class="cs-opt" data-value="copart" data-fee="12"><img src="https://flagcdn.com/24x18/us.png" alt="ABŞ"><span>Copart (ABŞ) — 12%</span></div>
+          <div class="cs-opt" data-value="iaai" data-fee="10"><img src="https://flagcdn.com/24x18/us.png" alt="ABŞ"><span>IAAI (ABŞ) — 10%</span></div>
+          <div class="cs-opt" data-value="manheim" data-fee="10"><img src="https://flagcdn.com/24x18/us.png" alt="ABŞ"><span>Manheim (ABŞ) — 10%</span></div>
+          <div class="cs-opt" data-value="adesa" data-fee="10"><img src="https://flagcdn.com/24x18/us.png" alt="ABŞ"><span>Adesa (ABŞ) — 10%</span></div>
+          <div class="cs-opt" data-value="edge" data-fee="10"><img src="https://flagcdn.com/24x18/us.png" alt="ABŞ"><span>EDGE Pipeline (ABŞ) — 10%</span></div>
+          <div class="cs-opt" data-value="encar" data-fee="5"><img src="https://flagcdn.com/24x18/kr.png" alt="Koreya"><span>EnCar (Cənubi Koreya) — 5%</span></div>
+        </div>
+      </div>
+      <input type="hidden" id="selAuction" value="">
+    </div>
+
+    <div class="step">
+      <label><span class="step-num">2</span><span data-i18n="calc-s2">Lokasiya (ştat/ölkə)</span></label>
+      <select id="selLocation">
+        <option value="" data-i18n="opt-loc-first">— Əvvəlcə auksion seçin —</option>
+      </select>
+    </div>
+
+    <div class="step">
+      <label><span class="step-num">3</span><span data-i18n="calc-s3">Yükləmə portu</span></label>
+      <input type="text" id="loadPort" readonly value="— Lokasiya seçildikdən sonra —">
+      <div class="hint" data-i18n="calc-s3-hint">Lokasiyaya görə avtomatik seçilir</div>
+    </div>
+
+    <div class="step">
+      <label><span class="step-num">4</span><span data-i18n="calc-s4">Auksion qiyməti ($)</span></label>
+      <input type="number" id="auctionPrice" min="0" max="500000" step="100" placeholder="məs. 15000">
+    </div>
+
+    <div class="step">
+      <label><span class="step-num">5</span><span data-i18n="calc-s5">Çatdırılma portu</span></label>
+      <select id="selDest">
+        <option value="poti">🇬🇪 Poti — Tövsiyə</option>
+        <option value="baku">🇦🇿 Bakı Limanı</option>
+      </select>
+    </div>
+
+    <button class="btn btn-outline" id="resetBtn" style="margin-top:4px;width:100%;justify-content:center;" data-i18n="calc-reset">↺ Sıfırla</button>
+  </div>
+
+  <!-- RESULT -->
+  <div class="result-card">
+    <h3 data-i18n="r-h3">Qiymət bölgüsü</h3>
+    <div class="r-row zero" id="rRow1"><span data-i18n="r-auction">Auksion qiyməti</span><span id="r1">$0</span></div>
+    <div class="r-row zero" id="rRow2"><span><span data-i18n="r-fee">Buyer fee</span> (<span id="feeLabel">0</span>%)</span><span id="r2">$0</span></div>
+    <div class="r-row" id="rRow3"><span data-i18n="r-inland">ABŞ daxili daşınma</span><span id="r3">$250</span></div>
+    <div class="r-row zero" id="rRow4"><span data-i18n="r-ocean">Dəniz daşınması</span><span id="r4">$0</span></div>
+
+    <div class="r-total"><span class="lbl" data-i18n="r-total">Yekun (təxmini)</span><span class="val" id="rTotal">$0</span></div>
+    <div class="r-azn" id="rAzn">≈ 0 AZN</div>
+    <div class="r-note" data-i18n="r-note">Bu rəqəmlər təxminidir (±10–15%). Dəqiq hesab üçün bizimlə əlaqə saxlayın.</div>
+    <div class="r-cta"><a href="request.html" class="btn btn-red" data-i18n="r-cta">Sifariş ver — dəqiq qiymət al</a></div>
+  </div>
+
+</div>
+
+<div class="info-grid">
+  <div class="info-box"><div class="ico">🇬🇪</div><h4 data-i18n="info1-h">Poti daha sərfəlidir</h4><p data-i18n="info1-p">Poti portu vasitəsilə daşıma adətən daha sürətli və ucuzdur.</p></div>
+  <div class="info-box"><div class="ico">⚡</div><h4 data-i18n="info2-h">EV güzəştləri</h4><p>Elektrik avtomobillər üçün gömrük rüsumunda xüsusi güzəştlər var.</p></div>
+  <div class="info-box"><div class="ico">📅</div><h4 data-i18n="info3-h">2–3 illik avtomobillər</h4><p data-i18n="info3-p">Bu yaş aralığı gömrük baxımından ən əlverişlidir.</p></div>
+</div>
+</div></div>
+
+<footer id="contact"><div class="wrap">
+  <div class="foot-grid">
+    <div>
+      <div class="foot-brand"><img src="images/azbaku-logo-v2.png" alt="AzBaku" style="width:36px;height:24px;object-fit:contain;"><span style="color:var(--blue);font-weight:800;font-size:16px;text-transform:uppercase;letter-spacing:0.04em;">AzBaku AutoImport</span></div>
+      <p style="color:#E8EAED;max-width:260px;font-size:13px;" data-i18n="foot-desc">ABŞ və Kanada auksionlarından Azərbaycana sifarişlə avtomobil idxalı.</p>
+    </div>
+    <div><h4 data-i18n="foot-nav">Naviqasiya</h4><a href="about.html" data-i18n="nav-about">Haqqımızda</a>
+      <a href="examples.html" data-i18n="nav-examples">Nümunələr</a><a href="request.html" data-i18n="nav-request">Sifariş ver</a><a href="calculator.html" data-i18n="nav-calc">Kalkulyator</a><a href="faq.html" data-i18n="nav-faq">FAQ</a><a href="vin-check.html" data-i18n="nav-vin">VIN Yoxla</a></div>
+    <div><h4 data-i18n="nav-contact">Əlaqə</h4><a href="tel:+994502023080" class="phone-display">050 202 30 80</a><a href="mailto:info@azbaku.az">info@azbaku.az</a><a data-i18n="foot-addr">Bakı, Azərbaycan</a></div>
+    <div><h4 data-i18n="foot-social">Sosial</h4><a href="#">Instagram</a><a href="#">Facebook</a><a href="#">WhatsApp</a></div>
+  </div>
+  <div class="foot-bottom"><span>© 2026 <span style="color:rgba(196,201,204,0.75);font-weight:700;">AzBaku AutoImport</span></span><span data-i18n="foot-copy">Şəffaf idxal, etibarlı proses.</span></div>
+</div></footer>
+
+<script>
+(function(){
+  // Header
+  var btn=document.getElementById('hamburgerBtn'),menu=document.getElementById('mobileMenu'),hdr=document.querySelector('header');
+  btn.addEventListener('click',function(){menu.style.top=hdr.offsetHeight+'px';menu.classList.toggle('open');});
+  menu.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){menu.classList.remove('open');});});
+  document.addEventListener('click',function(e){if(menu.classList.contains('open')&&!menu.contains(e.target)&&!btn.contains(e.target))menu.classList.remove('open');});
+
+  // Locations by auction (ABŞ stateləri + Korea)
+  var usStates=[
+    // East Coast / Southeast
+    {n:'Alabama (AL)',port:'Savannah'},{n:'Connecticut (CT)',port:'New Jersey'},
+    {n:'Delaware (DE)',port:'Baltimore'},{n:'Florida (FL)',port:'Savannah'},
+    {n:'Georgia (GA)',port:'Savannah'},{n:'Kentucky (KY)',port:'Baltimore'},
+    {n:'Maine (ME)',port:'New Jersey'},{n:'Maryland (MD)',port:'Baltimore'},
+    {n:'Massachusetts (MA)',port:'New Jersey'},{n:'Mississippi (MS)',port:'Houston'},
+    {n:'New Hampshire (NH)',port:'New Jersey'},{n:'New Jersey (NJ)',port:'New Jersey'},
+    {n:'New York (NY)',port:'New Jersey'},{n:'North Carolina (NC)',port:'Savannah'},
+    {n:'Pennsylvania (PA)',port:'Baltimore'},{n:'Rhode Island (RI)',port:'New Jersey'},
+    {n:'South Carolina (SC)',port:'Savannah'},{n:'Tennessee (TN)',port:'Savannah'},
+    {n:'Vermont (VT)',port:'New Jersey'},{n:'Virginia (VA)',port:'Baltimore'},
+    {n:'West Virginia (WV)',port:'Baltimore'},
+    // Midwest
+    {n:'Illinois (IL)',port:'Chicago (daxili → Baltimore)'},{n:'Indiana (IN)',port:'Chicago (daxili → Baltimore)'},
+    {n:'Iowa (IA)',port:'Chicago (daxili → Baltimore)'},{n:'Kansas (KS)',port:'Houston'},
+    {n:'Michigan (MI)',port:'Detroit (daxili → Baltimore)'},{n:'Minnesota (MN)',port:'Chicago (daxili → Baltimore)'},
+    {n:'Missouri (MO)',port:'Houston'},{n:'Nebraska (NE)',port:'Houston'},
+    {n:'North Dakota (ND)',port:'Seattle/Tacoma'},{n:'Ohio (OH)',port:'Baltimore'},
+    {n:'South Dakota (SD)',port:'Houston'},{n:'Wisconsin (WI)',port:'Chicago (daxili → Baltimore)'},
+    // South / Southwest
+    {n:'Arkansas (AR)',port:'Houston'},{n:'Louisiana (LA)',port:'Houston'},
+    {n:'Oklahoma (OK)',port:'Houston'},{n:'Texas (TX)',port:'Houston'},
+    // West
+    {n:'Alaska (AK)',port:'Seattle/Tacoma'},{n:'Arizona (AZ)',port:'Los Angeles'},
+    {n:'California (CA)',port:'Los Angeles'},{n:'Colorado (CO)',port:'Los Angeles'},
+    {n:'Hawaii (HI)',port:'Los Angeles'},{n:'Idaho (ID)',port:'Seattle/Tacoma'},
+    {n:'Montana (MT)',port:'Seattle/Tacoma'},{n:'Nevada (NV)',port:'Los Angeles'},
+    {n:'New Mexico (NM)',port:'Los Angeles'},{n:'Oregon (OR)',port:'Seattle/Tacoma'},
+    {n:'Utah (UT)',port:'Los Angeles'},{n:'Washington (WA)',port:'Seattle/Tacoma'},
+    {n:'Wyoming (WY)',port:'Los Angeles'}
+  ];
+  var koreaLocs=[
+    {n:'Seoul',port:'Busan'},{n:'Busan',port:'Busan'},{n:'Incheon',port:'Incheon'},
+    {n:'Daegu',port:'Busan'},{n:'Ulsan',port:'Busan'}
+  ];
+  var canadaLocs=[
+    {n:'Ontario',port:'Halifax'},{n:'Quebec',port:'Halifax'},{n:'British Columbia',port:'Vancouver'},
+    {n:'Alberta',port:'Vancouver'},{n:'Manitoba',port:'Halifax'}
+  ];
+
+  var locationsByAuction={
+    copart:usStates,iaai:usStates,manheim:usStates,adesa:usStates,edge:usStates,
+    encar:koreaLocs
+  };
+
+  // Default rates (admin paneldən yenilənir)
+  var buyerFees={copart:12,iaai:10,manheim:10,adesa:10,edge:10,encar:5};
+  var oceanRates={
+    poti:{sedan:1100,suv:1200,truck:1400,van:1300,ev:1000,hybrid:1150,premium:1350},
+    baku:{sedan:1500,suv:1650,truck:1900,van:1750,ev:1400,hybrid:1600,premium:1800}
+  };
+  var AZN=1.70, INLAND=250;
+  var stateCostMap={}; // ştat adı → o ştata məxsus admin-təyin qiyməti
+
+  // Admin paneldəki tarifləri yüklə
+  fetch('api/settings.php').then(function(r){return r.json();}).then(function(s){
+    if(!s) return;
+    ['copart','iaai','manheim','adesa','edge','encar'].forEach(function(a){
+      if(s['fee_'+a]) buyerFees[a]=parseFloat(s['fee_'+a]);
+    });
+    ['sedan','suv','truck','van','ev','hybrid','premium'].forEach(function(cat){
+      if(s['ocean_poti_'+cat]) oceanRates.poti[cat]=parseInt(s['ocean_poti_'+cat]);
+      if(s['ocean_baku_'+cat]) oceanRates.baku[cat]=parseInt(s['ocean_baku_'+cat]);
+    });
+    if(s.azn_rate) AZN=parseFloat(s.azn_rate);
+    
+    if(s.inland_cost) INLAND=parseInt(s.inland_cost);
+    // Admin-in təyin etdiyi auksion adları (varsa) əvvəlcə tətbiq olunur
+    var auctionNameKeys={copart:'auction_copart_name',iaai:'auction_iaai_name',manheim:'auction_manheim_name',adesa:'auction_adesa_name',edge:'auction_edge_name',encar:'auction_encar_name'};
+    document.querySelectorAll('#auctionMenu .cs-opt').forEach(function(o){
+      var v=o.dataset.value;
+      var nameKey=auctionNameKeys[v];
+      if(nameKey && s[nameKey]){
+        var span=o.querySelector('span');
+        span.dataset.baseName=s[nameKey];
+      }
+    });
+    // Update fee labels in custom dropdown
+    document.querySelectorAll('#auctionMenu .cs-opt').forEach(function(o){
+      var v=o.dataset.value;
+      if(v && buyerFees[v]!==undefined){
+        var span=o.querySelector('span');
+        var base=span.dataset.baseName||span.textContent.split(' — ')[0];
+        span.textContent=base+' — '+buyerFees[v]+'%';
+      }
+    });
+    recalc();
+  }).catch(function(){});
+
+  // ===== Xüsusi auksion dropdown-u (bayraq şəkilləri ilə) =====
+  var auctionSelectEl = document.getElementById('auctionSelect');
+  var auctionTriggerEl = document.getElementById('auctionTrigger');
+  var auctionHiddenInput = document.getElementById('selAuction');
+
+  auctionTriggerEl.addEventListener('click', function(e){
+    e.stopPropagation();
+    auctionSelectEl.classList.toggle('open');
+  });
+
+  document.querySelectorAll('#auctionMenu .cs-opt').forEach(function(opt){
+    opt.addEventListener('click', function(){
+      var val = this.dataset.value;
+      var flagImg = this.querySelector('img').cloneNode(true);
+      var label = this.querySelector('span').textContent;
+
+      // Trigger düyməsinin görünüşünü yenilə
+      auctionTriggerEl.querySelector('.cs-trigger-text').innerHTML = '';
+      auctionTriggerEl.querySelector('.cs-trigger-text').appendChild(flagImg);
+      auctionTriggerEl.querySelector('.cs-trigger-text').appendChild(document.createTextNode(label));
+
+      // Aktiv seçimi işarələ
+      document.querySelectorAll('#auctionMenu .cs-opt').forEach(function(o){o.classList.remove('active');});
+      this.classList.add('active');
+
+      // Menyunu bağla
+      auctionSelectEl.classList.remove('open');
+
+      // Gizli input-u yenilə və mövcud 'change' məntiqini işə sal
+      auctionHiddenInput.value = val;
+      auctionHiddenInput.dispatchEvent(new Event('change'));
+    });
+  });
+
+  // Kənara klikləyəndə menyunu bağla
+  document.addEventListener('click', function(e){
+    if(!auctionSelectEl.contains(e.target)) auctionSelectEl.classList.remove('open');
+  });
+
+  function fmt(n){return'$'+Math.round(n).toLocaleString('en-US');}
+
+  function recalc(){
+    var auction=document.getElementById('selAuction').value;
+    var price=parseInt(document.getElementById('auctionPrice').value)||0;
+    var cat='sedan'; // kateqoriya seçimi çıxarıldı, dəniz tarifi sabit "sedan" bazasında hesablanır
+    var dest=document.getElementById('selDest').value||'poti';
+
+    var feeRate=buyerFees[auction]||0;
+    var fee=Math.round(price*(feeRate/100));
+    var selLoc=document.getElementById('selLocation').value;
+    var stateInland=(selLoc && stateCostMap[selLoc]!==undefined)?stateCostMap[selLoc]:INLAND;
+    var inland=price>0?stateInland:0;
+    var ocean=(price>0&&auction)?(oceanRates[dest]||oceanRates.poti)[cat]||0:0;
+    var total=price+fee+inland+ocean;
+
+    document.getElementById('feeLabel').textContent=feeRate;
+    document.getElementById('r1').textContent=price?fmt(price):'$0';
+    document.getElementById('r2').textContent=fee?fmt(fee):'$0';
+    document.getElementById('r3').textContent=inland?fmt(inland):'$0';
+    document.getElementById('r4').textContent=ocean?fmt(ocean):'$0';
+    document.getElementById('rTotal').textContent=fmt(total);
+    document.getElementById('rAzn').textContent='≈ '+Math.round(total*AZN).toLocaleString()+' AZN';
+
+    // Zero styling
+    ['rRow1','rRow2','rRow4'].forEach(function(id){
+      document.getElementById(id).classList.toggle('zero',
+        id==='rRow1'?!price:id==='rRow2'?!fee:!ocean);
+    });
+  }
+
+  // Auction → populate locations (əvvəlcə admin-in ştat-üzrə qiymətlərini yoxlayır)
+  document.getElementById('selAuction').addEventListener('change',function(){
+    var auction=this.value;
+    var locSel=document.getElementById('selLocation');
+    locSel.innerHTML='<option value="">— Lokasiya seçin —</option>';
+    stateCostMap={};
+
+    var fallbackLocs=locationsByAuction[auction]||[];
+    function renderLocs(locs){
+      locs.forEach(function(l){
+        var o=document.createElement('option');o.value=l.n;o.dataset.port=l.port;o.textContent=l.n;
+        locSel.appendChild(o);
+      });
+    }
+
+    if(!auction){ document.getElementById('loadPort').value='— Lokasiya seçildikdən sonra —'; recalc(); return; }
+
+    fetch('api/states.php?auction='+encodeURIComponent(auction))
+      .then(function(r){return r.json();})
+      .then(function(rows){
+        if(Array.isArray(rows) && rows.length){
+          // Admin bu auksion üçün ştat-üzrə qiymət təyin edib — onları istifadə et
+          rows.forEach(function(r){ stateCostMap[r.state_name]=parseInt(r.cost)||INLAND; });
+          renderLocs(rows.map(function(r){return {n:r.state_name,port:r.port};}));
+        } else {
+          // Admin hələ təyin etməyib — köhnə sabit siyahı + flat qiymət
+          renderLocs(fallbackLocs);
+        }
+      })
+      .catch(function(){ renderLocs(fallbackLocs); });
+
+    document.getElementById('loadPort').value='— Lokasiya seçildikdən sonra —';
+    recalc();
+  });
+
+  // Location → set port + ştata məxsus qiyməti tətbiq et
+  document.getElementById('selLocation').addEventListener('change',function(){
+    var opt=this.options[this.selectedIndex];
+    document.getElementById('loadPort').value=opt&&opt.dataset.port?'🚢 '+opt.dataset.port:'—';
+    recalc();
+  });
+
+  // Recalc on any change
+  ['auctionPrice','selDest'].forEach(function(id){
+    var el=document.getElementById(id);
+    el.addEventListener('change',recalc);el.addEventListener('input',recalc);
+  });
+
+  document.getElementById('resetBtn').addEventListener('click',function(){
+    document.getElementById('selAuction').value='';
+    document.querySelectorAll('#auctionMenu .cs-opt').forEach(function(o){o.classList.remove('active');});
+    document.getElementById('auctionTrigger').querySelector('.cs-trigger-text').innerHTML='— Auksion seçin —';
+    document.getElementById('selLocation').innerHTML='<option value="" data-i18n="opt-loc-first">— Əvvəlcə auksion seçin —</option>';
+    document.getElementById('loadPort').value='— Lokasiya seçildikdən sonra —';
+    document.getElementById('auctionPrice').value='';
+    document.getElementById('selDest').value='poti';
+    recalc();
+  });
+
+  recalc();
+})();
+</script>
+<script src="site-common.js"></script>
+<script src="lang.js?v=8"></script>
+</body>
+</html>

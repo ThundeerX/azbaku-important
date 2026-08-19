@@ -1,0 +1,43 @@
+-- Yeni CMS sahələri üçün ilkin dəyərlər
+-- Bu, admin paneldəki yeni sahələrin boş görünməməsi üçündür.
+-- Hər sətir "əgər yoxdursa əlavə et" məntiqi ilə işləyir, təhlükəsizdir.
+
+INSERT INTO site_settings (skey, svalue) VALUES
+('nav_home','Ana Səhifə'),
+('nav_about','Haqqımızda'),
+('nav_examples','Nümunələr'),
+('nav_request','Sifariş ver'),
+('nav_calc','Kalkulyator'),
+('nav_faq','FAQ'),
+('nav_contact','Əlaqə'),
+('ab_v1_h','Şəffaflıq'),
+('ab_v1_p','Hər xərc ayrıca göstərilir — auksion, daşınma, gömrük, xidmət haqqı. Gizli ödəniş yoxdur, son rəqəm əvvəlcədən məlumdur.'),
+('ab_v2_h','Təsdiqsiz alış yoxdur'),
+('ab_v2_p','Heç bir lot sizin razılığınız olmadan qazanılmır. Limit qiymətini siz müəyyən edirsiniz, biz o həddən yuxarıya çıxmırıq.'),
+('ab_v3_h','Sığortalı daşınma'),
+('ab_v3_p','Bütün avtomobillər tam dəniz sığortası ilə daşınır. Daşıma zamanı baş verəcək hər hansı zərər ödənilir.'),
+('ab_v4_h','Real nümunələr'),
+('ab_v4_p','Hər bir keçmiş idxalımızı real qiymət və müddətlə göstəririk. Nə vəd ediriksə, onu da edirik.'),
+('ab_v5_h','Sürətli proses'),
+('ab_v5_p','Auksiyon tenderindən Bakıya təhvilə qədər orta 38–45 gün. Hər addımda WhatsApp vasitəsilə məlumatlandırırıq.'),
+('ab_v6_h','Əlverişli qiymət'),
+('ab_v6_p','Birbaşa auksionla işləyirik, vasitəçi yoxdur. Şəffaf qiymət siyasəti — hər xərc ayrıca göstərilir.'),
+('rq_lbl_make','Marka'),
+('rq_lbl_model','Model'),
+('rq_lbl_name','Ad Soyad'),
+('rq_lbl_phone','Telefon'),
+('calc_s1','Auksion platformu'),
+('calc_s2','Lokasiya (ştat/ölkə)'),
+('calc_s3','Yükləmə portu'),
+('calc_s4','Auksion qiyməti ($)'),
+('calc_s5','Çatdırılma portu'),
+('faq_h1','Suallarınıza Cavablar'),
+('faq_sub','Auksion prosesindən gömrük rəsmiləşdirilməsinə qədər hər şeyi burada izah edirik.'),
+('auction_copart_name','Copart (ABŞ)'),
+('auction_iaai_name','IAAI (ABŞ)'),
+('auction_manheim_name','Manheim (ABŞ)'),
+('auction_adesa_name','Adesa (ABŞ)'),
+('auction_edge_name','EDGE Pipeline (ABŞ)'),
+('auction_encar_name','EnCar (Cənubi Koreya)'),
+('hdr_cta','Sifariş ver')
+ON DUPLICATE KEY UPDATE svalue=svalue;

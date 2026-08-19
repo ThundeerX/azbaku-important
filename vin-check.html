@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="VIN nömrəsi ilə avtomobilin il, marka, model və mühərrik məlumatlarını pulsuz yoxlayın.">
+<title>VIN Yoxla — AzBaku AutoImport</title>
+<link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="images/favicon-180.png">
+<link rel="icon" type="image/png" sizes="192x192" href="images/favicon-192.png">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--blue:#002B8A;--blue-deep:#001A54;--silver:#C4C9CC;--white:#FFF;--charcoal:#1A1A1A;--red:#D7263D;--paper:#F5F7F9;--steel:#5B6672;--line:#E1E5E8;}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{overflow-x:hidden;}
+img{max-width:100%;display:block;}
+body{font-family:'Inter',sans-serif;color:var(--charcoal);background:var(--white);line-height:1.6;-webkit-font-smoothing:antialiased;}
+h1,h2,h3{font-family:'Fraunces',serif;font-weight:600;color:var(--blue);}
+a{color:inherit;text-decoration:none;}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px;}
+.eyebrow{font-size:12.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--red);font-weight:700;margin-bottom:14px;display:inline-block;}
+
+header{position:sticky;top:0;z-index:60;background:var(--white);padding:0;}
+.topbar{background:var(--blue);}
+.topbar .wrap{display:flex;justify-content:center;align-items:center;padding:7px 20px;}
+.topbar a{color:var(--white);font-weight:600;font-size:12.5px;}
+.navwrap{background:rgba(255,255,255,0.72);backdrop-filter:blur(22px) saturate(160%);-webkit-backdrop-filter:blur(22px) saturate(160%);}
+.navwrap .wrap{display:flex;align-items:center;justify-content:space-between;padding:10px 20px;gap:14px;flex-wrap:nowrap;}
+.brand-mark{width:42px;height:28px;flex-shrink:0;}
+.brand-mark img{width:100%;height:100%;object-fit:contain;display:block;}
+.brand{flex-shrink:0;font-family:'Inter',sans-serif;font-weight:800;font-size:12px;letter-spacing:0.03em;text-transform:uppercase;color:var(--blue);display:flex;align-items:center;gap:7px;white-space:nowrap;overflow:hidden;line-height:1.15;}
+nav{display:none;}
+nav a{font-size:14px;font-weight:600;color:var(--charcoal);padding:7px 14px;white-space:nowrap;border-radius:999px;transition:background .15s ease,color .15s ease;}
+nav a:hover{color:var(--blue);}
+nav a.active{background:var(--blue);color:#fff !important;font-weight:700;}
+.mobile-menu a.active{color:var(--blue);font-weight:800;}
+.header-cta{display:none !important;}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 24px;border-radius:7px;font-weight:700;font-size:14px;border:1.5px solid transparent;cursor:pointer;white-space:nowrap;}
+.btn:hover{transform:translateY(-1px);}
+.btn-red{background:var(--red);color:var(--white);}
+.btn-outline{background:transparent;color:var(--blue);border-color:var(--blue);}
+.btn-outline:hover{background:var(--blue);color:var(--white);}
+.btn-outline-light{background:transparent;color:var(--white);border-color:rgba(255,255,255,0.5);}
+.lang-btn{display:flex;align-items:center;gap:5px;padding:6px 10px;border:1.5px solid var(--line);border-radius:6px;background:var(--white);font-size:11px;font-weight:700;color:var(--blue);cursor:pointer;flex-shrink:0;}
+.lang-btn:hover{border-color:var(--blue);}
+.hamburger{display:flex;flex-direction:column;justify-content:center;gap:4px;width:36px;height:36px;flex-shrink:0;border:1.5px solid var(--line);border-radius:8px;background:var(--white);cursor:pointer;}
+.hamburger span{width:15px;height:2px;background:var(--blue);margin:0 auto;}
+.mobile-menu{display:none;flex-direction:column;padding:8px 20px 16px;position:fixed;left:0;right:0;top:0;z-index:70;background:var(--white);box-shadow:0 12px 24px rgba(0,0,0,0.12);overflow-y:auto;}
+.mobile-menu.open{display:flex;}
+.mobile-menu a{padding:13px 0;font-size:15px;font-weight:600;color:var(--blue);border-bottom:1px solid var(--line);}
+
+/* Desktop: floating centered pill nav */
+@media(min-width:769px){
+  .topbar{display:none;}
+  header{background:transparent;padding:14px 20px 0;}
+  .navwrap{max-width:1200px;margin:0 auto;border-radius:999px;box-shadow:0 10px 30px rgba(0,43,138,0.14);border:1px solid rgba(255,255,255,0.5);background:rgba(255,255,255,0.75);backdrop-filter:blur(24px) saturate(160%);-webkit-backdrop-filter:blur(24px) saturate(160%);}
+  .navwrap .wrap{padding:10px 16px 10px 24px;}
+  .brand{font-size:17px;font-weight:800;gap:9px;}
+  .brand-mark{width:46px;height:31px;}
+  nav{display:flex;align-items:center;gap:2px;flex-shrink:1;min-width:0;}
+  nav a{font-size:13.5px;padding:8px 15px;}
+  .header-cta{display:inline-flex !important;padding:11px 22px;}
+  .hamburger{display:none;}
+  .wrap{padding:0 32px;}
+}
+/* Mobile ≤480px */
+@media(max-width:480px){
+  .wrap{padding:0 14px;}
+  .r2,.r3,.r4,.row2,.row3,.row4,.field-row{grid-template-columns:1fr !important;gap:0 !important;}
+  .cases,.gallery-grid,.values-grid,.how-steps,.paths,.info-grid,.foot-grid,.calc-grid,.form-grid,.detail-grid,.faq-layout,.route-split,.about-intro{grid-template-columns:1fr !important;}
+  .about-stats,.stats,.quick-stats{grid-template-columns:1fr 1fr !important;}
+  .result-card,.faq-filters{position:static !important;}
+  h1{font-size:clamp(21px,6.5vw,30px) !important;}
+  h2{font-size:clamp(19px,5.8vw,26px) !important;}
+  h3{font-size:16px !important;}
+  .hero-inner{padding:34px 0 30px !important;}
+  .page-hero{padding:32px 0 26px !important;}
+  .page-hero .wrap{padding:32px 14px 26px !important;}
+  section{padding:44px 0 !important;}
+  .why-band,.how-section,.about-cta,.faq-cta{padding:26px 16px !important;}
+  .calc-card,.form-card,.card{padding:18px !important;}
+  .detail-hero img{height:200px !important;}
+  .about-img img{height:200px !important;}
+  .route-photo img{height:200px !important;}
+  .case-photo{height:170px !important;}
+  .hero-btns,.cta-btns,.btns{flex-direction:column;width:100%;}
+  .hero-btns .btn,.cta-btns .btn,.btns .btn{width:100%;}
+  input,select,textarea{font-size:16px !important;}
+  .foot-bottom{flex-direction:column;text-align:center;}
+  .trust-strip .wrap{grid-template-columns:1fr 1fr !important;}
+}
+/* Small mobile ≤360px */
+@media(max-width:360px){
+  .brand{font-size:10px !important;}
+  .brand-mark{width:35px !important;height:23px !important;}
+  .stats,.about-stats,.quick-stats{grid-template-columns:1fr !important;}
+}
+
+/* Page hero */
+.page-hero{background:var(--blue);padding:52px 0 44px;}
+.breadcrumb{font-size:13px;color:var(--silver);margin-bottom:14px;}
+.breadcrumb a:hover{color:var(--white);}
+.page-hero h1{color:var(--white);font-size:clamp(26px,3.6vw,38px);margin-bottom:8px;}
+.page-hero p{color:var(--silver);font-size:15.5px;max-width:560px;}
+
+.faq-wrap{padding:56px 0 88px;background:var(--paper);}
+
+/* VIN yoxlayıcı */
+.vin-card{background:var(--white);border:1px solid var(--line);border-radius:16px;padding:28px;box-shadow:0 8px 30px rgba(0,43,138,0.06);}
+.vin-card label{display:block;font-size:12.5px;font-weight:700;color:var(--charcoal);margin-bottom:8px;}
+.vin-input-row{display:flex;gap:10px;}
+.vin-input-row input{flex:1;padding:13px 15px;border:1.5px solid var(--line);border-radius:8px;font-size:15px;font-family:'Courier New',monospace;letter-spacing:0.06em;text-transform:uppercase;color:var(--charcoal);}
+.vin-input-row input:focus{border-color:var(--blue);outline:none;}
+.vin-input-row .btn{white-space:nowrap;padding:13px 26px;}
+.vin-hint{font-size:12px;color:var(--steel);margin-top:9px;}
+.vin-err{color:var(--red);font-size:12.5px;margin-top:9px;font-weight:600;}
+
+#vinResult{margin-top:20px;}
+.vin-loading{text-align:center;padding:30px;color:var(--steel);font-size:14px;}
+.vin-result-card{background:var(--white);border:1px solid var(--line);border-radius:16px;padding:28px;box-shadow:0 8px 30px rgba(0,43,138,0.06);}
+.vin-result-title{font-size:19px;font-family:'Fraunces',serif;color:var(--blue);margin-bottom:4px;}
+.vin-result-vin{font-family:'Courier New',monospace;font-size:12.5px;color:var(--steel);letter-spacing:0.04em;margin-bottom:18px;}
+.vin-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden;}
+.vin-item{background:var(--white);padding:12px 14px;}
+.vin-item .lbl{font-size:11px;color:var(--steel);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:3px;}
+.vin-item .val{font-size:14.5px;font-weight:700;color:var(--charcoal);}
+.vin-warn{background:#FFF7E6;border:1px solid #F5C542;color:#8A6200;border-radius:10px;padding:12px 16px;font-size:13px;margin-bottom:16px;}
+
+.vin-cta-box{margin-top:28px;text-align:center;background:var(--blue);border-radius:16px;padding:32px 24px;}
+.vin-cta-box h3{color:var(--white);font-size:19px;margin-bottom:8px;}
+.vin-cta-box p{color:var(--silver);font-size:13.5px;max-width:440px;margin:0 auto 18px;line-height:1.6;}
+@media(max-width:560px){.vin-input-row{flex-direction:column;}.vin-grid{grid-template-columns:1fr;}}
+.faq-layout{display:grid;grid-template-columns:200px 1fr;gap:40px;align-items:start;}
+
+/* Filter sidebar */
+.faq-filters{position:sticky;top:100px;}
+.faq-filters h4{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--steel);margin-bottom:12px;}
+.filter-btn{display:flex;justify-content:space-between;align-items:center;width:100%;padding:9px 14px;border-radius:8px;border:none;background:transparent;font-size:13.5px;font-family:inherit;color:var(--steel);cursor:pointer;margin-bottom:3px;font-weight:500;}
+.filter-btn:hover{background:var(--white);color:var(--blue);}
+.filter-btn.active{background:var(--blue);color:var(--white);font-weight:700;}
+.filter-btn .cnt{font-size:11px;opacity:0.7;}
+
+/* FAQ items */
+.faq-section{margin-bottom:32px;}
+.faq-section-title{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--steel);margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--line);}
+.faq-item{background:var(--white);border:1px solid var(--line);border-radius:12px;margin-bottom:10px;overflow:hidden;}
+.faq-q{display:flex;justify-content:space-between;align-items:center;padding:18px 20px;cursor:pointer;font-weight:600;font-size:14.5px;color:var(--charcoal);gap:12px;}
+.faq-q:hover{color:var(--blue);}
+.faq-q .arrow{font-size:18px;flex-shrink:0;color:var(--steel);transition:transform .2s ease;}
+.faq-item.open .faq-q .arrow{transform:rotate(45deg);}
+.faq-a{display:none;padding:0 20px 20px;font-size:14px;color:var(--steel);line-height:1.75;}
+.faq-item.open .faq-a{display:block;}
+.empty-state{text-align:center;padding:60px 20px;color:var(--steel);}
+.empty{text-align:center;padding:60px 20px;color:var(--steel);}
+
+/* Footer */
+footer{background:linear-gradient(180deg,#6B7280 0%,#1F2937 100%);color:#E8EAED;padding:52px 0 24px;font-size:14px;}
+.foot-bottom{border-top:1px solid rgba(255,255,255,0.1);padding-top:20px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:12.5px;color:rgba(196,201,204,0.6);}
+.foot-brand{display:flex;align-items:center;gap:8px;margin-bottom:12px;}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:28px;margin-bottom:32px;}
+.foot-grid h4{color:var(--white);font-size:14px;font-weight:700;margin-bottom:12px;}
+.foot-grid a{display:block;color:#E8EAED;margin-bottom:8px;font-size:13px;}
+.foot-grid a:hover{color:var(--white);}
+
+@media(max-width:800px){.faq-layout{grid-template-columns:1fr;}.faq-filters{position:static;}}
+@media(max-width:880px){.foot-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:560px){.foot-grid{grid-template-columns:1fr;}}
+
+</style>
+</head>
+<body>
+
+<header>
+  <div class="topbar"><div class="wrap"><a href="tel:+994502023080" class="phone-display">050 202 30 80</a></div></div>
+  <div class="navwrap"><div class="wrap">
+    <a href="index.html" class="brand"><span class="brand-mark"><img src="images/azbaku-logo-v2.png" alt="AzBaku"></span><span style="display:flex;flex-direction:column;line-height:1.15;"><span>AZBAKU</span><span>AUTOIMPORT</span></span></a>
+    <nav>
+      <a href="index.html" data-i18n="nav-home">Ana Səhifə</a>
+      <a href="about.html" data-i18n="nav-about">Haqqımızda</a>
+      <a href="examples.html" data-i18n="nav-examples">Nümunələr</a>
+      <a href="request.html" data-i18n="nav-request">Sifariş ver</a>
+      <a href="calculator.html" data-i18n="nav-calc">Kalkulyator</a>
+      <a href="faq.html" data-i18n="nav-faq">FAQ</a>
+      <a href="vin-check.html" class="active" data-i18n="nav-vin">VIN Yoxla</a>
+      <a href="index.html#contact" data-i18n="nav-contact">Əlaqə</a>
+    </nav>
+    <div style="display:flex;align-items:center;gap:12px;"><a href="request.html" class="btn btn-red header-cta" id="headerCtaBtn" data-i18n="nav-request">Sifariş ver</a><button id="langToggle" class="lang-btn"><img src="https://flagcdn.com/24x18/ru.png" alt="RU" style="width:20px;height:14px;border-radius:2px;vertical-align:middle;"> RU</button>
+        <button class="hamburger" id="hamburgerBtn"><span></span><span></span><span></span></button></div>
+  </div></div>
+</header>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html" data-i18n="nav-home">Ana Səhifə</a>
+  <a href="about.html" data-i18n="nav-about">Haqqımızda</a>
+  <a href="examples.html" data-i18n="nav-examples">Nümunələr</a>
+  <a href="request.html" data-i18n="nav-request">Sifariş ver</a>
+  <a href="calculator.html" data-i18n="nav-calc">Kalkulyator</a>
+  <a href="faq.html" data-i18n="nav-faq">FAQ</a>
+  <a href="vin-check.html" class="active" data-i18n="nav-vin">VIN Yoxla</a>
+  <a href="index.html#contact" data-i18n="nav-contact">Əlaqə</a>
+</div>
+
+<section class="page-hero"><div class="wrap">
+  <div class="breadcrumb"><a href="index.html">Ana səhifə</a> / VIN Yoxla</div>
+  <span class="eyebrow" data-i18n="vin-eye">Pulsuz və ani</span>
+  <h1 data-i18n="vin-h1">VIN Nömrəsini Yoxlayın</h1>
+  <p data-i18n="vin-sub">17 rəqəmli VIN nömrəsini yazın — avtomobilin il, marka, model və mühərrik məlumatlarını dərhal görün.</p>
+</div></section>
+
+<div class="faq-wrap"><div class="wrap" style="max-width:720px;">
+
+  <div class="vin-card">
+    <label for="vinInput" data-i18n="vin-lbl">VIN nömrəsi (17 simvol)</label>
+    <div class="vin-input-row">
+      <input type="text" id="vinInput" maxlength="17" placeholder="məs. 1HGCM82633A004352" autocomplete="off" autocapitalize="characters" spellcheck="false">
+      <button class="btn btn-red" id="vinBtn" data-i18n="vin-btn">Yoxla</button>
+    </div>
+    <div class="vin-hint" id="vinHint" data-i18n="vin-hint">VIN, avtomobilin şüşəsində, sənədlərində və ya auksion elanında yazılır.</div>
+  </div>
+
+  <div id="vinResult"></div>
+
+  <div class="vin-cta-box">
+    <h3 data-i18n="vin-cta-h">Tam tarixçəni bilmək istəyirsiniz?</h3>
+    <p data-i18n="vin-cta-p">Bu, yalnız əsas texniki məlumatdır — qəza tarixçəsi, kilometraj qeydləri daxil deyil. Bizimlə əlaqə saxlayın, tam yoxlama edək.</p>
+    <a href="request.html" class="btn btn-blue" data-i18n="vin-cta-btn">Bizimlə əlaqə saxlayın</a>
+  </div>
+
+</div></div>
+
+<footer id="contact"><div class="wrap">
+  <div class="foot-grid">
+    <div>
+      <div class="foot-brand"><img src="images/azbaku-logo-v2.png" alt="AzBaku" style="width:36px;height:24px;object-fit:contain;"><span style="color:var(--blue);font-weight:800;font-size:16px;text-transform:uppercase;letter-spacing:0.04em;">AzBaku AutoImport</span></div>
+      <p style="color:#E8EAED;max-width:260px;font-size:13px;">ABŞ və Kanada auksionlarından Azərbaycana sifarişlə avtomobil idxalı.</p>
+    </div>
+    <div><h4 data-i18n="foot-nav">Naviqasiya</h4><a href="about.html" data-i18n="nav-about">Haqqımızda</a>
+      <a href="examples.html" data-i18n="nav-examples">Nümunələr</a><a href="request.html" data-i18n="nav-request">Sifariş ver</a><a href="calculator.html" data-i18n="nav-calc">Kalkulyator</a><a href="faq.html" data-i18n="nav-faq">FAQ</a><a href="vin-check.html" data-i18n="nav-vin">VIN Yoxla</a></div>
+    <div><h4 data-i18n="nav-contact">Əlaqə</h4><a href="tel:+994502023080" class="phone-display">050 202 30 80</a><a href="mailto:info@azbaku.az">info@azbaku.az</a><a>Bakı, Azərbaycan</a></div>
+    <div><h4 data-i18n="foot-social">Sosial</h4><a href="#">Instagram</a><a href="#">Facebook</a><a href="#">WhatsApp</a></div>
+  </div>
+  <div class="foot-bottom"><span>© 2026 <span style="color:rgba(196,201,204,0.75);font-weight:700;">AzBaku AutoImport</span></span><span>Şəffaf idxal, etibarlı proses.</span></div>
+</div></footer>
+
+<script>
+(function(){
+  var btn=document.getElementById('hamburgerBtn'),menu=document.getElementById('mobileMenu'),hdr=document.querySelector('header');
+  btn.addEventListener('click',function(){menu.style.top=hdr.offsetHeight+'px';menu.classList.toggle('open');});
+  menu.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){menu.classList.remove('open');});});
+  document.addEventListener('click',function(e){if(menu.classList.contains('open')&&!menu.contains(e.target)&&!btn.contains(e.target))menu.classList.remove('open');});
+
+})();
+</script>
+<script>
+(function(){
+  var vinInput = document.getElementById('vinInput');
+  var vinBtn = document.getElementById('vinBtn');
+  var resultBox = document.getElementById('vinResult');
+
+  vinInput.addEventListener('input', function(){
+    this.value = this.value.toUpperCase().replace(/[^A-HJ-NPR-Z0-9]/g,''); // I,O,Q VIN-də istifadə olunmur
+  });
+  vinInput.addEventListener('keydown', function(e){ if(e.key==='Enter') checkVin(); });
+  vinBtn.addEventListener('click', checkVin);
+
+  function checkVin(){
+    var vin = vinInput.value.trim();
+    if(vin.length !== 17){
+      resultBox.innerHTML = '<div class="vin-err">VIN düzgün deyil — dəqiq 17 simvol olmalıdır (hazırda '+vin.length+').</div>';
+      return;
+    }
+
+    resultBox.innerHTML = '<div class="vin-loading">Yoxlanılır...</div>';
+    vinBtn.disabled = true;
+
+    fetch('https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVinValues/'+encodeURIComponent(vin)+'?format=json')
+      .then(function(r){ return r.json(); })
+      .then(function(data){
+        vinBtn.disabled = false;
+        var d = data && data.Results && data.Results[0];
+        if(!d){ showError('Nəticə alınmadı, yenidən cəhd edin.'); return; }
+
+        var errCode = d.ErrorCode || '';
+        var hasBasicData = d.Make || d.ModelYear;
+
+        if(!hasBasicData){
+          showError('Bu VIN üçün məlumat tapılmadı. VIN-i yenidən yoxlayıb təkrar cəhd edin.');
+          return;
+        }
+
+        var warn = '';
+        if(errCode && errCode !== '0'){
+          warn = '<div class="vin-warn">⚠️ VIN qismən oxundu (' + (d.ErrorText || 'yoxlama kodu: '+errCode) + '). Nəticə tam dəqiq olmaya bilər.</div>';
+        }
+
+        var items = [
+          ['İl', d.ModelYear],
+          ['Marka', d.Make],
+          ['Model', d.Model],
+          ['Trim', d.Trim],
+          ['Ban növü', d.BodyClass],
+          ['Mühərrik', d.EngineConfiguration || d.EngineCylinders ? (d.EngineCylinders||'')+' silindr' : ''],
+          ['Həcm (L)', d.DisplacementL ? d.DisplacementL+' L' : ''],
+          ['Yanacaq növü', d.FuelTypePrimary],
+          ['Ötürücü', d.DriveType],
+          ['Sürətlər qutusu', d.TransmissionStyle],
+          ['İstehsal ölkəsi', d.PlantCountry],
+          ['Zavod şəhəri', d.PlantCity]
+        ].filter(function(x){ return x[1] && x[1].trim(); });
+
+        var html = warn + '<div class="vin-result-card">' +
+          '<div class="vin-result-title">' + (d.ModelYear||'') + ' ' + (d.Make||'') + ' ' + (d.Model||'') + '</div>' +
+          '<div class="vin-result-vin">VIN: ' + vin + '</div>' +
+          '<div class="vin-grid">' +
+          items.map(function(it){
+            return '<div class="vin-item"><div class="lbl">'+it[0]+'</div><div class="val">'+it[1]+'</div></div>';
+          }).join('') +
+          '</div></div>';
+
+        resultBox.innerHTML = html;
+      })
+      .catch(function(){
+        vinBtn.disabled = false;
+        showError('Xidmətə qoşulmaq mümkün olmadı. İnterneti yoxlayıb yenidən cəhd edin.');
+      });
+  }
+
+  function showError(msg){
+    resultBox.innerHTML = '<div class="vin-err">' + msg + '</div>';
+  }
+})();
+</script>
+<script src="site-common.js"></script>
+<script src="lang.js?v=8"></script>
+</body>
+</html>
