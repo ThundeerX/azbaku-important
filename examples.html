@@ -199,10 +199,9 @@ footer{background:linear-gradient(180deg,#6B7280 0%,#1F2937 100%);color:#E8EAED;
     {id:'static-3',title:'BMW 3 Series 2021',country:'ABŞ',country_code:'US',photo_url:'https://images.unsplash.com/photo-1555215695-3004980ad54e?w=700&q=80',price:'$24,150',days:'44 gün'}
   ];
   function render(cases){window._lastCases=cases;var g=document.getElementById('galleryGrid');g.innerHTML='';cases.forEach(function(c){var a=document.createElement('a');a.className='case-card';a.href='example-detail.html?id='+c.id;a.innerHTML='<div class="case-photo"><img src="'+c.photo_url+'" alt="'+c.title+'"><span class="flag-badge">'+flag(c.country_code)+' '+(c.country||'')+'</span><span class="status-badge">Təhvil verildi</span></div><div class="case-body"><h3>'+c.title+'</h3><div class="case-meta"><span>Yekun qiymət<strong>'+c.price+'</strong></span><span>Müddət<strong>'+c.days+'</strong></span></div><div class="case-cta">Tam məlumata bax →</div></div>';g.appendChild(a);});window.dispatchEvent(new Event('contentloaded'));}
-  window.addEventListener("langchange",function(){if(window._lastCases)render(window._lastCases);});
   fetch('/api/cases.php').then(function(r){return r.json();}).then(function(c){if(!c||!c.length){render(fallback);return;}render(c);}).catch(function(){render(fallback);});
 })();
 </script>
-<script src="lang.js?v=7"></script>
+<script src="lang.js?v=8"></script>
 </body>
 </html>
