@@ -66,7 +66,11 @@
     } else if (!on && l) { l.remove(); }
   }
 
+  var isApplying = false; // sonsuz dövrün qarşısını alan qoruyucu
+
   function applyLang(target){
+    if (isApplying) return; // artıq işə düşür, təkrar çağırışı ötür
+    isApplying = true;
     lang = target;
     localStorage.setItem('azbaku_lang', target);
     updateButtons();
@@ -74,7 +78,7 @@
     window.dispatchEvent(new CustomEvent('langchange', {detail: {lang: target}}));
 
     var nodes = collectNodes();
-    if (target === 'az') { restoreAZ(nodes); return; }
+    if (target === 'az') { restoreAZ(nodes); isApplying = false; return; }
 
     var texts = [], map = [];
     nodes.forEach(function(el){
@@ -89,7 +93,7 @@
       texts.push(src);
       map.push({el: el, src: src});
     });
-    if (!texts.length) return;
+    if (!texts.length) { isApplying = false; return; }
 
     loader(true);
     fetch('api/translate.php', {
@@ -100,6 +104,7 @@
     .then(function(r){ return r.json(); })
     .then(function(dict){
       loader(false);
+      isApplying = false;
       if (!dict || dict.error) return;
       map.forEach(function(m){
         var tr = dict[m.src];
@@ -109,7 +114,7 @@
         else m.el.innerHTML = tr;
       });
     })
-    .catch(function(){ loader(false); });
+    .catch(function(){ loader(false); isApplying = false; });
   }
 
   var FLAGS = {
