@@ -289,12 +289,23 @@ footer{background:linear-gradient(180deg,#6B7280 0%,#1F2937 100%);color:#E8EAED;
   }
 
   function loadFaq(){
-    fetch('/api/faq.php').then(function(r){return r.json();}).then(function(data){
-      allFaq = data || [];
-      updateCounts();
-      applyFilter(currentCat);
-    }).catch(function(){
-      document.getElementById('faqList').innerHTML='<div class="empty-state">FAQ yüklənmədi.</div>';
+    fetch('/api/faq.php').then(function(r){
+      return r.text().then(function(txt){
+        var parsed=null; try{parsed=JSON.parse(txt);}catch(e){parsed=null;}
+        return {status:r.status, text:txt, json:parsed};
+      });
+    }).then(function(result){
+      if(Array.isArray(result.json)){
+        allFaq = result.json;
+        updateCounts();
+        applyFilter(currentCat);
+      } else {
+        var raw=(result.text||'').replace(/<[^>]*>/g,' ').trim().slice(0,200);
+        var msg = (result.json && (result.json.debug||result.json.error)) ? (result.json.debug||result.json.error) : (raw||'boş cavab (HTTP '+result.status+')');
+        document.getElementById('faqList').innerHTML='<div class="empty-state">FAQ yüklənmədi — '+msg+'</div>';
+      }
+    }).catch(function(err){
+      document.getElementById('faqList').innerHTML='<div class="empty-state">FAQ yüklənmədi — şəbəkə xətası: '+(err&&err.message?err.message:'naməlum')+'</div>';
     });
   }
 
