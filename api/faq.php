@@ -12,6 +12,19 @@ if ($method === 'GET') {
     $cat = $_GET['cat'] ?? '';
     $sql = "SELECT * FROM faq_items".($cat?" WHERE category='$cat'":'')." ORDER BY category, sort_order ASC";
     $rows = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+
+    // Müvəqqəti diaqnostika: cədvəl boşdursa, hansı bazaya qoşulduğumuzu göstər
+    if (!count($rows)) {
+        $rawCount = $pdo->query("SELECT COUNT(*) c FROM faq_items")->fetch(PDO::FETCH_ASSOC);
+        echo json_encode([
+            "debug_empty" => true,
+            "connected_db" => DB_NAME,
+            "connected_host" => DB_HOST,
+            "raw_count_in_table" => $rawCount['c'] ?? 'N/A'
+        ], JSON_UNESCAPED_UNICODE);
+        exit;
+    }
+
     $json = json_encode($rows, JSON_UNESCAPED_UNICODE);
     if ($json === false) {
         http_response_code(500);
