@@ -421,31 +421,10 @@ tr:hover td{background:var(--paper);}
     <div class="tbl-wrap" id="statesBox"><div class="empty">Auksion seçib "Yüklə" basın</div></div>
   </div>
   <div class="card">
-    <h3>Dəniz daşınması — Poti ($)</h3>
-    <div class="r4">
-      <div class="f"><label>Sedan</label><input type="number" id="ocean_poti_sedan"></div>
-      <div class="f"><label>SUV</label><input type="number" id="ocean_poti_suv"></div>
-      <div class="f"><label>Truck</label><input type="number" id="ocean_poti_truck"></div>
-      <div class="f"><label>Van</label><input type="number" id="ocean_poti_van"></div>
-    </div>
-    <div class="r3">
-      <div class="f"><label>EV</label><input type="number" id="ocean_poti_ev"></div>
-      <div class="f"><label>Hibrid</label><input type="number" id="ocean_poti_hybrid"></div>
-      <div class="f"><label>Premium</label><input type="number" id="ocean_poti_premium"></div>
-    </div>
-  </div>
-  <div class="card">
-    <h3>Dəniz daşınması — Bakı ($)</h3>
-    <div class="r4">
-      <div class="f"><label>Sedan</label><input type="number" id="ocean_baku_sedan"></div>
-      <div class="f"><label>SUV</label><input type="number" id="ocean_baku_suv"></div>
-      <div class="f"><label>Truck</label><input type="number" id="ocean_baku_truck"></div>
-      <div class="f"><label>Van</label><input type="number" id="ocean_baku_van"></div>
-    </div>
-    <div class="r3">
-      <div class="f"><label>EV</label><input type="number" id="ocean_baku_ev"></div>
-      <div class="f"><label>Hibrid</label><input type="number" id="ocean_baku_hybrid"></div>
-      <div class="f"><label>Premium</label><input type="number" id="ocean_baku_premium"></div>
+    <h3>Dəniz daşınması ($)</h3>
+    <div class="r2">
+      <div class="f"><label>Poti limanı</label><input type="number" id="ocean_poti_sedan"></div>
+      <div class="f"><label>Bakı limanı</label><input type="number" id="ocean_baku_sedan"></div>
     </div>
     <button class="btn btn-blue" onclick="saveSettings()">Bütün tarifləri yadda saxla</button>
   </div>
@@ -949,7 +928,7 @@ function clearTransCache(){
 }
 
 // --- SETTINGS ---
-var settingIds=['fee_copart','fee_iaai','fee_manheim','fee_adesa','fee_edge','fee_encar','inland_cost','azn_rate','ocean_poti_sedan','ocean_poti_suv','ocean_poti_truck','ocean_poti_van','ocean_poti_ev','ocean_poti_hybrid','ocean_poti_premium','ocean_baku_sedan','ocean_baku_suv','ocean_baku_truck','ocean_baku_van','ocean_baku_ev','ocean_baku_hybrid','ocean_baku_premium','phone','email','address','instagram','facebook','whatsapp','hdr_phone','hdr_nav','hdr_cta','hdr_line1','hdr_line2','foot_desc','foot_desc_ru','foot_copy','h_hero_title','h_hero_title_ru','h_hero_lead','h_hero_lead_ru','h_s1v','h_s1l','h_s2v','h_s2l','h_why_h','h_why_h_ru','h_w1h','h_w2h','h_w3h','h_w1p','h_w2p','h_w3p','h_cta_h','h_cta_h_ru','ab_h1','ab_sub','ab_p1','ab_p2','ab_p3','ab_s1','ab_s2','ab_s3','ab_s4','rq_h1','rq_sub','rq_s1','rq_s2','rq_s3','rq_ok_h','rq_ok_p','ai_api_key'];
+var settingIds=['fee_copart','fee_iaai','fee_manheim','fee_adesa','fee_edge','fee_encar','inland_cost','azn_rate','ocean_poti_sedan','ocean_baku_sedan','phone','email','address','instagram','facebook','whatsapp','hdr_phone','hdr_nav','hdr_cta','hdr_line1','hdr_line2','foot_desc','foot_desc_ru','foot_copy','h_hero_title','h_hero_title_ru','h_hero_lead','h_hero_lead_ru','h_s1v','h_s1l','h_s2v','h_s2l','h_why_h','h_why_h_ru','h_w1h','h_w2h','h_w3h','h_w1p','h_w2p','h_w3p','h_cta_h','h_cta_h_ru','ab_h1','ab_sub','ab_p1','ab_p2','ab_p3','ab_s1','ab_s2','ab_s3','ab_s4','rq_h1','rq_sub','rq_s1','rq_s2','rq_s3','rq_ok_h','rq_ok_p','ai_api_key'];
 
 function loadSettings(){
   fetch('api/settings.php').then(function(r){return r.json();}).then(function(s){
