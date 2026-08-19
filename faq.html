@@ -295,13 +295,19 @@ footer{background:linear-gradient(180deg,#6B7280 0%,#1F2937 100%);color:#E8EAED;
         return {status:r.status, text:txt, json:parsed};
       });
     }).then(function(result){
-      if(Array.isArray(result.json)){
-        allFaq = result.json;
+      var j = result.json;
+      if(j && Array.isArray(j.rows)){
+        allFaq = j.rows;
         updateCounts();
-        applyFilter(currentCat);
+        if(!allFaq.length && j.diagnostics){
+          var d=j.diagnostics;
+          document.getElementById('faqList').innerHTML='<div class="empty-state">Cədvəl boşdur. Baza: '+d.connected_db+' | Host: '+d.connected_host+' | Cədvəldəki sətir sayı: '+d.raw_count_in_table+'</div>';
+        } else {
+          applyFilter(currentCat);
+        }
       } else {
-        var raw=(result.text||'').replace(/<[^>]*>/g,' ').trim().slice(0,200);
-        var msg = (result.json && (result.json.debug||result.json.error)) ? (result.json.debug||result.json.error) : (raw||'boş cavab (HTTP '+result.status+')');
+        var raw=(result.text||'').replace(/<[^>]*>/g,' ').trim().slice(0,300);
+        var msg = (j && (j.debug||j.error)) ? (j.debug||j.error) : (raw||'boş cavab (HTTP '+result.status+')');
         document.getElementById('faqList').innerHTML='<div class="empty-state">FAQ yüklənmədi — '+msg+'</div>';
       }
     }).catch(function(err){
